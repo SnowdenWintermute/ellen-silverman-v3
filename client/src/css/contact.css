@@ -1,0 +1,16 @@
+.contact {
+  width: 100%;
+  min-height: calc(100vh - 184px);
+}
+.contact-form-holder {
+  height: 100px;
+  text-align: center;
+  display: block;
+  font-size: 1.5em;
+  font-family: "Josefin Slab";
+  padding: 50px;
+  margin: 0 auto;
+}
+.contact-form-email-address {
+  color: blue;
+}

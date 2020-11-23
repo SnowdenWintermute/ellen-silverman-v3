@@ -1,0 +1,70 @@
+.galleryHolderHolder {
+  display: block;
+  margin: 0 auto;
+  min-height: calc(100vh - 184px);
+}
+.galleryHolder {
+  padding: 10px;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+.painting-card-body {
+  height: 372px;
+  width: 350px;
+  margin: 10px;
+  border: 1px solid black;
+  transition: 0.3s;
+}
+.painting-card-body:hover {
+  box-shadow: 1px 1px 3px black;
+}
+.painting-card-img-link {
+  display: block;
+  width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+.painting-card-img-link img {
+  display: block;
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.painting-card-info-text {
+  font-family: "Roboto Condensed", "Sans Serif";
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #e9e7e2;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 775px) {
+  .painting-card-body {
+    height: 570px;
+    width: 80%;
+  }
+  .painting-card-img-link img {
+    height: 500px;
+    width: 100%;
+  }
+  .galleryHolder {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .galleryHolder {
+    padding: 0;
+  }
+  .painting-card-body {
+    margin: 0;
+    margin-bottom: 10px;
+    height: 570px;
+    width: 98%;
+  }
+}

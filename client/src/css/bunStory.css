@@ -1,0 +1,437 @@
+.bun-story {
+  position: fixed;
+  background: black;
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+.bun-story-page {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  overflow: hidden;
+  margin: auto; /* Will not center vertically and won't work in IE6/7. */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.position-relative {
+  position: relative;
+}
+.bun-story-img {
+  height: 100%;
+  transition: ease-in-out 0.7s;
+  margin: 0 auto;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.scroll-indicator {
+  position: fixed;
+  z-index: 2;
+  height: fit-content;
+  display: flex;
+  color: white;
+  top: 40vh;
+  margin: auto; /* Will not center vertically and won't work in IE6/7. */
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  transition: 1s;
+}
+.scroll-indicator-hidden {
+  opacity: 0;
+  transform: translateY(-70%);
+}
+@media screen and (max-width: 700px) {
+  .scroll-indicator {
+    transform: translateX(15%);
+    font-size: 18px;
+  }
+  .scroll-indicator-hidden {
+    opacity: 0;
+    transform: translate(15%, -70%);
+  }
+}
+.scroll-indicator-down-arrow {
+  position: relative;
+  margin-top: 10px;
+  fill: white;
+  height: 40px;
+  width: 40px;
+  transition: ease-in-out 2s;
+}
+.arrow-up {
+  transform: translateY(-10%);
+}
+.arrow-down {
+  transform: translateY(10%);
+}
+.color-flash {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: white;
+  z-index: 2;
+  transition: 2s;
+}
+.color-flash-inactive {
+  opacity: 0;
+}
+.camera-flash {
+  position: fixed;
+  height: 100%;
+  width: 5%;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 2;
+  transition: 0.2s;
+  opacity: 0.8;
+  box-shadow: 0px -100px 50vw 50vw rgba(255, 255, 255, 0.3);
+  right: 0;
+}
+.camera-flash-inactive {
+  opacity: 0;
+  box-shadow: 0px 0px 0px 0vw rgba(255, 255, 255, 0.3);
+}
+.teaTime-pos-1 {
+  transform: scale(1.3) translateX(2vw) translateY(-10vh);
+}
+.teaTime-pos-2 {
+  transform: scale(2.5) translateX(-8%) translateY(-30%);
+}
+.teaTime-pos-3 {
+  transform: scale(1) translateX(-0%) translateY(-0%);
+}
+.teaTime-pos-4 {
+  transform: scale(1.8) translateX(-30%) translateY(-20%);
+}
+.teaTime-pos-5 {
+  transform: scale(1.8) translateX(-30%) translateY(20%);
+}
+.teaTime-pos-6 {
+  transform: scale(1.5) translateX(-0%) translateY(-0%);
+}
+.teaTime-pos-7 {
+  transition: 3s;
+  transform: scale(2.6) translateX(24%) translateY(-14%);
+}
+.teaTime-pos-8 {
+  transition: 3s;
+  opacity: 0;
+  transform: scale(2.8) translateX(0%) translateY(-44%);
+}
+.museum {
+  transition: 1s;
+  z-index: 1;
+}
+.museum-pos-1 {
+  opacity: 0;
+  transform: translateY(-20%);
+}
+.museum-pos-2 {
+  transition: 3s;
+  transition-delay: 1500ms;
+  opacity: 1;
+  transform: scale(1.5) translate(10%, -10%);
+}
+.museum-pos-3 {
+  transform: scale(1.1);
+}
+.museum-pos-4 {
+  transform: scale(1.5);
+  transform: translateX(-20%);
+}
+.museum-pos-5 {
+  transform: scale(1.9) translate(-11%, -25%);
+}
+.museum-pos-6 {
+  transform: scale(2.9) translate(-14%, -28%);
+}
+.museum-pos-7 {
+  transform: scale(1) translate(-0%, -0%);
+}
+.museum-pos-8 {
+  opacity: 0;
+}
+.harrysLR {
+  z-index: 1;
+}
+.harrys-pos-1 {
+  transition-delay: 500ms;
+  opacity: 0;
+}
+.harrys-pos-2 {
+  transition-delay: 500ms;
+  opacity: 1;
+  transform: scale(1.8);
+}
+.harrys-pos-3 {
+  /* couch */
+  transform: scale(1.2) translate(-14%, -10%);
+}
+.harrys-pos-4 {
+  /* clues */
+  transition-delay: 500ms;
+  transform: scale(1.2);
+}
+.harrys-pos-5 {
+  transform: scale(1.7) translate(-20%, 20%);
+}
+.harrys-pos-6 {
+  transform: scale(1.7) translate(20%, 23%);
+}
+.harrys-pos-7 {
+  transform: scale(1.7) translate(10%, -35%);
+}
+.harrys-pos-8 {
+  transform: scale(1.9) translate(6%, -15%);
+}
+.harrys-pos-9 {
+  transform: scale(2.1) translate(2%, -30%);
+  opacity: 0;
+}
+.directors-pos-1 {
+  opacity: 0;
+}
+.directors-pos-2 {
+  transform: scale(1.2);
+}
+.directors-pos-3 {
+  /* floral */
+  transform: scale(1.6) translate(-8%, -30%);
+}
+.directors-pos-4 {
+  /* below bookcase */
+  transform: scale(1.5) translate(-16%, 10%);
+}
+.directors-pos-5 {
+  /* bookcase */
+  transition: ease-out 3s;
+  transform: scale(1.5) translate(-16%, 15%);
+}
+.directors-pos-6 {
+  /*desk*/
+  transform: scale(2) translate(18%, -14%);
+}
+.directors-pos-7 {
+  /*chair*/
+  transform: scale(2.2) translate(-8.5%, -9%);
+}
+.directors-pos-8 {
+  /*daydream light*/
+  transition-delay: 1000ms;
+  transition: ease-out 6s;
+  transform: scale(1.8) translate(28%, 2%);
+}
+.directors-pos-9 {
+  /*starkly awoken*/
+  transition: ease 0.3s;
+  transform: scale(1.5) translate(-14%, -16%);
+}
+.directors-pos-10 {
+  /*red bloom*/
+  transform: scale(2.7) translate(-10%, -45%);
+}
+.directors-pos-11 {
+  transform: scale(2.7) translate(-100%, -15%);
+  opacity: 0;
+}
+.italian-pos-1 {
+  opacity: 0;
+  transition: ease 5s;
+  transform: scale(2);
+}
+.italian-pos-2 {
+  transition: ease 5s;
+  transform: scale(1.5);
+}
+.italian-pos-3 {
+  /*spot the head*/
+  transform: scale(1.5) translate(-2%, -25%);
+}
+.italian-pos-4 {
+  /*camera flash right*/
+  transform: scale(1.1) translate(-15%, -0%);
+}
+.italian-pos-5 {
+  /*furthest table*/
+  transform: scale(2.6) translate(30%, -18%);
+}
+.italian-pos-6 {
+  transform: scale(1);
+}
+.italian-pos-7 {
+  /*cern finds the head*/
+  transform: scale(1.5) translate(14%, -25%);
+}
+.italian-pos-8 {
+  transform: scale(1);
+}
+.italian-pos-9 {
+  /* sharp fork */
+  transform: scale(2.6) translate(30%, -18%);
+}
+.italian-pos-10 {
+  transform: scale(1.6) translate(-30%, -15%);
+  opacity: 0;
+}
+.italian-pos-11 {
+  opacity: 0;
+  transform: translate(-30%, -25%);
+}
+.lydias-pos-1 {
+  opacity: 0;
+  transform: translate(-55%, -5%);
+}
+.lydias-pos-2 {
+  transform: scale(1.5) translate(-0%, -0%);
+}
+.lydias-pos-3 {
+  /*approach table*/
+  transform: scale(1.2) translate(10%, 10%);
+}
+.lydias-pos-4 {
+  /*clock ticks*/
+  transform: scale(2.5) translate(-7%, -7%);
+}
+.lydias-pos-5 {
+  transform: translate(-0%, -0%);
+}
+.lydias-pos-6 {
+  /*approach table*/
+  transform: scale(1.2) translate(10%, 10%);
+}
+.lydias-pos-7 {
+  /*hearth beckons*/
+  transition: ease 4s;
+  transform: scale(1.9) translate(2%, 16%);
+}
+.lydias-pos-8 {
+  /*eating*/
+  transform: scale(1.9) translate(17%, 16%);
+}
+.lydias-pos-9 {
+  /*center of table*/
+  transform: scale(2.8) translate(22%, 16%);
+}
+.lydias-pos-10 {
+  /*lunged forward*/
+  transform: scale(1.8) translate(22%, 16%);
+}
+.lydias-pos-11 {
+  /*stand up*/
+  transform: scale(1.1) translate(0%, 0%);
+}
+.lydias-pos-12 {
+  /*table cracked*/
+  transform: scale(2.3) translate(22%, 16%);
+}
+.lydias-pos-13 {
+  transform: translate(-0%, -0%);
+}
+.lydias-pos-14 {
+  opacity: 0;
+  transform: translate(-35%, -5%);
+}
+.porch-pos-1 {
+  opacity: 0;
+  transform: scale(1.8);
+}
+.porch-pos-2 {
+  transform: scale(1.8);
+}
+.porch-pos-3 {
+  /*turn startled*/
+  transition-duration: 0.3s;
+  transform: scale(1.8) translateX(-10%);
+}
+.porch-pos-4 {
+  transform: translate(-20%);
+}
+.porch-pos-5 {
+  transform: scale(1.2) translateX(-50%);
+  opacity: 0;
+}
+.study-pos-1 {
+  opacity: 0;
+  transform: scale(1.2) translateX(50%);
+}
+.study-pos-2 {
+  transform: scale(1.3);
+}
+.study-pos-3 {
+  /*spacious chairs*/
+  transform: scale(1) translateX(20%);
+}
+.study-pos-4 {
+  /*professor stab*/
+  transform: scale(2) translateX(-10%);
+}
+.study-pos-5 {
+  transform: scale(1);
+}
+.study-pos-6 {
+  transform: translate(-25%);
+}
+.study-pos-7 {
+  transform: translate(0);
+}
+.story-image-small {
+  transition: 15s;
+  transform: scale(0.3);
+}
+.story-image-small-2 {
+  transition: 15s;
+  transform: scale(0.1);
+  opacity: 0;
+}
+.teaTime-end-grid-1 {
+  transition-delay: 100;
+  transform: scale(0.3) translate(-150%, -50%);
+}
+.museum-end-grid-1 {
+  transition-delay: 200;
+  transform: scale(0.4) translate(150%, 50%);
+}
+.harrysLR-end-grid-1 {
+  transition-delay: 300;
+  transform: scale(0.5) translate(150%, -150%);
+}
+.directors-end-grid-1 {
+  transition-delay: 400;
+  transform: scale(0.3) translate(-250%, -225%);
+}
+.italian-end-grid-1 {
+  transition-delay: 500;
+  transform: scale(0.2) translate(250%, -195%);
+}
+.lydias-end-grid-1 {
+  transition-delay: 600;
+  transform: scale(0.3) translate(-170%, -134%);
+}
+.porch-end-grid-1 {
+  transition-delay: 700;
+  transform: scale(0.3) translate(109%, 105%);
+}
+.study-end-grid-1 {
+  transition-delay: 800;
+  transform: scale(0.3) translate(-170%, 99%);
+}
+
+.teaTime-end-grid-2,
+.museum-end-grid-2,
+.harrysLR-end-grid-2,
+.directors-end-grid-2,
+.italian-end-grid-2,
+.lydias-end-grid-2,
+.porch-end-grid-2,
+.study-end-grid-2 {
+  transform: translate(-0%, -0%);
+}

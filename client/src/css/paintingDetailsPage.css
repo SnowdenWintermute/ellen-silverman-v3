@@ -1,0 +1,78 @@
+/* Painting Details Page */
+.painting-details-page {
+  padding: 20px 20px 100px 100px;
+  min-height: calc(100vh - 184px);
+}
+.painting-details-content-holder {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: auto;
+}
+.painting-details-img {
+  border: 1px solid black;
+  margin: 0px 30px 30px 30px;
+  /* max-height: 500px; */
+  width: 600px;
+  max-width: 100%;
+  display: inline-block;
+}
+.painting-details-text-box {
+  display: inline-block;
+  border: 1px solid black;
+  background: #fafafa;
+  font-family: "Josefin Slab";
+  height: 200px;
+  padding: 20px;
+  font-size: 1.2em;
+}
+.painting-title {
+  font-style: italic;
+  font-size: 20px;
+}
+.painting-details-img-holder img {
+  height: 100%;
+}
+.painting-details-text-box a:hover {
+  color: blue;
+}
+
+/* Painting Details Page Meda Queries */
+@media only screen and (max-width: 1067px) {
+  .painting-details-page {
+    padding: 20px 20px 100px 20px;
+  }
+  .painting-details-img {
+    margin: 0 0 20px 0;
+  }
+  .painting-title {
+    font-size: 1.2em;
+  }
+  .painting-details-text-box {
+    width: 500px;
+    max-width: 100%;
+    font-size: 1.2em;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .painting-title {
+    /* font-size: 0.8em; */
+  }
+  .painting-details-text-box {
+    font-size: 1.1em;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .painting-title {
+    /* font-size: 0.8em; */
+  }
+  .painting-details-text-box {
+    font-size: 1em;
+  }
+}
+@media only screen and (max-width: 270px) {
+  .painting-details-text-box {
+    font-size: 0.8em;
+  }
+}

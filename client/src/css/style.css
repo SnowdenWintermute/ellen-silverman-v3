@@ -1,0 +1,177 @@
+/* 'Roboto Condensed' 'Architects Daughter' 'Source Sans Pro' */
+
+/*IE9*/
+/* *::selection {
+  background-color: transparent;
+}
+*::-moz-selection {
+  background-color: transparent;
+} */
+* {
+  /* -webkit-user-select: none;
+  -moz-user-select: -moz-none; */
+  /*IE10*/
+  /* -ms-user-select: none;
+  user-select: none; */
+
+  /*You just need this if you are only concerned with android and not desktop browsers.*/
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap");
+
+html {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /* border: 1px solid black; */
+}
+body {
+  background: #f5f5f5;
+  height: 100vh;
+}
+h1 {
+  font-family: "Source Sans Pro", sans-serif;
+}
+h2 {
+  font-size: 1.6em;
+  font-family: "Josefin Slab";
+}
+h3 {
+  font-size: 14px;
+  margin: 2vmin;
+  font-family: "Josefin Slab";
+}
+p {
+  font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
+  font-size: 1.4em;
+}
+a {
+  font-family: "Josefin Slab";
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  outline: none;
+}
+a:hover {
+  /* color: blue; */
+}
+
+#middleText {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, -0%);
+  white-space: nowrap;
+  font-size: 3em;
+  /* pointer-events: none; */
+  background: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  text-align: center;
+  margin-top: 90px;
+  z-index: 0;
+}
+.pageLabel p {
+  padding: 10px 10px 5px 10px;
+}
+.pageLabel a:hover {
+  color: blue;
+}
+/*Pages*/
+
+/* .pagesWrapper {
+  height: calc(100vh - 93px);
+  background: #f5f5f5;
+  font-size: 62.5%;
+  margin-top: 90px;
+} */
+.pagesWrapperNoMargin {
+  margin-top: 0;
+}
+#indexPageWrapper {
+  font-size: 62.5%;
+  background: transparent;
+}
+
+/* Galleries */
+
+.hidden {
+  display: none;
+}
+.paintingCloseup {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: black;
+}
+.paintingCloseup img {
+  object-fit: contain;
+  max-height: 100vh;
+  max-width: 100%;
+}
+
+/*CV*/
+#cvText p {
+  margin: 3vmin;
+  line-height: 25px;
+}
+#profilePic {
+  float: left;
+  margin-left: 2vw;
+  margin-right: 3vw;
+  border: 1px solid black;
+  box-shadow: 5px 5px 3px black;
+}
+
+/* Contact */
+.pageDiv {
+  min-height: calc(100vh - 5vh - 70px - 90px);
+}
+#contactDiv {
+  /* background-image: url("./img/4.png"); */
+  background-position: center;
+  background-size: cover;
+  object-fit: cover;
+  margin-top: 0;
+  padding-bottom: 3vh;
+}
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.contactInput {
+  background-color: #f5f5f5;
+  resize: none;
+  width: 50%;
+  color: black;
+  font-family: "Roboto Condensed", sans-serif;
+  height: 6vh;
+  font-size: 2em;
+  border: 1px solid black;
+  box-shadow: 5px 5px 3px black;
+  margin-top: 1vh;
+  padding-left: 1vw;
+}
+.contactInputText {
+  padding-top: 1vh;
+  height: 35vh;
+}
+#formSubmit {
+  margin-top: 2vh;
+  color: black;
+  font-family: "Roboto Condensed", sans-serif;
+  height: 6vh;
+  font-size: 2em;
+  border: 1px solid black;
+  box-shadow: 5px 5px 3px black;
+  width: 50%;
+}

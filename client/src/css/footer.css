@@ -1,0 +1,34 @@
+/*Footer*/
+footer {
+  height: 100px;
+  background: #e9e7e2;
+  font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
+  font-size: 1.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+footer footerLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+footer a {
+  font-family: "Source Sans Pro";
+  font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+footer p {
+  font-family: "Roboto Condensed";
+  font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
+}
+
+@media only screen and (max-width: 400px) {
+  footer {
+    font-size: 1em;
+  }
+}
