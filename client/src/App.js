@@ -1,9 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from 'redux-thunk'
 import { Provider } from "react-redux";
-
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 import navReducer from "./store/reducers/nav-reducer";
 import storyReducer from "./store/reducers/story-reducer";
 
@@ -18,16 +21,21 @@ import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";
 import BunStory from "./components/bunStory/BunStory";
 
+import Register from './components/auth/Register'
+import RegisterComplete from './components/auth/RegisterComplete'
+
 const rootReducer = combineReducers({
   nav: navReducer,
   story: storyReducer,
 });
 
-const store = createStore(rootReducer);
+const reduxMiddleware = [thunk]
+const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...reduxMiddleware)));
 
 function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <Router>
         <Helmet>
           <title>{"L. E. Silverman"}</title>
@@ -61,6 +69,8 @@ function App() {
             path="/artworks/:category?/:painting?"
             component={Artworks}
           />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/complete-registration" component={RegisterComplete} />
           <Switch>
             <Route exact path="/img/:category/:painting" component={""}></Route>
             <Route exact path="/the-professor" component={""}></Route>

@@ -16,10 +16,7 @@ export default class ElementSlider extends Component {
     let { slides } = this.props;
     let slideTimer = this.props.slideTimer ? this.props.slideTimer : 3000;
     let newSlideClasses = [];
-    console.log(slides);
     slides.forEach((slide, i) => {
-      console.log(slide.showClass);
-      console.log(i);
       if (i === 0) newSlideClasses.push(slide.showClass);
       else newSlideClasses.push(slide.hiddenClass);
     });

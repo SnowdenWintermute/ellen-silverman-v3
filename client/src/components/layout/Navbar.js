@@ -82,6 +82,9 @@ const Navbar = (props) => {
             <Link to="/contact" onClick={hideMenu}>
               Contact
             </Link>
+            <Link to="/register" onClick={hideMenu}>
+              Register
+            </Link>
           </div>
         </div>
       </Swipe>

@@ -14,7 +14,7 @@ const ExhibitionImage = ({ key, image }) => {
   return (
     <div key={key} className={`side-image-frame`} onClick={handleImgClick}>
       <div className={`image-exit-button ${xClass}`}>X</div>
-      <img className={`side-image ${imgClass}`} src={image} />
+      <img className={`side-image ${imgClass}`} src={image} alt={image} />
     </div>
   );
 };

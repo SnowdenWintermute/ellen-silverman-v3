@@ -29,7 +29,7 @@ const BunStoryImages = (props) => {
   const [studyClass, setStudyClass] = useState("study-pos-1");
 
   const textRefs = useSelector((state) => state.story.textRefs);
-  const textRefsCurrent = textRefs.current;
+  const textRefsCurrent = textRefs && textRefs.current;
 
   const appearZone = window.innerHeight / 3;
   const windowHeightPercent = window.innerHeight / 100;
@@ -55,7 +55,7 @@ const BunStoryImages = (props) => {
     setTimeout(() => {
       setAnimating(false);
     }, 1000);
-    if (!textRefs.current) return;
+    if (!textRefs || !textRefs.current) return;
 
     if (getTextTop("text2") > appearZone) {
       setScrollIndicatorShowClass("");
@@ -261,6 +261,9 @@ const BunStoryImages = (props) => {
     museumFlashTriggered,
     harrysFlashTriggered,
     directorsFlashTriggered,
+    italianFlashTriggered,
+    cameraFlashTriggered,
+    lydiasFlashTriggered,
   ]);
 
   const handleScroll = useCallback(
