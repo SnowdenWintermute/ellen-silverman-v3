@@ -17,13 +17,13 @@
 }
 #hamburger {
   position: absolute;
-  right: 15px;
+  left: 15px;
   top: 18px;
   display: none;
 }
 .menu {
   height: 70px;
-  width: 90vw;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   z-index: 0;

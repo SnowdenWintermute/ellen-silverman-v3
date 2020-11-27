@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { createOrUpdateUser } from "../../store/actions/auth-actions";
-// import { createOrUpdateUser } from "../../functions/auth";
+import { createOrUpdateUser } from "../../apiCalls/auth.js"
 
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -39,63 +38,60 @@ const RegisterComplete = ({ history }) => {
         // redux store
         console.log("user", user, "idTokenResult", idTokenResult);
 
-        await dispatch(createOrUpdateUser(idTokenResult.token))
-        // createOrUpdateUser(idTokenResult.token)
-        //   .then((res) => {
-        //     dispatch({
-        //       type: "LOGGED_IN_USER",
-        //       payload: {
-        //         name: res.data.name,
-        //         email: res.data.email,
-        //         token: idTokenResult.token,
-        //         role: res.data.role,
-        //         _id: res.data._id,
-        //       },
-        //     });
-        //   })
-        //   .catch((err) => console.log(err));
-
-        // redirect
-        history.push("/");
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
+    history.push("/");
   };
 
   const completeRegistrationForm = () => (
     <form onSubmit={handleSubmit}>
-      <div>{email}</div>
+      <input className="simple-text-input" disabled={true} value={email} onChange={() => { }} />
       <input
+        className="simple-text-input"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         autoFocus
       />
-      <br />
       <input
+        className="simple-text-input"
         type="password"
         value={passwordConfirm}
         onChange={(e) => setPasswordConfirm(e.target.value)}
         placeholder="Confirm password"
         autoFocus
       />
-      <br />
-      <button type="submit" className="btn btn-raised">
-        Complete Registration
+      <div className="auth-bottom-links">
+        <div></div>
+        <button type="submit" className="button button-standard-size button-basic" disabled={!password || !passwordConfirm}>
+          Complete Registration
       </button>
+      </div>
     </form>
   );
 
   return (
-    <div className="container p-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h4>Register Complete</h4>
-          {completeRegistrationForm()}
-        </div>
+    <div className="auth-page-body">
+      <div className="auth-frame">
+        <h1 className="auth-brand-header">Complete Registration</h1>
+        {completeRegistrationForm()}
       </div>
     </div>
   );

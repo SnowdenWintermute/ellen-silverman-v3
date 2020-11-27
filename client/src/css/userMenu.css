@@ -1,0 +1,33 @@
+.user-menu-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
+.user-menu-icon:hover {
+  fill: blue;
+}
+.user-menu-links-holder {
+  position: absolute;
+  right: 10px;
+  margin-top: 3px;
+  background: white;
+  z-index: 1299;
+  border: 1px solid black;
+  top: 47px;
+  padding: 10px 30px 10px 30px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.user-menu-links-holder a {
+  padding: none;
+  margin: 0px;
+}

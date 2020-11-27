@@ -27,7 +27,7 @@ footer p {
   font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 470px) {
   footer {
     font-size: 1em;
   }

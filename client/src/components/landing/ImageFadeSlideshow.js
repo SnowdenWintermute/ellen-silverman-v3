@@ -12,7 +12,7 @@ export default class ImageFadeSlideshow extends Component {
     };
   }
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     let { slides } = this.props;
     let slideTimer = this.props.slideTimer ? this.props.slideTimer : 3000;
     let slideClasses = [];

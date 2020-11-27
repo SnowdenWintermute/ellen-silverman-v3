@@ -46,11 +46,11 @@
 
 @media only screen and (max-width: 775px) {
   .painting-card-body {
-    height: 570px;
-    width: 80%;
+    height: 320px;
+    width: 45%;
   }
   .painting-card-img-link img {
-    height: 500px;
+    height: calc(320px - 70px);
     width: 100%;
   }
   .galleryHolder {
@@ -58,13 +58,22 @@
   }
 }
 @media only screen and (max-width: 600px) {
+  .painting-card-body {
+    height: 270px;
+    width: 50%;
+  }
+  .painting-card-img-link img {
+    height: 200px;
+    width: 100%;
+  }
   .galleryHolder {
     padding: 0;
   }
   .painting-card-body {
     margin: 0;
-    margin-bottom: 10px;
-    height: 570px;
-    width: 98%;
+    width: 50%;
+    /* margin-bottom: 10px; */
+    /* height: 570px;
+    width: 98%; */
   }
 }

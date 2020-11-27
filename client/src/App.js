@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from 'redux-thunk'
-import { Provider } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
-import navReducer from "./store/reducers/nav-reducer";
-import storyReducer from "./store/reducers/story-reducer";
 
 import Navbar from "./components/layout/Navbar";
 import PageLabel from "./components/layout/PageLabel";
@@ -20,46 +15,76 @@ import Cv from "./components/cv/Cv";
 import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";
 import BunStory from "./components/bunStory/BunStory";
+import AddPainting from './components/admin/AddPainting'
 
 import Register from './components/auth/Register'
 import RegisterComplete from './components/auth/RegisterComplete'
+import Login from "./components/auth/Login";
+import UserHistory from './components/user/UserHistory'
+import { auth } from "./firebase";
+import { currentUser } from './apiCalls/auth'
+import ForgotPassword from "./components/auth/ForgotPassword";
 
-const rootReducer = combineReducers({
-  nav: navReducer,
-  story: storyReducer,
-});
+import UserRoute from './components/routes/UserRoute'
+import AdminRoute from './components/routes/AdminRoute'
 
-const reduxMiddleware = [thunk]
-const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...reduxMiddleware)));
+const App = () => {
+  const dispatch = useDispatch()
 
-function App() {
+  // to check firebase auth state
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const idTokenResult = await user.getIdTokenResult();
+        currentUser(idTokenResult.token)
+          .then((res) => {
+            console.log(res)
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    });
+    // cleanup
+    return () => unsubscribe();
+  }, [dispatch]);
+
   return (
-    <Provider store={store}>
+
+    <Router>
       <ToastContainer />
-      <Router>
-        <Helmet>
-          <title>{"L. E. Silverman"}</title>
-        </Helmet>
-        <div className="App">
-          <Switch>
-            <Route
-              exact
-              path="/img/:category/:painting"
-              component={FullResolutionImage}
-            ></Route>
-            <Route exact path="/the-professor" component={""}></Route>
-            <Navbar />
-          </Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Switch>
-            <Route exact path="/img/:category/:painting" component={""}></Route>
-            <Route exact path="/the-professor" component={""}></Route>
-            <Route
-              exact
-              path="/:page/:category?/:painting?/"
-              component={PageLabel}
-            />
-          </Switch>
+      <Helmet>
+        <title>{"L. E. Silverman"}</title>
+      </Helmet>
+      <div className="App">
+        <Switch>
+          <Route
+            exact
+            path="/img/:category/:painting"
+            component={FullResolutionImage}
+          ></Route>
+          <Route exact path="/the-professor" component={""}></Route>
+          <Navbar />
+        </Switch>
+        <Route exact path="/" component={LandingPage} />
+        <Switch>
+          <Route exact path="/img/:category/:painting" component={""}></Route>
+          <Route exact path="/the-professor" component={""}></Route>
+          <Route
+            exact
+            path="/:page/:category?/:painting?/"
+            component={PageLabel}
+          />
+        </Switch>
+        <Switch>
           <Route exact path="/about" component={Cv}></Route>
           <Route exact path="/exhibitions" component={Exhibitions}></Route>
           <Route exact path="/contact" component={Contact}></Route>
@@ -71,14 +96,18 @@ function App() {
           />
           <Route exact path="/register" component={Register} />
           <Route exact path="/complete-registration" component={RegisterComplete} />
-          <Switch>
-            <Route exact path="/img/:category/:painting" component={""}></Route>
-            <Route exact path="/the-professor" component={""}></Route>
-            <Route path="/:page" component={Footer}></Route>
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/request-password-reset" component={ForgotPassword} />
+          <UserRoute exact path="/user/history" component={UserHistory} />
+          <AdminRoute exact path="/admin/add-painting" component={AddPainting} />
+        </Switch>
+        <Switch>
+          <Route exact path="/img/:category/:painting" component={""}></Route>
+          <Route exact path="/the-professor" component={""}></Route>
+          <Route path="/:page" component={Footer}></Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { ReactComponent as HomeIcon } from "../../home.svg";
-
 import HamburgerMenu from "react-hamburger-menu";
 import Swipe from "react-easy-swipe";
+import UserMenu from './UserMenu'
 
-const Navbar = (props) => {
+
+const Navbar = () => {
   const [width, setWidth] = useState(null);
   // const [height, setHeight] = useState(null);
   const [hamburgerMenuShowing, setHamburgerMenuShowing] = useState(false);
@@ -32,7 +32,6 @@ const Navbar = (props) => {
   }
 
   function hideMenu() {
-    console.log("hideMenu");
     setHamburgerMenuShowing(false);
   }
 
@@ -82,10 +81,8 @@ const Navbar = (props) => {
             <Link to="/contact" onClick={hideMenu}>
               Contact
             </Link>
-            <Link to="/register" onClick={hideMenu}>
-              Register
-            </Link>
           </div>
+          <UserMenu hideMenu={hideMenu} />
         </div>
       </Swipe>
     </div>

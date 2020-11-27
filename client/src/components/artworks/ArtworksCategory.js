@@ -5,7 +5,7 @@ import paintingList from "./paintingList";
 import getPaintingsInCategory from "../utils/getPaintingsInCategory";
 
 export default class ArtworksCategory extends Component {
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     window.scrollTo(0, 0);
   }
   render() {

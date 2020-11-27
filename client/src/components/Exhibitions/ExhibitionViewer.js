@@ -10,8 +10,6 @@ const ExhibitionViewer = ({
   link,
 }) => {
   const exhibitionImageElms = sideImages.map((sideImage, i) => {
-    // setImgClasses([...imgClasses, ``]);
-    console.log(i);
     return <ExhibitionImage key={i} image={sideImage} />;
   });
 

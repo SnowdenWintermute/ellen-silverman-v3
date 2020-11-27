@@ -1,61 +1,123 @@
-import React, { useState, useEffect } from "react";
-import { auth } from "../../firebase";
+import React, { useState, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { Link } from 'react-router-dom'
+import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
+import { createOrUpdateUser } from "../../apiCalls/auth";
+import { auth, googleAuthProvider } from "../../firebase";
 
 const Register = ({ history }) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("michael.p.silverman@gmail.com");
+  const [loading, setLoading] = useState(false)
 
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API)
-    console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL)
     if (user && user.token) history.push("/");
   }, [user, history]);
 
+  const roleBasedRedirect = useCallback((role) => {
+    // check if intended
+    let intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
+    } else {
+      if (role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
+    }
+  }, [history]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const config = {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
 
+
     await auth.sendSignInLinkToEmail(email, config);
     toast.success(
       `Email is sent to ${email}. Click the link to complete your registration.`
     );
+    setLoading(false)
     // save user email in local storage
     window.localStorage.setItem("emailForRegistration", email);
     // clear state
     setEmail("");
   };
 
+  const googleLogin = async () => {
+    auth
+      .signInWithPopup(googleAuthProvider)
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+            roleBasedRedirect(res.data.role);
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
+  };
+
   const registerForm = () => (
     <form onSubmit={handleSubmit}>
+      <div
+        className="log-in-with-google"
+        onClick={googleLogin}
+        disabled={loading}
+      >
+        <GoogleIcon className="google-svg" />
+        <div className="google-login-text">
+          Login with Google
+          </div>
+      </div>
+      <div className="or-holder">
+        <span>or</span>
+      </div>
       <input
         type="email"
-        className="form-control"
+        className="simple-text-input"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email"
         autoFocus
       />
 
-      <br />
-      <button type="submit" className="btn btn-raised">
-        Register
+      <div className="auth-bottom-links">
+        <Link to="/login">Have account? Log in here</Link>
+
+        <button type="submit" className="button button-standard-size button-basic" disabled={loading || !email}>
+          Register
       </button>
+      </div>
     </form>
   );
 
   return (
-    <div className="container p-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h4>Register</h4>
-          {registerForm()}
-        </div>
+    <div className="auth-page-body">
+      <div className="auth-frame">
+        <h1 className="auth-brand-header">Register</h1>
+        {registerForm()}
       </div>
     </div>
   );

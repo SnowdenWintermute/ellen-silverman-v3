@@ -1,0 +1,98 @@
+.auth-page-body {
+  min-height: calc(100vh - 72px - 38px - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth-frame {
+  width: 100%;
+  max-width: 448px;
+  /* height: 500px; */
+  /* margin-bottom: 40px; */
+  background-color: #e9e7e2;
+  padding: 38px;
+  padding-bottom: 70px;
+  /* height: 100%; */
+}
+@media (max-width: 460px) {
+  .auth-frame {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    min-height: 100%;
+    width: 100%;
+  }
+}
+
+.auth-brand-header,
+.auth-header {
+  display: block;
+  text-align: center;
+}
+.auth-brand-header {
+  color: Black;
+  margin-bottom: 14px;
+  font-size: 24px;
+  font-family: "Josefin Slab", "sans";
+}
+.auth-header {
+  margin-bottom: 34px;
+  font-size: 18px;
+  font-family: "Josefin Slab", "sans";
+}
+.auth-form {
+  width: 100%;
+}
+.log-in-with-google {
+  height: 42px;
+  border: 1px solid rgb(66, 133, 244);
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.google-svg {
+  width: 45px;
+}
+.google-login-text {
+  font-size: 18px;
+  font-family: "Josefin Slab", "sans";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgb(66, 133, 244);
+  width: 100%;
+}
+.or-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.forgot-password {
+  margin-bottom: 35px;
+  font-size: 18px;
+}
+.auth-bottom-links {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-frame a:hover {
+  color: blue;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: black;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}

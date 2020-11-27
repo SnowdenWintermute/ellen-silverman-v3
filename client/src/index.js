@@ -14,10 +14,35 @@ import "./css/storyCarousel.css";
 import "./css/bunStory.css";
 import "./css/bunStoryText.css";
 import "./css/footer.css";
+import "./css/userMenu.css";
+import "./css/auth.css";
+import "./css/forms.css";
+import "./css/buttons.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import navReducer from "./store/reducers/nav-reducer";
+import storyReducer from "./store/reducers/story-reducer";
+import userReducer from "./store/reducers/user-reducer";
+
+const rootReducer = combineReducers({
+  nav: navReducer,
+  story: storyReducer,
+  user: userReducer,
+});
+
+const reduxMiddleware = [thunk]
+
+const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...reduxMiddleware)));
+
+ReactDOM.render(<Provider store={store}>
+  <App />
+</Provider>
+  , document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

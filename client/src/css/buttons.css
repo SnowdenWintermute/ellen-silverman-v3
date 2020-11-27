@@ -1,0 +1,52 @@
+.button {
+  display: block;
+  text-align: center;
+  text-justify: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+@media (max-width: 420px) {
+  .button {
+    font-size: 14px;
+  }
+}
+@media (max-width: 340px) {
+  .button {
+    font-size: 12px;
+  }
+}
+@media (max-width: 310px) {
+  .button {
+    font-size: 8px;
+  }
+}
+.button-standard-size {
+  max-height: 36px;
+  max-width: 100%;
+  min-width: 90px;
+  line-height: 36px;
+}
+.button-basic {
+  border: 1px solid black;
+  background-color: transparent;
+  transition: 0.3s;
+}
+.button-basic:disabled {
+  border: 1px solid grey;
+  cursor: default;
+}
+.button-primary {
+  color: white;
+  background-color: #369;
+}
+.button-success {
+  color: black;
+  background-color: white;
+}
+.button-danger {
+  color: black;
+  background-color: #955;
+}

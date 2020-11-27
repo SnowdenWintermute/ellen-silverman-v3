@@ -19,6 +19,7 @@ mongoose
   .catch((err) => console.log("DB CONNECTION ERR", err));
 
 // middlewares
+app.use(express.json({ extended: false }));
 app.use(bodyParser.json({ limit: "4mb" }));
 app.use(cors());
 
