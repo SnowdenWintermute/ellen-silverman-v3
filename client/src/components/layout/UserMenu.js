@@ -11,7 +11,6 @@ const UserMenu = ({ hideMenu }) => {
 
   useEffect(() => {
     const clearUserDropdown = (e) => {
-      console.log(e.target.getAttribute("name"))
       if (e.target.getAttribute("name") !== "user-menu")
         setShowMenu(false);
     };

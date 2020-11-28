@@ -15,24 +15,36 @@ const paintingSchema = new mongoose.Schema(
       lowercase: true,
       index: true,
     },
-    size: {
+    height: {
+      type: Number,
+      required: true
+    },
+    width: {
+      type: Number,
+      required: true
+    },
+    drawingMaterial: {
       type: String,
-      enum: ['11" x 14"']
+      lowercase: true,
+      enum: ['oil', 'pastel', 'watercolor', 'acrylic', 'graphite', 'charcoal', 'ink', 'crayon']
     },
-    materials: {
+    support: {
       type: String,
-      enum: ['Oil on canvas',]
+      lowercase: true,
+      enum: ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal',]
     },
-    datePainted: {
-      type: Date,
+    year: {
+      type: Number,
     },
-    picture: { type: String },
+    image: { data: Buffer, contentType: String },
+    thumbnail: { data: Buffer, contentType: String },
     price: {
       type: Number,
       required: "Please enter the price"
     },
     series: {
-      type: String,
+      type: ObjectId,
+      ref: "series",
       required: "Please specify which series the painting is from"
     },
     description: {
@@ -43,4 +55,4 @@ const paintingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", paintingSchema);
+module.exports = mongoose.model("Painting", paintingSchema);

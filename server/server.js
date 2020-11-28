@@ -25,6 +25,8 @@ app.use(cors());
 
 // routes middleware
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/paintings', require('./routes/paintings'))
+app.use('/api/series', require('./routes/series'))
 
 // port
 const port = process.env.PORT || 8000;

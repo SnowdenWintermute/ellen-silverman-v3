@@ -19,7 +19,8 @@
     "firebase-admin": "^9.4.1",
     "formidable": "^1.2.2",
     "lodash": "^4.17.20",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "slugify": "^1.4.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
