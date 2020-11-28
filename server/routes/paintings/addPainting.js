@@ -20,14 +20,14 @@ exports.create = (req, res) => {
 
     let painting = new Painting(fields);
 
-    if (files.photo) {
-      if (files.photo.size > 3000000) {
+    if (files.image) {
+      if (files.image.size > 3000000) {
         return res.status(400).json({
           error: 'Image should be less than 3mb in size'
         });
       }
-      painting.photo.data = fs.readFileSync(files.photo.path);
-      painting.photo.contentType = files.photo.type;
+      painting.image.data = fs.readFileSync(files.image.path);
+      painting.image.contentType = files.image.type;
     }
 
     painting.save((err, result) => {
