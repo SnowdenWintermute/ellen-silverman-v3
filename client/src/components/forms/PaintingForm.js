@@ -5,13 +5,10 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading 
     title,
     height,
     width,
-    drawingMaterial,
-    support,
     year,
     image,
     thumbnail,
     price,
-    series,
     description,
   } = values;
 
@@ -46,7 +43,7 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading 
       </div>
       <div className="">
         <label className="">Height</label>
-        <input onChange={handleChange('height')} type="number" className="" value={height} />
+        <input onChange={handleChange('height')} type="text" className="" value={height} />
       </div>
       <div className="">
         <label className="">Width</label>
@@ -67,16 +64,17 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading 
         </select>
       </div>
       <div className="">
-        <label className="">Year</label>
-        <input onChange={handleChange('width')} type="number" className="" value={year} />
+        <label stlye={{ color: "black", display: 'inline' }}>Year
+        <input onChange={handleChange('year')} type="text" className="" value={year} />
+        </label>
       </div>
       <div className="">
         <label className="">Price</label>
-        <input onChange={handleChange('width')} type="number" className="" value={price} />
+        <input onChange={handleChange('price')} type="text" className="" value={price} />
       </div>
       <div className="">
         <label className="">Description</label>
-        <textarea onChange={handleChange('width')} type="text" className="" value={description} />
+        <textarea onChange={handleChange('description')} type="text" className="" value={description} />
       </div>
 
       <button disabled={loading} className="button button-standard-size button-basic">Add Painting</button>

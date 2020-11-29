@@ -43,7 +43,7 @@
   color: blue;
 }
 
-label {
+.menu label {
   margin: 0px 10px 0 0;
   font-size: 2.6em;
   line-height: 70px;

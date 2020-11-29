@@ -34,7 +34,6 @@ const AddProduct = () => {
   const initFormDataAndLoadSeriesList = useCallback(async () => {
     try {
       const fetchedSeriesList = await getSeriesList()
-      console.log(fetchedSeriesList)
       setSeriesList(fetchedSeriesList)
       setFormData(new FormData())
     } catch (err) {
@@ -56,19 +55,25 @@ const AddProduct = () => {
   const loadSeries = async () => await setSeriesList(getSeriesList().data)
 
   const handleSubmit = async (e) => {
-    console.log(e)
     e.preventDefault();
     try {
       setLoading(true)
-      const res = await addPainting(values, user.token)
-      console.log(res)
-      toast.success(`Added ${values.title} to ${values.series} series.`)
-      setValues({ ...initialValues })
+      const res = await addPainting(formData, user.token)
+      console.log({ ...res })
+      if (res.response) {
+        if (res.response.data.error) {
+          toast.error(res.response.data.error.message)
+        }
+      } else if (res.data) {
+        console.log({ ...res })
+        toast.success(`Added ${res.data.title}.`)
+        setValues({ ...initialValues })
+      }
       setLoading(false)
     } catch (err) {
       setLoading(false)
       console.log(err)
-      toast.error(err)
+      toast.error(err.message)
     }
   };
 
