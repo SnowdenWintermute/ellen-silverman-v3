@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
-
-import PaintingForm from '../forms/PaintingForm'
-
+// api
 import { getSeriesList } from '../../apiCalls/series'
 import { addPainting } from '../../apiCalls/paintings'
+// components
+import PaintingForm from '../forms/PaintingForm'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AddProduct = () => {
   const [loading, setLoading] = useState(false)
   const [seriesList, setSeriesList] = useState([])
   const [formData, setFormData] = useState(null)
+  const [formFieldErrors, setFormFieldErrors] = useState({})
   const initialValues = {
     title: "",
     height: "",
@@ -27,10 +29,8 @@ const AddProduct = () => {
   const [values, setValues] = useState({
     ...initialValues
   });
-
   const user = useSelector(state => state.user);
 
-  // load categories and set form data
   const initFormDataAndLoadSeriesList = useCallback(async () => {
     try {
       const fetchedSeriesList = await getSeriesList()
@@ -50,46 +50,41 @@ const AddProduct = () => {
     const value = name === 'image' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     setValues({ ...values, [name]: value });
+    const newFormFieldErrors = { ...formFieldErrors }
+    delete newFormFieldErrors[name]
+    setFormFieldErrors(newFormFieldErrors)
   };
-
-  const loadSeries = async () => await setSeriesList(getSeriesList().data)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true)
       const res = await addPainting(formData, user.token)
-      console.log({ ...res })
       if (res.response) {
         if (res.response.data.error) {
-          toast.error(res.response.data.error.message)
+          if (res.response.data.error.errors && Object.keys(res.response.data.error.errors).length) {
+            setFormFieldErrors({ ...res.response.data.error.errors })
+          } else toast.error(res.response.data.error.message)
         }
       } else if (res.data) {
-        console.log({ ...res })
         toast.success(`Added ${res.data.title}.`)
         setValues({ ...initialValues })
       }
       setLoading(false)
     } catch (err) {
       setLoading(false)
-      console.log(err)
       toast.error(err.message)
     }
   };
 
 
-
-  const loadingSpinner = () =>
-    loading && (
-      <span>Loading...</span>
-    );
-
   return (
     <div className="page-frame">
-      {loadingSpinner()}
-      <PaintingForm handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} />
+      {loading ? <CircularProgress /> :
+        <PaintingForm handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} formFieldErrors={formFieldErrors} />
+      }
     </div>
-  );
-};
+  )
+}
 
 export default AddProduct;

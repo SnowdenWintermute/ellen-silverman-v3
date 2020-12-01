@@ -179,3 +179,9 @@ a:hover {
   box-shadow: 5px 5px 3px black;
   width: 50%;
 }
+
+.page-frame {
+  padding-top: 40px;
+  padding-bottom: 60px;
+  min-height: calc(100vh - 5vh - 70px - 93px);
+}

@@ -45,3 +45,14 @@
   color: black;
   font-size: 16px;
 }
+.standard-form {
+  border: 1px solid black;
+  width: 480px;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.select-text {
+  padding-left: 12px;
+}

@@ -1,15 +1,11 @@
 /*Navbar*/
 .nav {
   width: 100%;
-  /* position: absolute;
-  z-index: 10; */
-  /* top: 0%; */
   text-align: right;
   height: 70px;
   line-height: 70px;
   font-size: 1.9em;
   background: #e9e7e2;
-  /* overflow: hidden; */
 }
 #nav-spacer {
   height: 70px;

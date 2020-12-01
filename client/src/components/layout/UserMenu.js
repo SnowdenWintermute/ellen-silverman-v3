@@ -43,6 +43,7 @@ const UserMenu = ({ hideMenu }) => {
     }}>
       Logout
             </Link>}
+    {user && user.role === "admin" && <Link to="/admin/add-painting" onClick={hideMenu}>Add Painting</Link>}
   </ul>)
 
   return (
