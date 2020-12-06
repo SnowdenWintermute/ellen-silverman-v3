@@ -8,7 +8,7 @@ import { addPainting } from '../../apiCalls/paintings'
 import PaintingForm from '../forms/PaintingForm'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const AddProduct = () => {
+const AddSeries = () => {
   const [loading, setLoading] = useState(false)
   const [seriesList, setSeriesList] = useState([])
   const [formData, setFormData] = useState(null)
@@ -57,6 +57,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("oy")
     try {
       setLoading(true)
       const res = await addPainting(formData, user.token)
@@ -87,4 +88,4 @@ const AddProduct = () => {
   )
 }
 
-export default AddProduct;
+export default AddSeries;

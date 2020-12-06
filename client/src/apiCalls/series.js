@@ -9,3 +9,18 @@ export const getSeriesList = async () => {
     return err
   }
 }
+
+export const addSeries = async (series, authToken) => {
+  console.log(series)
+  try {
+    const addedSeries = await axios.post(`${process.env.REACT_APP_API}/series`, series, {
+      headers: {
+        authToken
+      }
+    })
+    return addedSeries.data
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}

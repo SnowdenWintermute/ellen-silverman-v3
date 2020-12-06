@@ -8,6 +8,7 @@ const paintingSchema = new mongoose.Schema(
       trim: true,
       required: "Painting must have a title",
       index: true,
+      unique: true
     },
     slug: {
       type: String,
@@ -51,6 +52,10 @@ const paintingSchema = new mongoose.Schema(
       type: String,
       maxlength: 2000,
     },
+    sold: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );

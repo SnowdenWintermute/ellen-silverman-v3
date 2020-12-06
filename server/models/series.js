@@ -13,6 +13,7 @@ const seriesSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       index: true,
+      required: true
     },
   },
   { timestamps: true }

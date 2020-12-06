@@ -27,6 +27,8 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 
 import UserRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
+import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
+import AddSeries from "./components/admin/AddSeries";
 
 const App = () => {
   const dispatch = useDispatch()
@@ -99,6 +101,8 @@ const App = () => {
           <Route exact path="/request-password-reset" component={ForgotPassword} />
           <UserRoute exact path="/user/history" component={UserHistory} />
           <AdminRoute exact path="/admin/add-painting" component={AddPainting} />
+          <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
+          <AdminRoute exact path="/admin/add-series" component={AddSeries} />
         </Switch>
         <Switch>
           <Route exact path="/img/:category/:painting" component={""}></Route>
