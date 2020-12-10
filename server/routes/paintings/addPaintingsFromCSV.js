@@ -1,5 +1,3 @@
-const series = require('../../models/series')
-
 parseFiles = require('../utils/parseFiles')
 convertCSVtoJSON = require('../utils/convertCSVtoJSON')
 const Painting = require('../../models/painting');
@@ -19,7 +17,12 @@ const slugify = require("slugify");
 
 exports.addPaintingsFromCSV = async (req, res) => {
   const files = await parseFiles(req)
-  const paintings = await convertCSVtoJSON(files.csv.path)
+  let paintings
+  try {
+    paintings = await convertCSVtoJSON(files.csv.path)
+  } catch (err) {
+    return res.status(400).json({ error: { message: "Please choose a .csv file to upload" } })
+  }
   const series = {}
   const paintingsUpdated = []
   const paintingsAdded = []
@@ -49,11 +52,8 @@ exports.addPaintingsFromCSV = async (req, res) => {
         paintingsAdded.push(addedPainting)
       }
     } catch (err) {
-      errors.push(err)
+      errors.push({ error: err, paintingTitle: painting.title })
     }
   }
-  console.log("updated: ", paintingsUpdated)
-  console.log("added: ", paintingsAdded)
-  console.log("errors: ", errors)
   res.json({ paintingsUpdated, paintingsAdded, errors })
 }

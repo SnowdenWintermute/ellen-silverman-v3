@@ -46,6 +46,7 @@ const UserMenu = ({ hideMenu }) => {
     {user && user.role === "admin" && <Link to="/admin/add-painting" onClick={hideMenu}>Add Painting</Link>}
     {user && user.role === "admin" && <Link to="/admin/add-paintings-from-csv" onClick={hideMenu}>Add Paintings from CSV</Link>}
     {user && user.role === "admin" && <Link to="/admin/add-series" onClick={hideMenu}>Add Series</Link>}
+    {user && user.role === "admin" && <Link to="/admin/add-multiple-painting-photos" onClick={hideMenu}>Add Painting Photos</Link>}
   </ul>)
 
   return (
