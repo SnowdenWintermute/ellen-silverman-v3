@@ -76,6 +76,7 @@ const AddPaintingsFromCSV = () => {
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
+        style={{ overflow: "scroll" }}
       >
         <div className={classes.paper}>
           <h2 id="simple-modal-title">Results</h2>

@@ -18,6 +18,7 @@ import "./css/userMenu.css";
 import "./css/auth.css";
 import "./css/forms.css";
 import "./css/buttons.css";
+import "./css/tables.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

@@ -2,21 +2,39 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { uploadMultiplePaintingImages } from '../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import { Modal, Button, LinearProgress } from '@material-ui/core'
+import AddedPaintingImagesResultsAccordion from './AddedPaintingImagesResultsAccordion';
+import { toast } from "react-toastify"
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-});
+  paper: {
+    position: 'absolute',
+    // overflow: 'scroll',
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    top: `${10}%`,
+    left: `${50}%`,
+    transform: `translate(-${50}%, -${0}%)`,
+  },
+}));
 
 const AddMultiplePaintingPhotos = () => {
   const classes = useStyles();
+  const [inputKey, setInputKey] = useState(0)
   const [photos, setPhotos] = useState([])
   const [formData, setFormData] = useState(null)
   const [photosTotalSize, setPhotosTotalSize] = useState(0)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [imagesAdded, setImagesAdded] = useState([])
+  const [imagesUpdated, setImagesUpdated] = useState([])
+  const [errors, setErrors] = useState([])
 
   const user = useSelector(state => state.user)
   useEffect(() => { setFormData(new FormData()) }, [])
@@ -43,16 +61,24 @@ const AddMultiplePaintingPhotos = () => {
     setLoading(false)
     setProgress(0)
     setPhotos([])
+    setPhotosTotalSize(0)
     setFormData(new FormData())
-    console.log(res)
+    setInputKey(inputKey + 1)
+    setOpen(true)
+    setImagesAdded(res.data.paintingImagesSaved)
+    setImagesUpdated(res.data.paintingImagesUpdated)
+    setErrors(res.data.errors)
+    console.log({ ...res })
   }
+
+  const handleClose = () => setOpen(false)
 
   return (
     <div className="page-frame">
       <form onSubmit={handleSubmit} style={{ width: "400px", margin: "0 auto" }}>
         <label className="button button-basic">
           Photos must have exact same name as painting title
-        <input type="file" multiple accept="images/*" onChange={handleChange} files={photos} />
+        <input type="file" multiple accept="images/*" onChange={handleChange} files={photos} key={inputKey} />
         </label>
         <p>
           Total combined size: {photosTotalSize / 1000000} mb
@@ -63,6 +89,19 @@ const AddMultiplePaintingPhotos = () => {
         </div>
       </form>
       {photos.map((photo, i) => <img style={{ height: "80px" }} src={URL.createObjectURL(photo)} key={i} alt={photo.name} />)}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        style={{ overflow: "scroll" }}
+      >
+        <div className={classes.paper}>
+          <h2 id="simple-modal-title">Results</h2>
+          <AddedPaintingImagesResultsAccordion paintingImagesAdded={imagesAdded} paintingImagesUpdated={imagesUpdated} errors={errors} />
+          <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
+        </div>
+      </Modal>
     </div>
   )
 }

@@ -30,6 +30,7 @@ import AdminRoute from './components/routes/AdminRoute'
 import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
 import AddSeries from "./components/admin/AddSeries";
 import AddMultiplePaintingPhotos from "./components/admin/AddMultiplePaintingPhotos";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 const App = () => {
   const dispatch = useDispatch()
@@ -105,6 +106,7 @@ const App = () => {
           <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
           <AdminRoute exact path="/admin/add-series" component={AddSeries} />
           <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
+          <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
         <Switch>
           <Route exact path="/img/:category/:painting" component={""}></Route>

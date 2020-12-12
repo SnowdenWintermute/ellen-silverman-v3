@@ -28,8 +28,9 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading,
 
   return (
     <form className="standard-form" onSubmit={handleSubmit}>
-      <h4>Post Photo</h4>
+      <h4>Add New Painting</h4>
       <label className="button button-standard-size button-basic">
+        Image:
         <input onChange={handleChange('image')} type="file" name="image" accept="image/*" />
       </label>
       <FormControl variant="filled" error={formFieldErrors.series && true}>

@@ -35,6 +35,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
   // assign slug and series id to paintings
   paintings.forEach(painting => {
     painting.slug = slugify(painting.title)
+    painting.title_lower = painting.title.toLowerCase()
     if (series[painting.series]) painting.series = series[painting.series]._id
     painting.sold.toLowerCase() === "true" ? painting.sold = true : painting.sold = false
   })

@@ -1,12 +1,22 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
+const imageValidatior = [(v) => v.byteLength < 3000000, (props) => `Image must be less than 3mb (got ${props.value.byteLength / 1000000}mb)`]
+
 const paintingSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       trim: true,
       required: "Painting must have a title",
+      index: true,
+      unique: true
+    },
+    title_lower: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
       index: true,
       unique: true
     },
@@ -37,7 +47,9 @@ const paintingSchema = new mongoose.Schema(
     year: {
       type: Number,
     },
-    image: { data: Buffer, contentType: String },
+    image: {
+      data: { type: Buffer, validate: imageValidatior }, contentType: String,
+    },
     thumbnail: { data: Buffer, contentType: String },
     price: {
       type: Number,

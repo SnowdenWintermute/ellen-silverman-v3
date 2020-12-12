@@ -17,18 +17,10 @@ exports.create = (req, res) => {
 
       let painting = new Painting(fields);
 
-      if (painting.title) painting.slug = slugify(painting.title)
-
-      if (files.image) {
-        if (files.image.size > 3000000) {
-          return res.status(400).json({
-            error: { message: 'Image should be less than 3mb in size' }
-          });
-        }
-        painting.image.data = fs.readFileSync(files.image.path);
-        painting.image.contentType = files.image.type;
+      if (painting.title) {
+        painting.slug = slugify(painting.title)
+        painting.title_lower = painting.title.toLowerCase()
       }
-
       painting.save().then((result) => {
         console.log("Painting added")
         res.json(result);

@@ -47,11 +47,11 @@ const AccordionSummary = withStyles({
 
 const AccordionDetails = withStyles((theme) => ({
   root: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
 }))(MuiAccordionDetails);
 
-export default function AddedPaintingsResultsAccordion({ paintingsAdded, paintingsUpdated, errors }) {
+export default function AddedPaintingImagesResultsAccordion({ paintingImagesAdded, paintingImagesUpdated, errors }) {
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -70,22 +70,23 @@ export default function AddedPaintingsResultsAccordion({ paintingsAdded, paintin
               {errors.map((error, i) => (
                 <TableRow key={`error-${i}`}>
                   <TableCell align="left" style={{ width: '200px' }}>{error.paintingTitle}</TableCell>
-                  <TableCell align="left">{error.error.message}</TableCell>
+                  <TableCell align="left">{error.message}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </AccordionDetails>
       </Accordion>
-      {paintingsAdded.length > 0 && <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+      {paintingImagesAdded.length > 0 && <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header" expandIcon={<ExpandMoreIcon />}>
-          <Typography>Added Paintings ({paintingsAdded.length})</Typography>
+          <Typography>Added Images ({paintingImagesAdded.length})</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Table size="small" aria-label="a dense table">
             <TableBody>
-              {paintingsAdded.map((painting, i) => (
-                <TableRow key={`error-${i}`}>
+              {paintingImagesAdded.map((painting, i) => (
+                <TableRow key={`painting-added-${i}`}>
+                  <TableCell align="left"><img className="accordion-image" src={`data:${painting.thumbnail.contentType};base64,${Buffer.from(painting.thumbnail.data).toString('base64')}`} alt={painting.title} /></TableCell>
                   <TableCell align="left">{painting.title}</TableCell>
                 </TableRow>
               ))}
@@ -93,15 +94,16 @@ export default function AddedPaintingsResultsAccordion({ paintingsAdded, paintin
           </Table>
         </AccordionDetails>
       </Accordion>}
-      {paintingsUpdated.length > 0 && <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+      {paintingImagesUpdated.length > 0 && <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" expandIcon={<ExpandMoreIcon />}>
-          <Typography>Updated Paintings ({paintingsUpdated.length})</Typography>
+          <Typography>Updated Images ({paintingImagesUpdated.length})</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Table size="small" aria-label="a dense table">
             <TableBody>
-              {paintingsUpdated.map((painting, i) => (
-                <TableRow key={`error-${i}`}>
+              {paintingImagesUpdated.map((painting, i) => (
+                <TableRow key={`painting-updated-${i}`}>
+                  <TableCell align="left"><img className="accordion-image" src={`data:${painting.thumbnail.contentType};base64,${Buffer.from(painting.thumbnail.data).toString('base64')}`} alt={painting.title} /></TableCell>
                   <TableCell align="left">{painting.title}</TableCell>
                 </TableRow>
               ))}
