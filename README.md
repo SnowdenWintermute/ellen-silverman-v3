@@ -1,2 +1,2 @@
 # ellen-silverman-v3
-Custom art website for painter Ellen Silverman 
+Custom art and ecommerce website for painter Ellen Silverman 
