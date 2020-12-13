@@ -49,7 +49,11 @@ const AddSeries = () => {
   const handleChange = name => event => {
     const value = name === 'image' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
-    setValues({ ...values, [name]: value });
+    if (name === "image") {
+      if (event.target.files[0]) setValues({ ...values, image: event.target.files[0], title: event.target.files[0].name.split('.')[0] })
+      else setValues({ ...values, image: null, title: "" })
+    }
+    else setValues({ ...values, [name]: value });
     const newFormFieldErrors = { ...formFieldErrors }
     delete newFormFieldErrors[name]
     setFormFieldErrors(newFormFieldErrors)

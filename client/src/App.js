@@ -106,7 +106,7 @@ const App = () => {
           <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
           <AdminRoute exact path="/admin/add-series" component={AddSeries} />
           <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
-          <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+          <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Switch>
           <Route exact path="/img/:category/:painting" component={""}></Route>

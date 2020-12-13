@@ -6,19 +6,28 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import PanoramaIcon from '@material-ui/icons/Panorama';
 import ListIcon from '@material-ui/icons/List';
 import DashboardCard from './DashboardCard'
+import MaterialPaperBasic from '../layout/MaterialPaperBasic';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    width: "100%"
+    width: "100%",
+    height: "100%"
   },
   header: {
+    textAlign: "center",
     color: "black"
+  },
+  gridItem: {
+    height: "100%"
+  },
+  innerGrid: {
+    margin: "0 auto"
   }
 }));
 
@@ -27,46 +36,26 @@ const AdminDashboard = () => {
 
   return (
     <div className="page-frame">
-      <div className={classes.root}>
-        <Grid container spacing={0} justify="space-between" alignItems="center">
-          <Grid item xs={0} sm={1}>
-            {/* Gutter */}
+      <MaterialPaperBasic>
+        <Grid item container spacing={3} xs={12} justify="space-around" alignItems="center" className={classes.innerGrid}>
+          <Grid item xs={12}>
+            <Typography variant="h5" className={classes.header}>Admin Dashboard</Typography>
           </Grid>
-          <Grid item container spacing={3} xs={12} sm={10} justify="space-between" alignItems="center">
-            <Paper className={classes.paper}>
-              <Grid container spacing={3} xs={12} justify="space-between" alignItems="center">
-                <Grid item xs={12}>
-                  <Typography variant="h5" className={classes.header}>Admin Dashboard</Typography>
-                </Grid>
-                <Grid item xs={6} sm={4} lg={3}>
-                  <DashboardCard title={"Add Painting"} url={"/admin/add-painting"} icon={<PanoramaIcon />} />
-                </Grid>
-                <Grid item xs={6} sm={4} lg={3}>
-                  <DashboardCard title={"Add Series"} url={"/admin/add-series"} icon={<PostAddIcon />} />
-                </Grid>
-                <Grid item xs={6} sm={4} lg={3}>
-                  <DashboardCard title={"Add Paintings from CSV"} url={"/admin/add-paintings-from-csv"} icon={<ListIcon />} />
-                </Grid>
-                <Grid item xs={6} sm={4} lg={3}>
-                  <DashboardCard title={"Add Painting Photos"} url={"/admin/add-multiple-painting-photos"} icon={<PermMediaIcon />} />
-                </Grid>
-              </Grid>
-            </Paper>
+          <Grid item xs={6} lg={3} className={classes.gridItem}>
+            <DashboardCard title={"Add Painting"} url={"/admin/add-painting"} icon={<PanoramaIcon />} />
           </Grid>
-          <Grid item xs={0} sm={1}>
-            {/* Gutter */}
+          <Grid item xs={6} lg={3} className={classes.gridItem}>
+            <DashboardCard title={"Add Series"} url={"/admin/add-series"} icon={<PostAddIcon />} />
+          </Grid>
+          <Grid item xs={6} lg={3} className={classes.gridItem}>
+            <DashboardCard title={"Add Paintings from CSV"} url={"/admin/add-paintings-from-csv"} icon={<ListIcon />} />
+          </Grid>
+          <Grid item xs={6} lg={3} className={classes.gridItem}>
+            <DashboardCard title={"Add Painting Photos"} url={"/admin/add-multiple-painting-photos"} icon={<PermMediaIcon />} />
           </Grid>
         </Grid>
-      </div>
+      </MaterialPaperBasic>
     </div >
   );
-  // return (
-  //   <div>
-  //     <Link to="/admin/add-painting">Add Painting</Link>
-  //     <Link to="/admin/add-paintings-from-csv">Add Paintings from CSV</Link>
-  //     <Link to="/admin/add-series">Add Series</Link>
-  //     <Link to="/admin/add-multiple-painting-photos">Add Painting Photos</Link>
-  //   </div>
-  // )
 }
 export default AdminDashboard

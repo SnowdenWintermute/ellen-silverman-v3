@@ -10,10 +10,16 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     '&:hover': {
       boxShadow: '1px 1px 5px blue'
-    }
+    },
+    margin: '0 auto',
+    height: "100%"
+  },
+  header: {
+    textAlign: 'center'
   },
   icon: {
     height: 140,
+    textAlign: "center",
     width: "100%",
     display: "block",
     '& svg': {
@@ -27,18 +33,18 @@ export const DashboardCard = ({ title, url, icon }) => {
   const classes = useStyles();
 
   return (
-    <Link to={url}>
-      <Card className={classes.root}>
+    <Card className={classes.root}>
+      <Link to={url}>
         <CardContent>
-          <Typography gutterBottom variant="h6" component="h6">
+          <Typography gutterBottom variant="h6" component="h6" className={classes.header}>
             {title}
           </Typography>
           <Icon className={classes.icon}>
             {icon}
           </Icon>
         </CardContent>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   )
 }
 export default DashboardCard
