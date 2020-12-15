@@ -12,6 +12,7 @@
   background-color: #e9e7e2;
   padding: 38px;
   padding-bottom: 70px;
+  margin: 0 auto;
   /* height: 100%; */
 }
 @media (max-width: 460px) {

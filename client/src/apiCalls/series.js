@@ -10,6 +10,16 @@ export const getSeriesList = async () => {
   }
 }
 
+export const fetchOneSeriesPaintingsNames = async (seriesId) => {
+  try {
+    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/list-paintings/${seriesId}`)
+    return fetchedSeries.data
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}
+
 export const addSeries = async (series, authToken) => {
   try {
     const addedSeries = await axios.post(`${process.env.REACT_APP_API}/series`, series, {
@@ -23,6 +33,7 @@ export const addSeries = async (series, authToken) => {
     return err
   }
 }
+
 export const removeSeries = async (seriesName, authToken) => {
   try {
     const deletedSeries = await axios.delete(`${process.env.REACT_APP_API}/series`, {

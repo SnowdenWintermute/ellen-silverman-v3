@@ -1,24 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Modal, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core'
 import { uploadPaintingCSVFormData } from '../../apiCalls/paintings'
 import AddedPaintingsResultsAccordion from './AddedPaintingsResultsAccordion';
+import StandardModal from '../common/modal/StandardModal'
 import { toast } from "react-toastify"
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    overflow: 'scroll',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    top: `${10}%`,
-    left: `${50}%`,
-    transform: `translate(-${50}%, -${0}%)`,
-  },
-}));
 
 const AddPaintingsFromCSV = () => {
   const [formData, setFormData] = useState(null)
@@ -28,8 +14,6 @@ const AddPaintingsFromCSV = () => {
   const [errors, setErrors] = useState([])
   const [open, setOpen] = useState(false)
   const user = useSelector(state => state.user);
-
-  const classes = useStyles();
 
   useEffect(() => {
     setFormData(new FormData())
@@ -52,7 +36,6 @@ const AddPaintingsFromCSV = () => {
       res.data.paintingsUpdated && setPaintingsUpdated(res.data.paintingsUpdated)
       res.data.errors && setErrors(res.data.errors)
       setOpen(true)
-      console.log("open: ", open)
       setLoading(false)
     }).catch(err => {
       console.log(err)
@@ -71,19 +54,11 @@ const AddPaintingsFromCSV = () => {
         </label>
         <button style={{ height: "40px", cursor: "pointer" }} disabled={loading} variant="contained" color="primary">SEND CSV</button>
       </form>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        style={{ overflow: "scroll" }}
-      >
-        <div className={classes.paper}>
-          <h2 id="simple-modal-title">Results</h2>
-          <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />
-          <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
-        </div>
-      </Modal>
+      <StandardModal open={open} handleClose={handleClose}>
+        <h2 id="simple-modal-title">Results</h2>
+        <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />
+        <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
+      </StandardModal>
     </div>
 
   )

@@ -23,7 +23,7 @@ const Login = ({ history }) => {
       history.push(intended.from);
     } else {
       if (role === "admin") {
-        history.push("/admin/dashboard");
+        history.push("/admin/");
       } else {
         history.push("/user/history");
       }
@@ -101,7 +101,7 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div className="auth-page-body">
+    <div className="page-frame">
       <div className="auth-frame">
         <h1 className="auth-brand-header">Welcome</h1>
         <h3 className="auth-header">Sign In</h3>

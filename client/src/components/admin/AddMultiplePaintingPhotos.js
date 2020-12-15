@@ -2,24 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { uploadMultiplePaintingImages } from '../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/core/styles';
-import { Modal, Button, LinearProgress } from '@material-ui/core'
+import { Button, LinearProgress } from '@material-ui/core'
 import AddedPaintingImagesResultsAccordion from './AddedPaintingImagesResultsAccordion';
 import { toast } from "react-toastify"
+import StandardModal from '../common/modal/StandardModal'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-  },
-  paper: {
-    position: 'absolute',
-    // overflow: 'scroll',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    top: `${10}%`,
-    left: `${50}%`,
-    transform: `translate(-${50}%, -${0}%)`,
   },
 }));
 
@@ -89,19 +79,11 @@ const AddMultiplePaintingPhotos = () => {
         </div>
       </form>
       {photos.map((photo, i) => <img style={{ height: "80px" }} src={URL.createObjectURL(photo)} key={i} alt={photo.name} />)}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        style={{ overflow: "scroll" }}
-      >
-        <div className={classes.paper}>
-          <h2 id="simple-modal-title">Results</h2>
-          <AddedPaintingImagesResultsAccordion paintingImagesAdded={imagesAdded} paintingImagesUpdated={imagesUpdated} errors={errors} />
-          <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
-        </div>
-      </Modal>
+      <StandardModal open={open} handleClose={handleClose}>
+        <h2 id="simple-modal-title">Results</h2>
+        <AddedPaintingImagesResultsAccordion paintingImagesAdded={imagesAdded} paintingImagesUpdated={imagesUpdated} errors={errors} />
+        <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
+      </StandardModal>
     </div>
   )
 }
