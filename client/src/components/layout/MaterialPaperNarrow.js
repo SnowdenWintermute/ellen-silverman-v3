@@ -7,7 +7,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    maxWidth: 'fit-content',
+    // maxWidth: 'fit-content',
+    width: "100%",
     margin: '0 auto'
   }
 }))

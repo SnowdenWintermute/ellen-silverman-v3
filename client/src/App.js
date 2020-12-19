@@ -28,7 +28,7 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import UserRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
 import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
-import AddSeries from "./components/admin/AddSeries";
+import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/AdminDashboard";
 
@@ -104,7 +104,7 @@ const App = () => {
           <UserRoute exact path="/user/history" component={UserHistory} />
           <AdminRoute exact path="/admin/add-painting" component={AddPainting} />
           <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
-          <AdminRoute exact path="/admin/add-series" component={AddSeries} />
+          <AdminRoute exact path="/admin/manage-series" component={ManageSeries} />
           <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
           <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>

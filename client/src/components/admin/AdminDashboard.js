@@ -45,7 +45,7 @@ const AdminDashboard = () => {
             <DashboardCard title={"Add Painting"} url={"/admin/add-painting"} icon={<PanoramaIcon />} />
           </Grid>
           <Grid item xs={6} lg={3} className={classes.gridItem}>
-            <DashboardCard title={"Add Series"} url={"/admin/add-series"} icon={<PostAddIcon />} />
+            <DashboardCard title={"Manage Series' and Paintings"} url={"/admin/manage-series"} icon={<PostAddIcon />} />
           </Grid>
           <Grid item xs={6} lg={3} className={classes.gridItem}>
             <DashboardCard title={"Add Paintings from CSV"} url={"/admin/add-paintings-from-csv"} icon={<ListIcon />} />

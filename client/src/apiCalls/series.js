@@ -34,6 +34,20 @@ export const addSeries = async (series, authToken) => {
   }
 }
 
+export const editSeries = async (seriesId, newSeriesName, authToken) => {
+  try {
+    const editedSeries = await axios.put(`${process.env.REACT_APP_API}/series`, { seriesId, newSeriesName }, {
+      headers: {
+        authToken
+      }
+    })
+    return editedSeries
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
 export const removeSeries = async (seriesName, authToken) => {
   try {
     const deletedSeries = await axios.delete(`${process.env.REACT_APP_API}/series`, {
