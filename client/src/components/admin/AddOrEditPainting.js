@@ -56,21 +56,25 @@ const AddOrEditPainting = (props) => {
         const newValues = { ...initialValues }
         Object.keys(newValues).forEach(valueKey => {
           newValues[valueKey] = paintingToEdit.data[valueKey] || ""
+          if (formData) formData.set(valueKey, paintingToEdit.data[valueKey]);
         })
         setValues({ ...newValues })
       }
     }
     getPaintingAndSetInitialValues()
-  }, [])
+  }, [formData])
 
   const handleChange = name => event => {
     const value = name === 'image' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     if (name === "image") {
       if (event.target.files[0]) {
-        const titleFromImageName = event.target.files[0].name.split('.')[0]
-        setValues({ ...values, image: event.target.files[0], title: titleFromImageName })
-        formData.set("title", titleFromImageName)
+        setValues({ ...values, image: event.target.files[0] })
+        if (!editMode) {
+          const titleFromImageName = event.target.files[0].name.split('.')[0]
+          setValues({ ...values, title: titleFromImageName })
+          formData.set("title", titleFromImageName)
+        }
       }
       else setValues({ ...values, image: null, title: "" })
     }
@@ -87,6 +91,7 @@ const AddOrEditPainting = (props) => {
       let res
       if (editMode) res = await editPainting(formData, user.token)
       else res = await addPainting(formData, user.token)
+      console.log({ ...res })
       if (res.response) {
         if (res.response.data.error) {
           if (res.response.data.error.errors && Object.keys(res.response.data.error.errors).length) {
