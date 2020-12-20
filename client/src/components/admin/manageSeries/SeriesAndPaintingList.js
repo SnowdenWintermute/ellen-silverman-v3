@@ -4,11 +4,23 @@ import Accordion from '../../common/accordion/Accordion'
 import AccordionSummary from '../../common/accordion/AccordionSummary'
 import AccordionDetails from '../../common/accordion/AccordionDetails'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import EditIcon from '@material-ui/icons/Edit';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Icon, Button, Typography, Table, TableRow, TableCell, TableBody, IconButton } from '@material-ui/core'
+import { Link } from 'react-router-dom';
 
 
-const SeriesAndPaintingList = ({ seriesListLoading, seriesList, expanded, handlePanelChange, paintingLists, classes, openSeriesEditModal, confirmSeriesDelete }) => {
+const SeriesAndPaintingList = ({
+  seriesListLoading,
+  seriesList,
+  expanded,
+  handlePanelChange,
+  paintingLists,
+  classes,
+  openSeriesEditModal,
+  confirmSeriesDelete,
+  openDeletePaintingModal
+}) => {
   return (
     <>
       {seriesListLoading ?
@@ -49,9 +61,16 @@ const SeriesAndPaintingList = ({ seriesListLoading, seriesList, expanded, handle
                     <TableRow key={`error-${i}`}>
                       <TableCell align="left" style={{ width: '200px' }}>{painting.title}</TableCell>
                       <TableCell align="right">
+                        <Link to={`/admin/edit-painting/${painting.slug}`}>
+                          <IconButton>
+                            <Icon>
+                              <EditIcon />
+                            </Icon>
+                          </IconButton>
+                        </Link>
                         <IconButton>
                           <Icon>
-                            <DeleteForeverIcon />
+                            <DeleteForeverIcon onClick={() => openDeletePaintingModal(painting)} />
                           </Icon>
                         </IconButton>
                       </TableCell>

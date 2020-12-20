@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 // api
 import { addSeries, getSeriesList, removeSeries, editSeries, fetchOneSeriesPaintingsNames } from '../../../apiCalls/series'
+import { removePainting } from '../../../apiCalls/paintings'
 // components
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import AddSeriesInput from './AddSeriesInput'
 import SeriesAndPaintingList from './SeriesAndPaintingList'
 import DeleteSeriesModal from './DeleteSeriesModal'
 import EditSeriesModal from './EditSeriesModal'
+import DeletePaintingModal from './DeletePaintingModal'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   input: {
     width: "100%",
     marginBottom: "10px"
+  },
+  fullWidth: {
+    width: "100%"
   },
   addButton: {
     marginBottom: "10px"
@@ -44,9 +49,11 @@ const ManageSeries = () => {
   const [seriesName, setSeriesName] = useState("")
   const [expanded, setExpanded] = useState('')
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false)
-  const [seriesToBeDeleted, setSeriesToBeDeleted] = useState(null)
   const [editSeriesModalOpen, setEditSeriesModalOpen] = useState(false)
+  const [confirmDeletePaintingModalOpen, setConfirmDeletePaintingModalOpen] = useState(false)
+  const [seriesToBeDeleted, setSeriesToBeDeleted] = useState(null)
   const [seriesToBeEdited, setSeriesToBeEdited] = useState(null)
+  const [paintingToBeDeleted, setPaintingToBeDeleted] = useState(null)
 
   const user = useSelector(state => state.user);
 
@@ -73,7 +80,7 @@ const ManageSeries = () => {
     setSeriesToBeEdited({ ...seriesToBeEdited, newName: e.target.value })
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitNewSeries = async (e) => {
     e.preventDefault();
     try {
       setLoading(true)
@@ -115,7 +122,11 @@ const ManageSeries = () => {
       if (res.response && res.response.data && res.response.data.err) toast.error(res.response.data.err)
       else {
         toast.success(res.data)
-        loadSeries()
+        const newSeriesList = [...seriesList]
+        let indexToRemove
+        newSeriesList.forEach((series, i) => { if (series.name === seriesName) indexToRemove = i })
+        newSeriesList.splice(indexToRemove, 1)
+        setSeriesList(newSeriesList)
       }
     } catch (error) {
       toast.error(error)
@@ -149,20 +160,48 @@ const ManageSeries = () => {
     setEditSeriesModalOpen(true)
   }
 
+  const openDeletePaintingModal = (painting) => {
+    setPaintingToBeDeleted(painting)
+    setConfirmDeletePaintingModalOpen(true)
+  }
+
+  const deletePainting = async (painting) => {
+    console.log("delete painting: ", painting)
+    try {
+      const deletedPainting = await removePainting(painting._id, user.token)
+      toast.success(deletedPainting.data.title + " removed from database")
+      loadOneSeriesPaintings(deletedPainting.data.series)
+    } catch (error) {
+      console.log(error)
+      toast.error(error)
+    }
+    setConfirmDeletePaintingModalOpen(false)
+  }
+
   return (
     <div className="page-frame">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitNewSeries}>
         <MaterialPaperNarrow>
           <Grid container item xs={12}>
             <AddSeriesInput handleNewSeriesInputChange={handleNewSeriesInputChange} seriesName={seriesName} loading={loading} classes={classes} />
             <Grid item xs={12}>
-              <SeriesAndPaintingList seriesListLoading={seriesListLoading} seriesList={seriesList} expanded={expanded} handlePanelChange={handlePanelChange} paintingLists={paintingLists} classes={classes} openSeriesEditModal={openSeriesEditModal} confirmSeriesDelete={confirmSeriesDelete} />
+              <SeriesAndPaintingList
+                seriesListLoading={seriesListLoading}
+                seriesList={seriesList}
+                expanded={expanded}
+                handlePanelChange={handlePanelChange}
+                paintingLists={paintingLists}
+                classes={classes}
+                openSeriesEditModal={openSeriesEditModal}
+                confirmSeriesDelete={confirmSeriesDelete}
+                openDeletePaintingModal={openDeletePaintingModal} />
             </Grid>
           </Grid>
         </MaterialPaperNarrow>
       </form>
       <DeleteSeriesModal confirmDeleteModalOpen={confirmDeleteModalOpen} setConfirmDeleteModalOpen={setConfirmDeleteModalOpen} seriesToBeDeleted={seriesToBeDeleted} classes={classes} deleteSeries={deleteSeries} />
       <EditSeriesModal editSeriesModalOpen={editSeriesModalOpen} setEditSeriesModalOpen={setEditSeriesModalOpen} confirmEditSeries={confirmEditSeries} seriesToBeEdited={seriesToBeEdited} classes={classes} handleEditSeriesInputChange={handleEditSeriesInputChange} />
+      <DeletePaintingModal confirmDeletePaintingModalOpen={confirmDeletePaintingModalOpen} setConfirmDeletePaintingModalOpen={setConfirmDeletePaintingModalOpen} paintingToBeDeleted={paintingToBeDeleted} classes={classes} deletePainting={deletePainting} />
     </div>
   )
 }

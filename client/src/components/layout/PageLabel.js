@@ -46,7 +46,7 @@ const PageLabel = (props) => {
   }
   return (
     <div className="pageLabel" id="pageLabel" ref={pageLabelEl}>
-      <p>
+      <p style={{ display: 'flex', alignItems: 'center' }}>
         <Link to={`/`}>Lucretia E. McGuff-Silverman</Link>
         {currentPage ? " - " : ""}
         <Link to={`/${currentPage}`}>{capitalizedCurrentPage}</Link>

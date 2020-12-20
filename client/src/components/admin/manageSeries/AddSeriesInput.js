@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextField, Button, Grid, Typography } from '@material-ui/core'
+import classnames from 'classnames'
 
 const AddSeriesInput = ({ handleNewSeriesInputChange, seriesName, loading, classes }) => {
   return (
@@ -11,7 +12,7 @@ const AddSeriesInput = ({ handleNewSeriesInputChange, seriesName, loading, class
         <TextField autoFocus className={classes.input} label="Title" variant="filled" width="75px" onChange={handleNewSeriesInputChange} value={seriesName} />
       </Grid>
       <Grid item xs={12}>
-        <Button type="submit" className={classes.addButton} disabled={loading} variant="contained" color="primary">ADD SERIES</Button>
+        <Button type="submit" className={classnames(classes.addButton, classes.fullWidth)} disabled={loading} variant="contained" color="primary">ADD SERIES</Button>
       </Grid>
     </>
   )

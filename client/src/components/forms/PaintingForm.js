@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading, formFieldErrors }) => {
+const PaintingForm = ({ editMode, handleSubmit, handleChange, values, seriesList, loading, formFieldErrors }) => {
   const classes = useStyles()
   const {
     title,
@@ -45,24 +45,24 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading,
       <MaterialPaperNarrow>
         <Grid container item xs={12}>
           <Grid item xs={12}>
-            <Typography variant="h5" className={classes.header}>Add New Painting</Typography>
+            <Typography variant="h5" className={classes.header}>{editMode ? "Edit" : "Add New"} Painting</Typography>
           </Grid>
           <Grid item xs={12}>
             <FormControl variant="filled" className={classes.input}>
-              <ImageInput handleChange={handleChange} selectedImage={image} />
+              <ImageInput handleChange={handleChange} selectedImage={image ? image : (thumbnail && thumbnail.contentType !== undefined) ? thumbnail : ""} />
             </FormControl>
           </Grid>
           <Grid item xs={12}>
             <FormControl className={classes.input} variant="filled" error={formFieldErrors.series && true}>
               <InputLabel id="select-series">Series</InputLabel>
-              <Select className={classes.select} labelId="select-series" onChange={handleChange('series')} value={series}>
+              {Object.keys(seriesList).length > 0 && <Select className={classes.select} labelId="select-series" onChange={handleChange('series')} value={series}>
                 {seriesList.length &&
                   seriesList.map((ser, i) => (
                     <MenuItem key={i} value={ser._id}>
                       {ser.name}
                     </MenuItem>
                   ))}
-              </Select>
+              </Select>}
               {formFieldErrors.series && <FormHelperText>{formFieldErrors.series.message}</FormHelperText>}
             </FormControl>
           </Grid>
@@ -112,7 +112,7 @@ const PaintingForm = ({ handleSubmit, handleChange, values, seriesList, loading,
           </Grid>
           <Grid item xs={12}>
             {/* <button disabled={loading} className="button button-standard-size button-basic">ADD PAINTING</button> */}
-            <Button disabled={loading} variant="contained" color="primary" type="submit">ADD PAINTING</Button>
+            <Button disabled={loading} variant="contained" color="primary" type="submit">{editMode ? "EDIT" : "ADD"} PAINTING</Button>
           </Grid>
         </Grid>
       </MaterialPaperNarrow>

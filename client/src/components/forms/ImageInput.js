@@ -74,7 +74,7 @@ const ImageInput = ({ handleChange, selectedImage }) => {
       </Grid>
       <Grid item xs={12} sm={6} className={classes.imageGridContainer} >
         <Paper className={classes.paper}>
-          {selectedImage ? <img style={{ height: "100%" }} src={URL.createObjectURL(selectedImage)} key={selectedImage.name} alt={selectedImage.name} /> : <Icon className={classes.icon}>
+          {selectedImage ? <img style={{ height: "100%" }} src={selectedImage ? selectedImage.contentType ? `data:${selectedImage.contentType};base64,${Buffer.from(selectedImage.data).toString('base64')}` : URL.createObjectURL(selectedImage) : ""} key={selectedImage.name} alt={selectedImage.name} /> : <Icon className={classes.icon}>
             <InsertPhotoIcon />
           </Icon>}
         </Paper>

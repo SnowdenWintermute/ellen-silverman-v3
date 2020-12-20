@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 // api
 import { getSeriesList } from '../../apiCalls/series'
-import { addPainting } from '../../apiCalls/paintings'
+import { addPainting, editPainting, getPainting } from '../../apiCalls/paintings'
 // components
 import PaintingForm from '../forms/PaintingForm'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const AddSeries = () => {
+const AddOrEditPainting = (props) => {
+  const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
   const [seriesList, setSeriesList] = useState([])
   const [formData, setFormData] = useState(null)
@@ -46,11 +47,31 @@ const AddSeries = () => {
     initFormDataAndLoadSeriesList();
   }, [initFormDataAndLoadSeriesList]);
 
+  useEffect(() => {
+    const { paintingSlug } = props.match.params
+    const getPaintingAndSetInitialValues = async () => {
+      if (paintingSlug) {
+        const paintingToEdit = await getPainting(paintingSlug)
+        setEditMode(true)
+        const newValues = { ...initialValues }
+        Object.keys(newValues).forEach(valueKey => {
+          newValues[valueKey] = paintingToEdit.data[valueKey] || ""
+        })
+        setValues({ ...newValues })
+      }
+    }
+    getPaintingAndSetInitialValues()
+  }, [])
+
   const handleChange = name => event => {
     const value = name === 'image' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     if (name === "image") {
-      if (event.target.files[0]) setValues({ ...values, image: event.target.files[0], title: event.target.files[0].name.split('.')[0] })
+      if (event.target.files[0]) {
+        const titleFromImageName = event.target.files[0].name.split('.')[0]
+        setValues({ ...values, image: event.target.files[0], title: titleFromImageName })
+        formData.set("title", titleFromImageName)
+      }
       else setValues({ ...values, image: null, title: "" })
     }
     else setValues({ ...values, [name]: value });
@@ -61,10 +82,11 @@ const AddSeries = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("oy")
     try {
       setLoading(true)
-      const res = await addPainting(formData, user.token)
+      let res
+      if (editMode) res = await editPainting(formData, user.token)
+      else res = await addPainting(formData, user.token)
       if (res.response) {
         if (res.response.data.error) {
           if (res.response.data.error.errors && Object.keys(res.response.data.error.errors).length) {
@@ -72,8 +94,13 @@ const AddSeries = () => {
           } else toast.error(res.response.data.error.message)
         }
       } else if (res.data) {
-        toast.success(`Added ${res.data.title}.`)
-        setValues({ ...initialValues })
+        if (editMode) {
+          toast.success(`Edited ${res.data.title}.`)
+        }
+        else {
+          toast.success(`Added ${res.data.title}.`)
+          setValues({ ...initialValues })
+        }
       }
       setLoading(false)
     } catch (err) {
@@ -86,10 +113,10 @@ const AddSeries = () => {
   return (
     <div className="page-frame">
       {loading ? <CircularProgress /> :
-        <PaintingForm handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} formFieldErrors={formFieldErrors} />
+        <PaintingForm editMode={editMode} handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} formFieldErrors={formFieldErrors} />
       }
     </div>
   )
 }
 
-export default AddSeries;
+export default AddOrEditPainting;

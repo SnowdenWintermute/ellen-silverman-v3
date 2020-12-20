@@ -10,7 +10,7 @@ const EditSeriesModal = ({ editSeriesModalOpen, setEditSeriesModalOpen, confirmE
           Edit Series: {seriesToBeEdited && seriesToBeEdited.currentName}
         </Typography>
         <TextField autoFocus className={classes.input} label="Title" variant="filled" width="75px" onChange={handleEditSeriesInputChange} value={seriesToBeEdited && seriesToBeEdited.newName} />
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="primary" type="submit" className={classes.fullWidth}>
           CONFIRM EDIT
     </Button>
       </form>

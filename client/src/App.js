@@ -15,7 +15,7 @@ import Cv from "./components/cv/Cv";
 import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";
 import BunStory from "./components/bunStory/BunStory";
-import AddPainting from './components/admin/AddPainting'
+import AddOrEditPainting from './components/admin/AddOrEditPainting'
 
 import Register from './components/auth/Register'
 import RegisterComplete from './components/auth/RegisterComplete'
@@ -102,7 +102,8 @@ const App = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/request-password-reset" component={ForgotPassword} />
           <UserRoute exact path="/user/history" component={UserHistory} />
-          <AdminRoute exact path="/admin/add-painting" component={AddPainting} />
+          <AdminRoute exact path="/admin/add-painting" component={AddOrEditPainting} />
+          <AdminRoute exact path="/admin/edit-painting/:paintingSlug" component={AddOrEditPainting} />
           <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
           <AdminRoute exact path="/admin/manage-series" component={ManageSeries} />
           <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
