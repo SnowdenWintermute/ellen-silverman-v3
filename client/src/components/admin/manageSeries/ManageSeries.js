@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { addSeries, getSeriesList, removeSeries, editSeries, fetchOneSeriesPaintingsNames } from '../../../apiCalls/series'
 import { removePainting } from '../../../apiCalls/paintings'
 // components
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialPaperNarrow from '../../layout/MaterialPaperNarrow'
 import AddSeriesInput from './AddSeriesInput'
@@ -13,6 +13,7 @@ import SeriesAndPaintingList from './SeriesAndPaintingList'
 import DeleteSeriesModal from './DeleteSeriesModal'
 import EditSeriesModal from './EditSeriesModal'
 import DeletePaintingModal from './DeletePaintingModal'
+import AdminFeatureHeader from '../subComponents/AdminFeatureHeader';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -183,8 +184,10 @@ const ManageSeries = () => {
       <form onSubmit={handleSubmitNewSeries}>
         <MaterialPaperNarrow>
           <Grid container item xs={12}>
+            <AdminFeatureHeader headerText="Add New Series" />
             <AddSeriesInput handleNewSeriesInputChange={handleNewSeriesInputChange} seriesName={seriesName} loading={loading} classes={classes} />
             <Grid item xs={12}>
+              <Typography variant="h5" className={classes.header}>Edit Series and Paintings</Typography>
               <SeriesAndPaintingList
                 seriesListLoading={seriesListLoading}
                 seriesList={seriesList}

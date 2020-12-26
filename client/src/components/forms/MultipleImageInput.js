@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { Button, Paper, Grid, Icon } from '@material-ui/core';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import { makeStyles } from '@material-ui/core/styles'
+import classnames from 'classnames'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,35 +52,36 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const ImageInput = ({ handleChange, selectedImage }) => {
+const MultipleImageInput = ({ handleChange, selectedImages, imagesTotalSize, className }) => {
   const classes = useStyles()
   const hiddenFileInput = useRef(null)
 
   const handleClick = event => {
+    console.log("ey")
     hiddenFileInput.current.click();
   };
 
   return (
-    <Grid container justify="space-between" alignItems="center" onClick={handleClick} className={classes.root}>
+    <Grid container justify="space-between" alignItems="center" onClick={handleClick} className={classnames(classes.root, className)}>
       <Grid container item xs={12} sm={6} >
         <Grid item xs={12} >
           <Button variant="contained" className={classes.button}>
-            Select Image
+            Select Images
         </Button>
         </Grid>
         <Grid item xs={12}>
-          {selectedImage ? "Selected image: " + selectedImage.name : "Please choose an image to upload"}
+          {selectedImages.length < 1 && "Please choose an image to upload"}
         </Grid>
       </Grid>
       <Grid item xs={12} sm={6} className={classes.imageGridContainer} >
         <Paper className={classes.paper}>
-          {selectedImage ? <img style={{ height: "100%" }} src={selectedImage ? selectedImage.contentType ? `data:${selectedImage.contentType};base64,${Buffer.from(selectedImage.data).toString('base64')}` : URL.createObjectURL(selectedImage) : ""} key={selectedImage.name} alt={selectedImage.name} /> : <Icon className={classes.icon}>
+          {selectedImages.length > 0 ? `Total combined size: ${imagesTotalSize / 1000000} mb` : <Icon className={classes.icon}>
             <InsertPhotoIcon />
           </Icon>}
         </Paper>
       </Grid>
-      <input ref={hiddenFileInput} onChange={handleChange('image')} type="file" name="image" accept="image/*" style={{ display: 'none' }} />
+      <input ref={hiddenFileInput} onChange={handleChange} type="file" multiple name="images" accept="image/*" style={{ display: 'none' }} />
     </Grid>
   )
 }
-export default ImageInput
+export default MultipleImageInput

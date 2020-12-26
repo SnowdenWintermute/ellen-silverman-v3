@@ -1,13 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import { uploadPaintingCSVFormData } from '../../apiCalls/paintings'
 import AddedPaintingsResultsAccordion from './AddedPaintingsResultsAccordion';
 import StandardModal from '../common/modal/StandardModal'
+import FileInput from '../forms/FileInput'
 import { toast } from "react-toastify"
+import { makeStyles } from '@material-ui/core/styles'
+import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
+import AdminFeatureHeader from './subComponents/AdminFeatureHeader'
+
+const useStyles = makeStyles((theme) => ({
+  showResultsButton: {
+    marginTop: "10px",
+    width: "100%"
+  }
+}));
 
 const AddPaintingsFromCSV = () => {
   const [formData, setFormData] = useState(null)
+  const [selectedFile, setSelectedFile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [paintingsAdded, setPaintingsAdded] = useState([])
   const [paintingsUpdated, setPaintingsUpdated] = useState([])
@@ -15,12 +27,15 @@ const AddPaintingsFromCSV = () => {
   const [open, setOpen] = useState(false)
   const user = useSelector(state => state.user);
 
+  const classes = useStyles()
+
   useEffect(() => {
     setFormData(new FormData())
   }, []);
 
   const handleChange = e => {
-    formData.set("csv", e.target.files[0])
+    if (formData) formData.set("csv", e.target.files[0])
+    setSelectedFile(e.target.files[0])
   };
 
   const handleSubmit = (e) => {
@@ -47,13 +62,18 @@ const AddPaintingsFromCSV = () => {
 
   return (
     <div className="page-frame">
-      <form className="standard-form" onSubmit={handleSubmit}>
-        <h4>Add and Update Paintings from CSV</h4>
-        <label className="button button-standard-size button-basic">
-          <input onChange={handleChange} type="file" accept=".csv" />
-        </label>
-        <button style={{ height: "40px", cursor: "pointer" }} disabled={loading} variant="contained" color="primary">SEND CSV</button>
-      </form>
+      <MaterialPaperNarrow className={classes.paper}>
+        <Grid container item xs={12}>
+          <AdminFeatureHeader headerText={"Add and Update Paintings from CSV"} subHeaderText={"Any paintings in the selected .csv file will overwrite paintings on the database"} />
+          <Grid item xs={12}>
+            <form onSubmit={handleSubmit}>
+              <FileInput handleChange={handleChange} selectedFile={selectedFile} />
+              <Button style={{ height: "40px", cursor: "pointer", marginTop: "10px", width: "100%" }} disabled={loading || !selectedFile} variant="contained" color="primary" type="submit">SEND CSV</Button>
+            </form>
+            {(paintingsAdded.length > 0 || paintingsUpdated.length > 0 || errors.length > 0) && <Button className={classes.showResultsButton} variant="outlined" color="primary" onClick={() => setOpen(true)}>Show most recent edit results</Button>}
+          </Grid>
+        </Grid>
+      </MaterialPaperNarrow>
       <StandardModal open={open} handleClose={handleClose}>
         <h2 id="simple-modal-title">Results</h2>
         <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />

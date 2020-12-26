@@ -6,7 +6,6 @@ import { getSeriesList } from '../../apiCalls/series'
 import { addPainting, editPainting, getPainting } from '../../apiCalls/paintings'
 // components
 import PaintingForm from '../forms/PaintingForm'
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AddOrEditPainting = (props) => {
   const [editMode, setEditMode] = useState(false)
@@ -65,16 +64,16 @@ const AddOrEditPainting = (props) => {
   }, [formData])
 
   const handleChange = name => event => {
+    console.log(event.target.files[0])
     const value = name === 'image' ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     if (name === "image") {
       if (event.target.files[0]) {
-        setValues({ ...values, image: event.target.files[0] })
         if (!editMode) {
           const titleFromImageName = event.target.files[0].name.split('.')[0]
-          setValues({ ...values, title: titleFromImageName })
+          setValues({ ...values, image: event.target.files[0], title: titleFromImageName })
           formData.set("title", titleFromImageName)
-        }
+        } else setValues({ ...values, image: event.target.files[0] })
       }
       else setValues({ ...values, image: null, title: "" })
     }
@@ -117,9 +116,7 @@ const AddOrEditPainting = (props) => {
 
   return (
     <div className="page-frame">
-      {loading ? <CircularProgress /> :
-        <PaintingForm editMode={editMode} handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} formFieldErrors={formFieldErrors} />
-      }
+      <PaintingForm editMode={editMode} handleSubmit={handleSubmit} handleChange={handleChange} values={values} seriesList={seriesList} loading={loading} formFieldErrors={formFieldErrors} />
     </div>
   )
 }

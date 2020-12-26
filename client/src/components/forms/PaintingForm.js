@@ -1,17 +1,13 @@
 import React from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel';
-import { FormHelperText, TextField, Select, MenuItem, Button, Paper, Grid, Typography } from '@material-ui/core';
+import { FormHelperText, TextField, Select, MenuItem, Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
-// import { sizing } from '@material-ui/system';
 import ImageInput from './ImageInput'
 import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
+import AdminFeatureHeader from '../admin/subComponents/AdminFeatureHeader';
 
 const useStyles = makeStyles((theme) => ({
-  header: {
-    color: "black",
-    marginBottom: "10px"
-  },
   input: {
     width: "100%",
     marginBottom: "10px"
@@ -21,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PaintingForm = ({ editMode, handleSubmit, handleChange, values, seriesList, loading, formFieldErrors }) => {
+const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, seriesList, formFieldErrors }) => {
   const classes = useStyles()
   const {
     title,
@@ -40,13 +36,13 @@ const PaintingForm = ({ editMode, handleSubmit, handleChange, values, seriesList
   const drawingMaterialOptions = ['oil', 'pastel', 'watercolor', 'acrylic', 'graphite', 'charcoal', 'ink', 'crayon']
   const supportOptions = ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal']
 
+  console.log(image)
+
   return (
     <form onSubmit={handleSubmit}>
       <MaterialPaperNarrow>
         <Grid container item xs={12}>
-          <Grid item xs={12}>
-            <Typography variant="h5" className={classes.header}>{editMode ? "Edit" : "Add New"} Painting</Typography>
-          </Grid>
+          <AdminFeatureHeader headerText={`${editMode ? "Edit" : "Add New"} Painting`} />
           <Grid item xs={12}>
             <FormControl variant="filled" className={classes.input}>
               <ImageInput handleChange={handleChange} selectedImage={image ? image : (thumbnail && thumbnail.contentType !== undefined) ? thumbnail : ""} />
@@ -111,7 +107,6 @@ const PaintingForm = ({ editMode, handleSubmit, handleChange, values, seriesList
             <TextField className={classes.input} label="Description" variant="filled" multiline onChange={handleChange('description')} value={description} error={formFieldErrors.description && true} helperText={formFieldErrors.description ? formFieldErrors.description.message : ""} />
           </Grid>
           <Grid item xs={12}>
-            {/* <button disabled={loading} className="button button-standard-size button-basic">ADD PAINTING</button> */}
             <Button disabled={loading} variant="contained" color="primary" type="submit">{editMode ? "EDIT" : "ADD"} PAINTING</Button>
           </Grid>
         </Grid>

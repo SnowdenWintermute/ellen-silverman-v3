@@ -2,15 +2,36 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { uploadMultiplePaintingImages } from '../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, LinearProgress } from '@material-ui/core'
+import { Button, LinearProgress, Grid, Card, CardMedia } from '@material-ui/core'
+import AdminFeatureHeader from './subComponents/AdminFeatureHeader'
 import AddedPaintingImagesResultsAccordion from './AddedPaintingImagesResultsAccordion';
-import { toast } from "react-toastify"
 import StandardModal from '../common/modal/StandardModal'
+import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
+import MultipleImageInput from '../forms/MultipleImageInput'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
+  imageInput: {
+    marginBottom: "10px"
+  },
+  submitButton: {
+    width: "100%",
+    marginBottom: "10px"
+  },
+  showResultsButton: {
+    marginTop: "10px",
+    width: "100%"
+  },
+  imageCard: {
+    height: "80px",
+    width: "80px"
+  },
+  media: {
+    height: "80px",
+    maxWidth: "100%"
+  }
 }));
 
 const AddMultiplePaintingPhotos = () => {
@@ -18,7 +39,7 @@ const AddMultiplePaintingPhotos = () => {
   const [inputKey, setInputKey] = useState(0)
   const [photos, setPhotos] = useState([])
   const [formData, setFormData] = useState(null)
-  const [photosTotalSize, setPhotosTotalSize] = useState(0)
+  const [imagesTotalSize, setImagesTotalSize] = useState(0)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
@@ -30,14 +51,13 @@ const AddMultiplePaintingPhotos = () => {
   useEffect(() => { setFormData(new FormData()) }, [])
 
   const handleChange = (e) => {
-    console.log("form edited")
     setPhotos([...e.target.files])
     let totalSize = 0
     for (const file of e.target.files) {
       totalSize += file.size
       formData.set(file.name, file)
     }
-    setPhotosTotalSize(totalSize)
+    setImagesTotalSize(totalSize)
   }
 
   const handleProgressEvent = progressEvent => {
@@ -51,7 +71,7 @@ const AddMultiplePaintingPhotos = () => {
     setLoading(false)
     setProgress(0)
     setPhotos([])
-    setPhotosTotalSize(0)
+    setImagesTotalSize(0)
     setFormData(new FormData())
     setInputKey(inputKey + 1)
     setOpen(true)
@@ -65,20 +85,33 @@ const AddMultiplePaintingPhotos = () => {
 
   return (
     <div className="page-frame">
-      <form onSubmit={handleSubmit} style={{ width: "400px", margin: "0 auto" }}>
-        <label className="button button-basic">
-          Photos must have exact same name as painting title
-        <input type="file" multiple accept="images/*" onChange={handleChange} files={photos} key={inputKey} />
-        </label>
-        <p>
-          Total combined size: {photosTotalSize / 1000000} mb
-        </p>
-        <button className="button button-basic button-standard-size" disabled={loading || !photos.length}>UPLOAD PHOTOS</button>
-        <div className={classes.root}>
-          {loading && <LinearProgress variant="determinate" value={progress} />}
-        </div>
-      </form>
-      {photos.map((photo, i) => <img style={{ height: "80px" }} src={URL.createObjectURL(photo)} key={i} alt={photo.name} />)}
+      <MaterialPaperNarrow>
+        <Grid container item xs={12}>
+          <AdminFeatureHeader headerText={"Add Multiple Painting Images"} subHeaderText={"Image names must match painting names exactly"} />
+          <Grid xs={12}>
+            {loading && <LinearProgress variant="determinate" value={progress} />}
+          </Grid>
+          <Grid item xs={12}>
+            <form onSubmit={handleSubmit}>
+              <MultipleImageInput selectedImages={photos} handleChange={handleChange} imagesTotalSize={imagesTotalSize} className={classes.imageInput} />
+              <Button variant="contained" color="primary" className={classes.submitButton} disabled={loading || !photos.length} type="submit">UPLOAD PHOTOS</Button>
+            </form>
+          </Grid>
+          <Grid item container spacing={1} xs={12}>
+
+            {
+              photos.map((photo, i) => (
+                <Grid item xs={2}>
+                  <Card key={i}>
+                    <CardMedia className={classes.media} image={URL.createObjectURL(photo)} title={photo.name} />
+                  </Card>
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Grid>
+        {(imagesAdded.length > 0 || imagesUpdated.length > 0 || errors.length > 0) && <Button className={classes.showResultsButton} variant="outlined" color="primary" onClick={() => setOpen(true)}>Show most recent upload results</Button>}
+      </MaterialPaperNarrow>
       <StandardModal open={open} handleClose={handleClose}>
         <h2 id="simple-modal-title">Results</h2>
         <AddedPaintingImagesResultsAccordion paintingImagesAdded={imagesAdded} paintingImagesUpdated={imagesUpdated} errors={errors} />
