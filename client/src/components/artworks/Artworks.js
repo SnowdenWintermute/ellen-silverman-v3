@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Categories from "./Categories";
-import ArtworksCategory from "./ArtworksCategory";
+import SeriesList from "./SeriesList";
+import SeriesPage from "./SeriesPage";
 import PaintingDetailedPage from "./PaintingDetailedPage";
 
 export default class Artworks extends Component {
@@ -19,10 +19,10 @@ export default class Artworks extends Component {
 
     switch (pageState) {
       case "":
-        page = <Categories></Categories>;
+        page = <SeriesList></SeriesList>;
         break;
       case "categoryPage":
-        page = <ArtworksCategory category={params.category}></ArtworksCategory>;
+        page = <SeriesPage props={params} category={params.category}></SeriesPage>;
         break;
       case "detailPage":
         page = (

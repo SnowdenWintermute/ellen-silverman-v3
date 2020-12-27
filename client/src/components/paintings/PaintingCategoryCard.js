@@ -1,20 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function PaintingCategoryCard(props) {
+export default function PaintingCategoryCard({ linkTo, series, img }) {
   return (
     <div className="painting-card-body">
       <Link
         className="painting-card-img-link"
-        to={
-          props.linkTo
-            ? props.linkTo
-            : `/artworks/${props.category}/${props.picTitle}/`
-        }
+        to={linkTo}
       >
-        <img src={props.imgSrc.uri} alt={props.picTitle} />
+        <img src={img} alt={series} />
         <div className="painting-card-info-text">
-          <div className="galleryPicTitle">{props.picTitle}</div>
+          <div className="galleryPicTitle">{series}</div>
         </div>
       </Link>
     </div>

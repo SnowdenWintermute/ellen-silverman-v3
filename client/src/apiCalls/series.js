@@ -10,6 +10,26 @@ export const getSeriesList = async () => {
   }
 }
 
+export const getSeriesListWithThumbnails = async () => {
+  try {
+    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/list-with-thumbnails`)
+    return fetchedSeries.data
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}
+
+export const getPaintingsInSeriesWithThumbnails = async (seriesSlug) => {
+  try {
+    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/${seriesSlug}`)
+    return fetchedSeries.data
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}
+
 export const fetchOneSeriesPaintingsNames = async (seriesId) => {
   try {
     const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/list-paintings/${seriesId}`)
