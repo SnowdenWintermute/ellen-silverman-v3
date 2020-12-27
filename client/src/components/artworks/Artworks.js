@@ -10,7 +10,7 @@ export default class Artworks extends Component {
     let pageState = "";
     let page;
     if (params) {
-      if (params.category && params.painting) {
+      if (params.category && params.paintingSlug) {
         pageState = "detailPage";
       } else if (params.category) {
         pageState = "categoryPage";
@@ -19,18 +19,14 @@ export default class Artworks extends Component {
 
     switch (pageState) {
       case "":
-        page = <SeriesList></SeriesList>;
+        page = <SeriesList />;
         break;
       case "categoryPage":
-        page = <SeriesPage props={params} category={params.category}></SeriesPage>;
+        page = <SeriesPage props={params} category={params.category} />;
         break;
       case "detailPage":
-        page = (
-          <PaintingDetailedPage
-            category={params.category}
-            paintingName={params.painting}
-          ></PaintingDetailedPage>
-        );
+        console.log(params.paintingSlug);
+        page = <PaintingDetailedPage paintingSlug={params.paintingSlug} />;
         break;
       default:
     }

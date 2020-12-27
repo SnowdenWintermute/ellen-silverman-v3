@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const imageValidatior = [(v) => v.byteLength < 3000000, (props) => `Image must be less than 3mb (got ${props.value.byteLength / 1000000}mb)`]
+const imageValidatior = [
+  (v) => v.byteLength < 3000000,
+  (props) =>
+    `Image must be less than 3mb (got ${props.value.byteLength / 1000000}mb)`,
+];
 
 const paintingSchema = new mongoose.Schema(
   {
@@ -10,7 +14,7 @@ const paintingSchema = new mongoose.Schema(
       trim: true,
       required: "Painting must have a title",
       index: true,
-      unique: true
+      unique: true,
     },
     title_lower: {
       type: String,
@@ -18,7 +22,7 @@ const paintingSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
       index: true,
-      unique: true
+      unique: true,
     },
     slug: {
       type: String,
@@ -28,37 +32,56 @@ const paintingSchema = new mongoose.Schema(
     },
     height: {
       type: Number,
-      required: true
+      required: true,
     },
     width: {
       type: Number,
-      required: true
+      required: true,
     },
     drawingMaterial: {
       type: String,
       lowercase: true,
-      enum: ['oil', 'pastel', 'watercolor', 'acrylic', 'graphite', 'charcoal', 'ink', 'crayon']
+      enum: [
+        "oil",
+        "pastel",
+        "watercolor",
+        "acrylic",
+        "graphite",
+        "charcoal",
+        "ink",
+        "crayon",
+      ],
     },
     support: {
       type: String,
       lowercase: true,
-      enum: ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal',]
+      enum: [
+        "canvas",
+        "paper",
+        "card stock",
+        "vellum",
+        "fabric",
+        "stone",
+        "wood",
+        "metal",
+      ],
     },
     year: {
       type: Number,
     },
     image: {
-      data: { type: Buffer, validate: imageValidatior }, contentType: String,
+      data: { type: Buffer, validate: imageValidatior },
+      contentType: String,
     },
     thumbnail: { data: Buffer, contentType: String },
     price: {
       type: Number,
-      required: "Please enter the price"
+      required: "Please enter the price",
     },
     series: {
       type: ObjectId,
-      ref: "series",
-      required: "Please specify which series the painting is from"
+      ref: "Series",
+      required: "Please specify which series the painting is from",
     },
     description: {
       type: String,
@@ -66,8 +89,8 @@ const paintingSchema = new mongoose.Schema(
     },
     sold: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
 );

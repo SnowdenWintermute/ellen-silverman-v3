@@ -1,14 +1,17 @@
-const Painting = require('../../models/painting')
-const Series = require('../../models/series')
+const Painting = require("../../models/painting");
+const Series = require("../../models/series");
 
 exports.getPaintingsInSeries = async (req, res) => {
-  const { seriesSlug } = req.params
-  console.log(seriesSlug)
+  const { seriesSlug } = req.params;
+  console.log(seriesSlug);
   try {
-    const series = await Series.findOne({ slug: seriesSlug })
-    const paintingsInSeries = await Painting.find({ series: series._id }).select("-image")
-    return res.status(200).json(paintingsInSeries)
+    const series = await Series.findOne({ slug: seriesSlug });
+    const paintingsInSeries = await Painting.find({ series: series._id })
+      .select("-image")
+      .populate("series");
+    return res.status(200).json(paintingsInSeries);
   } catch (error) {
-    return res.status(400).error("Painting search failed")
+    console.log(error);
+    return res.status(400).error("Painting search failed");
   }
 };

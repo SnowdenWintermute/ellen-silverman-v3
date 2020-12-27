@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/layout/Navbar";
@@ -15,25 +15,25 @@ import Cv from "./components/cv/Cv";
 import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";
 import BunStory from "./components/bunStory/BunStory";
-import AddOrEditPainting from './components/admin/AddOrEditPainting'
+import AddOrEditPainting from "./components/admin/AddOrEditPainting";
 
-import Register from './components/auth/Register'
-import RegisterComplete from './components/auth/RegisterComplete'
+import Register from "./components/auth/Register";
+import RegisterComplete from "./components/auth/RegisterComplete";
 import Login from "./components/auth/Login";
-import UserHistory from './components/user/UserHistory'
+import UserHistory from "./components/user/UserHistory";
 import { auth } from "./firebase";
-import { currentUser } from './apiCalls/auth'
+import { currentUser } from "./apiCalls/auth";
 import ForgotPassword from "./components/auth/ForgotPassword";
 
-import UserRoute from './components/routes/UserRoute'
-import AdminRoute from './components/routes/AdminRoute'
+import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
 import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/AdminDashboard";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // to check firebase auth state
   useEffect(() => {
@@ -61,7 +61,6 @@ const App = () => {
   }, [dispatch]);
 
   return (
-
     <Router>
       <ToastContainer />
       <Helmet>
@@ -94,19 +93,47 @@ const App = () => {
           <Route exact path="/the-professor" component={BunStory}></Route>
           <Route
             exact
-            path="/artworks/:category?/:painting?"
+            path="/artworks/:category?/:paintingSlug?"
             component={Artworks}
           />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/complete-registration" component={RegisterComplete} />
+          <Route
+            exact
+            path="/complete-registration"
+            component={RegisterComplete}
+          />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/request-password-reset" component={ForgotPassword} />
+          <Route
+            exact
+            path="/request-password-reset"
+            component={ForgotPassword}
+          />
           <UserRoute exact path="/user/history" component={UserHistory} />
-          <AdminRoute exact path="/admin/add-painting" component={AddOrEditPainting} />
-          <AdminRoute exact path="/admin/edit-painting/:paintingSlug" component={AddOrEditPainting} />
-          <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
-          <AdminRoute exact path="/admin/manage-series" component={ManageSeries} />
-          <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
+          <AdminRoute
+            exact
+            path="/admin/add-painting"
+            component={AddOrEditPainting}
+          />
+          <AdminRoute
+            exact
+            path="/admin/edit-painting/:paintingSlug"
+            component={AddOrEditPainting}
+          />
+          <AdminRoute
+            exact
+            path="/admin/add-paintings-from-csv"
+            component={AddPaintingsFromCSV}
+          />
+          <AdminRoute
+            exact
+            path="/admin/manage-series"
+            component={ManageSeries}
+          />
+          <AdminRoute
+            exact
+            path="/admin/add-multiple-painting-photos"
+            component={AddMultiplePaintingPhotos}
+          />
           <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Switch>
@@ -117,6 +144,6 @@ const App = () => {
       </div>
     </Router>
   );
-}
+};
 
 export default App;
