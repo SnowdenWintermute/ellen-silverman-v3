@@ -14,7 +14,7 @@ export default function PaintingCard({
     <div className="painting-card-body">
       <Link
         className="painting-card-img-link"
-        to={`/artworks/${series}/${slug}/`}
+        to={`/artworks/${series.slug}/${slug}/`}
       >
         <img src={img} alt={img} />
         <div className="painting-card-info-text">

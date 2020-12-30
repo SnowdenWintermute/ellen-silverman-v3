@@ -77,7 +77,7 @@ export const removePainting = async (id, authToken) => {
   }
 };
 
-export const uploadPaintingCSVFormData = async (csvFormData, authToken) => {
+export const uploadPaintingCSVFormData = async (csvFormData, authToken, handleProgressEvent) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_API}/paintings/upload-csv`,
@@ -86,6 +86,9 @@ export const uploadPaintingCSVFormData = async (csvFormData, authToken) => {
         headers: {
           authToken,
           "Content-Type": `multipart/form-data; boundary=${csvFormData._boundary}`,
+        },
+        onUploadProgress: (progressEvent) => {
+          handleProgressEvent(progressEvent);
         },
       }
     );

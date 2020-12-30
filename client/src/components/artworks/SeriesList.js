@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import PaintingCategoryCard from "../paintings/PaintingCategoryCard";
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
+import { CircularProgress } from "@material-ui/core";
 
 const SeriesList = () => {
   const [cards, setCards] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const newCards = []
     const asyncFunc = async () => {
-      console.log("fetching series...")
+      setLoading(true)
       try {
         const seriesListWithThumbnails = await getSeriesListWithThumbnails()
         console.log(seriesListWithThumbnails)
@@ -27,12 +29,13 @@ const SeriesList = () => {
       } catch (error) {
         console.log(error)
       }
+      setLoading(false)
     }
     asyncFunc()
   }, [])
 
   return <div className="page-frame">
-    <div className="galleryHolder">{cards}</div>;
+    <div className="galleryHolder">{loading ? <CircularProgress /> : cards}</div>;
     </div>
 
 }

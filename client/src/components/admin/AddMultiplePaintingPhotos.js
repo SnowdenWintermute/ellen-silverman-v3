@@ -88,7 +88,7 @@ const AddMultiplePaintingPhotos = () => {
       <MaterialPaperNarrow>
         <Grid container item xs={12}>
           <AdminFeatureHeader headerText={"Add Multiple Painting Images"} subHeaderText={"Image names must match painting names exactly"} />
-          <Grid xs={12}>
+          <Grid item xs={12}>
             {loading && <LinearProgress variant="determinate" value={progress} />}
           </Grid>
           <Grid item xs={12}>
@@ -101,8 +101,8 @@ const AddMultiplePaintingPhotos = () => {
 
             {
               photos.map((photo, i) => (
-                <Grid item xs={2}>
-                  <Card key={i}>
+                <Grid item xs={2} key={i}>
+                  <Card>
                     <CardMedia className={classes.media} image={URL.createObjectURL(photo)} title={photo.name} />
                   </Card>
                 </Grid>

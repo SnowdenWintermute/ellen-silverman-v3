@@ -6,9 +6,11 @@ exports.getPaintingsInSeries = async (req, res) => {
   console.log(seriesSlug);
   try {
     const series = await Series.findOne({ slug: seriesSlug });
+    console.log(series)
     const paintingsInSeries = await Painting.find({ series: series._id })
       .select("-image")
       .populate("series");
+    console.log(paintingsInSeries)
     return res.status(200).json(paintingsInSeries);
   } catch (error) {
     console.log(error);

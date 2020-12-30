@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
 import { uploadPaintingCSVFormData } from '../../apiCalls/paintings'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import AddedPaintingsResultsAccordion from './AddedPaintingsResultsAccordion';
 import StandardModal from '../common/modal/StandardModal'
 import FileInput from '../forms/FileInput'
@@ -21,6 +22,7 @@ const AddPaintingsFromCSV = () => {
   const [formData, setFormData] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
   const [paintingsAdded, setPaintingsAdded] = useState([])
   const [paintingsUpdated, setPaintingsUpdated] = useState([])
   const [errors, setErrors] = useState([])
@@ -38,10 +40,15 @@ const AddPaintingsFromCSV = () => {
     setSelectedFile(e.target.files[0])
   };
 
+
+  const handleProgressEvent = progressEvent => {
+    setProgress(parseInt(Math.round(progressEvent.loaded * 100)) / progressEvent.total)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setLoading(true)
-    uploadPaintingCSVFormData(formData, user.token).then(res => {
+    uploadPaintingCSVFormData(formData, user.token, handleProgressEvent).then(res => {
       console.log({ ...res })
       if (res.response && res.response.data.error) {
         console.log("ey")
@@ -67,6 +74,7 @@ const AddPaintingsFromCSV = () => {
           <AdminFeatureHeader headerText={"Add and Update Paintings from CSV"} subHeaderText={"Any paintings in the selected .csv file will overwrite paintings on the database"} />
           <Grid item xs={12}>
             <form onSubmit={handleSubmit}>
+              {(loading && progress !== 100) ? <LinearProgress variant="determinate" value={progress} /> : loading && <LinearProgress />}
               <FileInput handleChange={handleChange} selectedFile={selectedFile} />
               <Button style={{ height: "40px", cursor: "pointer", marginTop: "10px", width: "100%" }} disabled={loading || !selectedFile} variant="contained" color="primary" type="submit">SEND CSV</Button>
             </form>

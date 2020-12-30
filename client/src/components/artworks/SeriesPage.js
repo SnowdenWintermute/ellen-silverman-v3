@@ -26,7 +26,7 @@ const SeriesPage = (params) => {
                 painting.thumbnail.contentType,
                 painting.thumbnail.data
               )}
-              series={painting.series.name}
+              series={painting.series}
               title={painting.title}
               slug={painting.slug}
               height={painting.height}

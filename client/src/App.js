@@ -70,7 +70,7 @@ const App = () => {
         <Switch>
           <Route
             exact
-            path="/img/:category/:painting"
+            path="/full-res/:category/:painting"
             component={FullResolutionImage}
           ></Route>
           <Route exact path="/the-professor" component={""}></Route>
@@ -78,7 +78,7 @@ const App = () => {
         </Switch>
         <Route exact path="/" component={LandingPage} />
         <Switch>
-          <Route exact path="/img/:category/:painting" component={""}></Route>
+          <Route exact path="/full-res/:category/:painting" component={""}></Route>
           <Route exact path="/the-professor" component={""}></Route>
           <Route
             exact
@@ -137,7 +137,7 @@ const App = () => {
           <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Switch>
-          <Route exact path="/img/:category/:painting" component={""}></Route>
+          <Route exact path="/full-res/:category/:painting" component={""}></Route>
           <Route exact path="/the-professor" component={""}></Route>
           <Route path="/:page" component={Footer}></Route>
         </Switch>

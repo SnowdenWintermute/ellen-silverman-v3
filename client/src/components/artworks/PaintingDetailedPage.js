@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress'
 import {
   // Magnifier,
   MagnifierContainer,
@@ -15,11 +16,14 @@ import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary"
 
 const PaintingDetailedPage = ({ paintingSlug }, props) => {
   const [painting, setPainting] = useState({});
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const asyncFunc = async () => {
       console.log(paintingSlug);
+      setLoading(true)
       const newPainting = await getPaintingWithFullImage(paintingSlug);
+      setLoading(false)
       console.log({ ...newPainting.data });
       setPainting({ ...newPainting.data });
     };
@@ -34,7 +38,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
       return false;
     };
     return function cleanup() {
-      window.oncontextmenu = () => {};
+      window.oncontextmenu = () => { };
     };
   }, []);
 
@@ -44,8 +48,14 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
   } else {
     paintingCost = "Sold";
   }
-
-  if (!Object.keys(painting).length > 0) {
+  if (loading) {
+    return <div className="page-frame">
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <CircularProgress />
+      </div>
+    </div>
+  }
+  else if (!Object.keys(painting).length > 0) {
     return <div>No painting by that name found</div>;
   } else
     return (
@@ -74,10 +84,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             <div className="painting-detail-text">{paintingCost}</div>
             <Link
               className="standard-link"
-              to={`/img/${painting["Category"]}/${createImgSrcStringFromBinary(
-                painting.image.contentType,
-                painting.image.data
-              )}`}
+              to={`/full-res/${painting.series.slug}/${painting.slug}`}
             >
               View Full Resolution
             </Link>

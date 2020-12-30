@@ -44,12 +44,23 @@ const paintingSchema = new mongoose.Schema(
       enum: [
         "oil",
         "pastel",
+        "oil pastel",
         "watercolor",
         "acrylic",
+        "pencil",
         "graphite",
+        "colored pencil",
         "charcoal",
+        "pencil and chalk",
+        "mono print",
         "ink",
+        "pen and ink",
+        "reed and ink",
         "crayon",
+        "mix media",
+        "clay",
+        "clay and wool",
+        "clear tape sculpture"
       ],
     },
     support: {
@@ -64,6 +75,9 @@ const paintingSchema = new mongoose.Schema(
         "stone",
         "wood",
         "metal",
+        "fiber cloth",
+        "wool felt",
+        "tape"
       ],
     },
     year: {
@@ -76,7 +90,6 @@ const paintingSchema = new mongoose.Schema(
     thumbnail: { data: Buffer, contentType: String },
     price: {
       type: Number,
-      required: "Please enter the price",
     },
     series: {
       type: ObjectId,
@@ -91,6 +104,9 @@ const paintingSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    catalogueIndex: {
+      type: Number
+    }
   },
   { timestamps: true }
 );

@@ -23,20 +23,33 @@ exports.addPaintingsFromCSV = async (req, res) => {
   } catch (err) {
     return res.status(400).json({ error: { message: "Please choose a .csv file to upload" } })
   }
-  const series = {}
+  const seriesList = {}
   const paintingsUpdated = []
   const paintingsAdded = []
   const errors = []
   // fetch ObjectIds of series
   for (const painting of paintings) {
-    if (!series[painting.series]) series[painting.series] = await Series.findOne({ name: painting.series })
+    if (!seriesList[painting.series]) seriesList[painting.series] = await Series.findOne({ name: painting.series })
     else continue
   }
+
+  //if want add series from csv too
+  // for (const painting of paintings) {
+  //   if (!painting.series) continue
+  //   if (!seriesList[painting.series]) {
+  //     const seriesToAddToList = await Series.findOne({ name: painting.series })
+  //     if (!seriesToAddToList) seriesList[painting.series] = await new Series({ name: painting.series, slug: slugify(painting.series) }).save()
+  //     else seriesList[painting.series] = seriesToAddToList
+  //   }
+  //   else continue
+  // }
+
   // assign slug and series id to paintings
   paintings.forEach(painting => {
+    if (!painting.title) return
     painting.slug = slugify(painting.title)
     painting.title_lower = painting.title.toLowerCase()
-    if (series[painting.series]) painting.series = series[painting.series]._id
+    if (seriesList[painting.series]) painting.series = seriesList[painting.series]._id
     painting.sold.toLowerCase() === "true" ? painting.sold = true : painting.sold = false
   })
   for (const painting of paintings) {
