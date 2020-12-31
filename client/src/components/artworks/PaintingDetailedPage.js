@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, withRouter } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress'
+import _ from 'lodash'
 import {
   // Magnifier,
   MagnifierContainer,
@@ -13,10 +14,17 @@ import {
 } from "react-image-magnifiers";
 import { getPaintingWithFullImage } from "../../apiCalls/paintings";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
+import { Button } from "@material-ui/core";
+import { toast } from "react-toastify";
 
 const PaintingDetailedPage = ({ paintingSlug }, props) => {
   const [painting, setPainting] = useState({});
+  const [paintingIsInCart, setPaintingIsInCart] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  // redux
+  const { user, cart } = useSelector(state => ({ ...state }))
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -41,6 +49,55 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
       window.oncontextmenu = () => { };
     };
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        const cart = JSON.parse(localStorage.getItem('cart'))
+        cart.forEach(item => {
+          if (item.title === painting.title) setPaintingIsInCart(true)
+        })
+      }
+    }
+  }, [painting])
+
+  const handleAddToCart = () => {
+    let cart = []
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'))
+      }
+      const paintingWithNoImages = { ...painting, image: null, thumbnail: null }
+      cart.push(paintingWithNoImages)
+      let unique = _.uniqWith(cart, _.isEqual)
+      localStorage.setItem('cart', JSON.stringify(unique))
+      console.log(JSON.parse(localStorage.getItem('cart')))
+      toast.success(`Added ${painting.title} to cart`)
+      setPaintingIsInCart(true)
+      dispatch({
+        type: "UPDATE_CART",
+        payload: cart
+      })
+    }
+  }
+
+  const handleRemoveFromCart = () => {
+    let newCart = []
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        const cart = JSON.parse(localStorage.getItem('cart'))
+        cart.forEach(item => {
+          if (item.title !== painting.title) newCart.push({ ...item })
+        })
+        localStorage.setItem('cart', JSON.stringify(newCart))
+        setPaintingIsInCart(false)
+        dispatch({
+          type: "UPDATE_CART",
+          payload: newCart
+        })
+      }
+    }
+  }
 
   let paintingCost;
   if (painting.price && !painting.sold) {
@@ -83,7 +140,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             )}
             <div className="painting-detail-text">{paintingCost}</div>
             <Link
-              className="standard-link"
+              className="standard-link underlined"
               to={`/full-res/${painting.series.slug}/${painting.slug}`}
             >
               View Full Resolution
@@ -91,14 +148,22 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             <br></br>
             <Link
               to={`/artworks/${painting.series.slug}`}
-              className="standard-link"
+              className="standard-link underlined"
             >
               View other paintings in the {painting.series.name} series
             </Link>
+            {!painting.sold &&
+              <>
+                <br />
+                <br />
+                {paintingIsInCart ?
+                  <Button variant="contained" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                  : <Button variant="contained" color="primary" onClick={handleAddToCart}>Add to Cart</Button>}
+              </>}
           </div>
         </div>
       </div>
     );
 };
 
-export default withRouter(PaintingDetailedPage);
+export default (PaintingDetailedPage);

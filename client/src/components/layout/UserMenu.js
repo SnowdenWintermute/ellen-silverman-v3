@@ -3,12 +3,39 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from "firebase";
 import { ReactComponent as UserIcon } from "../../icons/userIcon.svg";
+import { Badge, Icon, IconButton } from '@material-ui/core'
+import { makeStyles } from '@material-ui/styles'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
+const useStyles = makeStyles({
+  icon: {
+    height: 40,
+    textAlign: "center",
+    width: "100%",
+    display: "block",
+    '& svg': {
+      color: "black",
+      fontSize: 40,
+      '&:hover': {
+        color: "blue"
+      }
+    }
+  },
+  badge: {
+    right: -20,
+    top: -24,
+    pointerEvents: "none",
+    // border: `2px solid black`,
+    padding: '0 4px',
+  },
+})
 
 const UserMenu = ({ hideMenu }) => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
+  const cart = useSelector((state) => state.cart)
   const [showMenu, setShowMenu] = useState(false)
-
+  const classes = useStyles()
   useEffect(() => {
     const clearUserDropdown = (e) => {
       if (e.target.getAttribute("name") !== "user-menu")
@@ -47,13 +74,22 @@ const UserMenu = ({ hideMenu }) => {
   </ul>)
 
   return (
-    <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {
-      setShowMenu(!showMenu)
-      console.log(showMenu)
-    }}>
-      {showMenu && menuLinks}
-      <UserIcon className="user-menu-icon" name="user-menu" />
-    </div>
+    <>
+      <div className="cart-icon-holder">
+        <Icon className={classes.icon}>
+          <Badge className={classes.badge} badgeContent={cart.length} color="primary">
+          </Badge>
+          <ShoppingCartIcon />
+        </Icon>
+      </div>
+
+      <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {
+        setShowMenu(!showMenu)
+      }}>
+        {showMenu && menuLinks}
+        <UserIcon className="user-menu-icon" name="user-menu" />
+      </div>
+    </>
   )
 }
 

@@ -7,6 +7,13 @@
   right: 10px;
   top: 7px;
 }
+.cart-icon-holder {
+  cursor: pointer;
+  position: absolute;
+  height: 40px;
+  right: 70px;
+  top: 7px;
+}
 .user-menu-icon:hover {
   fill: blue;
 }

@@ -185,3 +185,7 @@ a:hover {
   padding-bottom: 60px;
   min-height: calc(100vh - 5vh - 70px - 93px);
 }
+
+.underlined {
+  text-decoration: underline;
+}

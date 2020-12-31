@@ -19,6 +19,7 @@ import "./css/auth.css";
 import "./css/forms.css";
 import "./css/buttons.css";
 import "./css/tables.css";
+import "./css/toastify.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
@@ -29,11 +30,13 @@ import { Provider } from 'react-redux'
 import navReducer from "./store/reducers/nav-reducer";
 import storyReducer from "./store/reducers/story-reducer";
 import userReducer from "./store/reducers/user-reducer";
+import cartReducer from "./store/reducers/cart-reducer";
 
 const rootReducer = combineReducers({
   nav: navReducer,
   story: storyReducer,
   user: userReducer,
+  cart: cartReducer
 });
 
 const reduxMiddleware = [thunk]

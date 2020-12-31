@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useDispatch } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { Provider, useDispatch } from "react-redux";
+import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/layout/Navbar";
@@ -62,7 +62,9 @@ const App = () => {
 
   return (
     <Router>
-      <ToastContainer />
+      <ToastContainer
+        transition={Flip}
+      />
       <Helmet>
         <title>{"L. E. Silverman"}</title>
       </Helmet>
