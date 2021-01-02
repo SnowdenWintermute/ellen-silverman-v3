@@ -7,7 +7,6 @@ exports.edit = async (req, res) => {
   const parsedForm = await parseFormFieldsAndFiles(req)
   console.log("parsed form: ", parsedForm)
   try {
-    console.log("title: ", parsedForm.fields.title)
     const paintingToBeEdited = await Painting.findOne({ title: parsedForm.fields.title })
     if (!paintingToBeEdited) return res.status(400).json({ error: { message: "No painting found by that name" } })
     Object.keys(paintingToBeEdited).forEach(key => {

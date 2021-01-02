@@ -14,12 +14,8 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     picture: { type: String },
-    cart: {
-      type: Array,
-      default: [],
-    },
-    address: String,
-    wishlist: [{ type: ObjectId, ref: "Product" }],
+    addresses: [{ type: ObjectId, ref: "Address" }],
+    wishlist: [{ type: ObjectId, ref: "Painting" }],
   },
   { timestamps: true }
 );

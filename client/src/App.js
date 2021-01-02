@@ -26,6 +26,10 @@ import { currentUser } from "./apiCalls/auth";
 import ForgotPassword from "./components/auth/ForgotPassword";
 
 import UserRoute from "./components/routes/UserRoute";
+import Cart from "./components/user/cart/Cart";
+import Checkout from "./components/user/cart/Checkout";
+
+
 import AdminRoute from "./components/routes/AdminRoute";
 import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
@@ -110,6 +114,8 @@ const App = () => {
             path="/request-password-reset"
             component={ForgotPassword}
           />
+          <Route exact path="/cart" component={Cart} />
+          <UserRoute exact path="/checkout" component={Checkout} />
           <UserRoute exact path="/user/history" component={UserHistory} />
           <AdminRoute
             exact

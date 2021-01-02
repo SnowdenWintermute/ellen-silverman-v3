@@ -57,7 +57,7 @@ p {
   font-size: 1.4em;
 }
 a {
-  font-family: "Josefin Slab";
+  /* font-family: "Josefin Slab"; */
   text-decoration: none;
   color: rgb(0, 0, 0);
   outline: none;

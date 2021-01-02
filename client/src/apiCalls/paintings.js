@@ -21,6 +21,17 @@ export const getPaintingWithFullImage = async (slug) => {
   }
 };
 
+export const getPaintingThumbnail = async (id) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API}/paintings/thumbnail/${id}`
+    );
+    return res;
+  } catch (err) {
+    return err;
+  }
+}
+
 export const addPainting = async (painting, authToken) => {
   try {
     const res = await axios.post(

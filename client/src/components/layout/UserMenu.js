@@ -76,11 +76,13 @@ const UserMenu = ({ hideMenu }) => {
   return (
     <>
       <div className="cart-icon-holder">
-        <Icon className={classes.icon}>
-          <Badge className={classes.badge} badgeContent={cart.length} color="primary">
-          </Badge>
-          <ShoppingCartIcon />
-        </Icon>
+        <Link to="/cart">
+          <Icon className={classes.icon}>
+            <Badge className={classes.badge} badgeContent={cart.length} color="primary">
+            </Badge>
+            <ShoppingCartIcon />
+          </Icon>
+        </Link>
       </div>
 
       <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {

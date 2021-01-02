@@ -28,17 +28,17 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
 
   useEffect(() => {
     const asyncFunc = async () => {
-      console.log(paintingSlug);
       setLoading(true)
       const newPainting = await getPaintingWithFullImage(paintingSlug);
       setLoading(false)
-      console.log({ ...newPainting.data });
       setPainting({ ...newPainting.data });
     };
     asyncFunc();
   }, []);
 
   useEffect(() => {
+    // scroll top
+    window.scrollTo(0, 0)
     // prevent context menu on long press
     window.oncontextmenu = function (event) {
       event.preventDefault();
@@ -135,9 +135,12 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             </div>
             {painting.year && (
               <div className="painting-detail-text">
-                Painted {painting["Year"]}
+                Painted {painting.year}
               </div>
             )}
+            <div className="painting-detail-text">
+              {`${painting.drawingMaterial} on ${painting.support}`}
+            </div>
             <div className="painting-detail-text">{paintingCost}</div>
             <Link
               className="standard-link underlined"

@@ -27,6 +27,7 @@ app.use(cors());
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/paintings', require('./routes/paintings'))
 app.use('/api/series', require('./routes/series'))
+app.use('/api/user', require('./routes/user'))
 
 // port
 const port = process.env.PORT || 8000;

@@ -13,14 +13,14 @@ const Login = ({ history }) => {
     password: "111111",
   });
   const [loading, setLoading] = useState(false);
+  const [intendedRedirect, setIntendedRedirect] = useState()
   const { email, password } = formData;
   const { user } = useSelector((state) => ({ ...state }));
 
   const roleBasedRedirect = useCallback((role) => {
     // check if intended
-    let intended = history.location.state;
-    if (intended) {
-      history.push(intended.from);
+    if (intendedRedirect) {
+      history.push(intendedRedirect);
     } else {
       if (role === "admin") {
         history.push("/admin/");
@@ -28,10 +28,11 @@ const Login = ({ history }) => {
         history.push("/user/history");
       }
     }
-  }, [history]);
+  }, [history, intendedRedirect]);
 
   useEffect(() => {
     let intended = history.location.state;
+    if (intended) setIntendedRedirect(intended.from)
     if (intended) {
       return;
     } else {

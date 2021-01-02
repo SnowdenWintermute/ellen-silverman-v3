@@ -104,6 +104,10 @@ const paintingSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    stock: {
+      type: Number,
+      default: 0
+    },
     catalogueIndex: {
       type: Number
     }
