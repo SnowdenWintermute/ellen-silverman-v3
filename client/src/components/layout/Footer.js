@@ -11,7 +11,7 @@ export default function Footer() {
         <Link to="/cv">CV</Link>&nbsp;|
         <Link to="/contact">Contact</Link>
       </div>
-      <p>Ellen Silverman</p>
+      <p>L. E. McGuff-Silverman</p>
     </footer>
   );
 }

@@ -6,15 +6,11 @@ import { getPaintingThumbnail } from '../../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/styles'
 import createImgSrcStringFromBinary from '../../utils/createImgSrcStringFromBinary'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
+import BasicPaper from '../../common/paper/BasicPaper'
 
 import { saveCart } from '../../../apiCalls/user'
 
 const useStyles = makeStyles({
-  paper: {
-    marginLeft: 10,
-    marginRight: 10,
-    padding: 15
-  },
   checkoutButton: {
     marginLeft: 16
   },
@@ -78,7 +74,7 @@ const Cart = () => {
 
   return (
     <div className="page-frame">
-      <Paper className={classes.paper}>
+      <BasicPaper>
         <Grid container>
           <Grid container item xs={12} sm={8}>
             <Grid item xs={12}>
@@ -163,7 +159,7 @@ const Cart = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </BasicPaper>
     </div>
   )
 }

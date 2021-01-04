@@ -5,3 +5,9 @@ export const saveCart = async (cartItemIdsAndQuantities, authToken) => await axi
     authToken
   }
 })
+
+export const getCart = async (authToken) => await axios.get(`${process.env.REACT_APP_API}/user/cart`, {
+  headers: {
+    authToken
+  }
+})

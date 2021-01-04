@@ -51,7 +51,7 @@ const Credits = ({ creditsShowing }) => {
       <div className={`story-credits-text credits-text-4 ${textClass4}`}>
         <Link
           className={"story-credits-text"}
-          to={"/artworks/The%20Professor's%20Interiors"}
+          to={"/artworks/The-Professor's-Interiors"}
         >
           Explore more paintings in The Professor's Interiors Series
         </Link>

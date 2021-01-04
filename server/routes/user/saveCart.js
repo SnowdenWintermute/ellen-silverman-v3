@@ -4,9 +4,11 @@ const User = require('../../models/user')
 
 exports.save = async (req, res) => {
   const { cartItemIdsAndQuantities } = req.body
-  console.log(cartItemIdsAndQuantities)
+  const user = await User.findOne({ email: req.user.email })
+  let oldCart = await Cart.findOne({ orderedBy: user._id })
+  if (oldCart) oldCart.remove()
   const newCart = new Cart()
-  for (const item of cartItemIdsAndQuantities) {
+  for (const item of cartItemIdsAndQuantities) { // subtotals for each item
     let subtotal = 0
     const painting = await Painting.findById(item.id).select('-image -thumbnail')
     subtotal += painting.price * item.quantity
@@ -17,8 +19,11 @@ exports.save = async (req, res) => {
     cartTotal += paintingInCart.subtotal
   })
   newCart.cartTotal = cartTotal
-  const orderedBy = await User.findOne({ email: req.user.email })
-  newCart.orderedBy = orderedBy._id
-  console.log(newCart)
-  res.send({ ok: true })
+  newCart.orderedBy = user._id
+  try {
+    await newCart.save()
+    res.json({ ok: true })
+  } catch (error) {
+    res.json(error)
+  }
 }
