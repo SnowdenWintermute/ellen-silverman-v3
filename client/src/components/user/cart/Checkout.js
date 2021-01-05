@@ -10,11 +10,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getCart, clearCart } from "../../../apiCalls/user";
 import BasicPaper from "../../common/paper/BasicPaper";
 import AddressForm from "../../forms/AddressForm";
 import { toast } from "react-toastify";
+import { updateCart } from "../../../store/actions/cart-actions"
+import StandardModal from '../../common/modal/StandardModal'
 
 const useStyles = makeStyles({
   cancelButton: {
@@ -31,11 +33,17 @@ const useStyles = makeStyles({
     marginBottom: "10px",
     marginTop: "10px",
   },
+  modalHeader: {
+    textAlign: "center",
+    marginBottom: 10
+  }
 });
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user);
   const [cart, setCart] = useState({});
+  const [cancelModalOpen, setCancelModalOpen] = useState(false)
   const [discountCode, setDiscountCode] = useState();
   const [addressValues, setAddressValues] = useState({
     fullName: "",
@@ -52,30 +60,38 @@ const Checkout = () => {
     const asyncFunc = async () => {
       try {
         const cartFromDatabase = await getCart(user.token);
-        console.log(cartFromDatabase);
+        console.log("ey")
+        console.log(cartFromDatabase)
+        if (!cartFromDatabase.data.userCart) {
+          console.log("pushed history away from checkout page")
+          dispatch(updateCart([]))
+          history.push('/cart')
+        }
         setCart(cartFromDatabase.data.userCart);
       } catch (error) {
         toast.error(error);
       }
     };
     asyncFunc();
-  }, []);
+  }, [dispatch, user, history]);
 
   const handleCancelOrder = async () => {
     try {
       const ok = await clearCart(user.token);
-      console.log(ok);
+      localStorage.removeItem('cart')
+      dispatch(updateCart([]))
+      history.push("/artworks")
     } catch (error) {
       toast.error(error);
     }
   };
 
-  const handleAddressFieldChange = (e) => {};
+  const handleAddressFieldChange = (e) => { };
 
   return (
     <div className="page-frame">
       <BasicPaper>
-        {cart ? (
+        {cart && (
           <Grid container>
             <Grid container item xs={12} sm={8}>
               <Grid item xs={12}>
@@ -115,14 +131,14 @@ const Checkout = () => {
                   {user ? (
                     <>
                       <Button
-                        onClick={handleCancelOrder}
+                        onClick={() => setCancelModalOpen(true)}
                         variant="contained"
                         className={classes.cancelButton}
                       >
                         CANCEL ORDER
                       </Button>
                       <Button
-                        onClick={() => {}}
+                        onClick={() => { }}
                         disabled={true}
                         variant="contained"
                         color="primary"
@@ -131,10 +147,10 @@ const Checkout = () => {
                       </Button>
                     </>
                   ) : (
-                    <Button variant="outlined" color="primary">
-                      Log in to check out
-                    </Button>
-                  )}
+                      <Button variant="outlined" color="primary">
+                        Log in to check out
+                      </Button>
+                    )}
                 </Grid>
               </Grid>
             </Grid>
@@ -161,10 +177,25 @@ const Checkout = () => {
               </Grid>
             </Grid>
           </Grid>
-        ) : (
-          "Cart is empty"
         )}
       </BasicPaper>
+      <StandardModal open={cancelModalOpen} handleClose={() => setCancelModalOpen(false)}>
+        <Grid container align="center">
+          <Grid item xs={12}>
+            <Typography variant="h5" className={classes.modalHeader}>
+              Confirm empty cart and cancel order?
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Button onClick={handleCancelOrder}
+              variant="contained"
+              className={classes.cancelButton}>CONFIRM CANCEL</Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button onClick={() => history.push("/cart")} variant="outlined" color="primary">EDIT CART</Button>
+          </Grid>
+        </Grid>
+      </StandardModal>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import { getPaintingWithFullImage } from "../../apiCalls/paintings";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
 import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
+import { updateCart } from "../../store/actions/cart-actions";
 
 const PaintingDetailedPage = ({ paintingSlug }, props) => {
   const [painting, setPainting] = useState({});
@@ -74,10 +75,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
       console.log(JSON.parse(localStorage.getItem('cart')))
       toast.success(`Added ${painting.title} to cart`)
       setPaintingIsInCart(true)
-      dispatch({
-        type: "UPDATE_CART",
-        payload: cart
-      })
+      dispatch(updateCart(cart))
     }
   }
 
@@ -128,7 +126,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             ></SideBySideMagnifier>
           </MagnifierContainer>
           <div className="painting-details-text-box">
-            <div className="painting-title">{painting["Name"]}</div>
+            <div className="painting-title">{painting.title}</div>
             <div className="painting-detail-text">Original Painting</div>
             <div className="painting-detail-text">
               Size, unframed: {painting.height}" x {painting.width}"

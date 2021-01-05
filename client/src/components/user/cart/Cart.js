@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/styles'
 import createImgSrcStringFromBinary from '../../utils/createImgSrcStringFromBinary'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import BasicPaper from '../../common/paper/BasicPaper'
+import { updateCart } from "../../../store/actions/cart-actions";
 
 import { saveCart } from '../../../apiCalls/user'
 
@@ -26,7 +27,11 @@ const Cart = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const history = useHistory()
+
   useEffect(() => {
+    console.log(Object.prototype.toString.call(cart) === '[object Array]')
+    console.log(cart)
+    if (!cart.length) return
     const promises = []
     const newCart = [...cart]
     newCart.forEach((item) => {
@@ -38,7 +43,6 @@ const Cart = () => {
     Promise.all(promises).then(result => {
       setCartItems(newCart)
     })
-    console.log(newCart)
   }, [cart])
 
   const removeItemFromCart = (id) => {
@@ -50,10 +54,7 @@ const Cart = () => {
           if (item._id !== id) newCart.push({ ...item })
         })
         localStorage.setItem('cart', JSON.stringify(newCart))
-        dispatch({
-          type: "UPDATE_CART",
-          payload: newCart
-        })
+        dispatch(updateCart(newCart))
         setCartItems(newCart)
       }
     }
@@ -83,7 +84,7 @@ const Cart = () => {
             <Grid item xs={12}>
               <Table>
                 <TableBody>
-                  {cart.length > 0 ? cart.map(item => <TableRow key={item._id}>
+                  {(cart && cart.length > 0) ? cart.map(item => <TableRow key={item._id}>
                     <TableCell>
                       {item.thumbnail ? <img style={{ height: "100px", border: "1px solid black" }} alt={item.title} src={createImgSrcStringFromBinary(item.thumbnail.contentType, item.thumbnail.data)} /> : <CircularProgress />}
                     </TableCell>
@@ -133,7 +134,7 @@ const Cart = () => {
               <Typography variant="h5">Order Summary</Typography>
               <Table className={classes.summaryTable} size="small">
                 <TableBody>
-                  {cart.map(item =>
+                  {typeof cart === 'array' && cart.map(item =>
                     <TableRow key={item.title}>
                       <TableCell>
                         {item.title}
@@ -145,7 +146,7 @@ const Cart = () => {
                   )}
                   <TableRow>
                     <TableCell><strong>Subtotal:</strong></TableCell>
-                    <TableCell><strong>${cart.reduce((totalPrice, item) => { return totalPrice + parseInt(item.price) }, 0)}</strong></TableCell>
+                    <TableCell><strong>${typeof cart === 'array' && cart.reduce((totalPrice, item) => { return totalPrice + parseInt(item.price) }, 0)}</strong></TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
