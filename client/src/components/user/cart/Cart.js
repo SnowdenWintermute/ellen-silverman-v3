@@ -84,7 +84,7 @@ const Cart = () => {
             <Grid item xs={12}>
               <Table>
                 <TableBody>
-                  {(cart && cart.length > 0) ? cart.map(item => <TableRow key={item._id}>
+                  {cart.length ? cart.map(item => <TableRow key={item._id}>
                     <TableCell>
                       {item.thumbnail ? <img style={{ height: "100px", border: "1px solid black" }} alt={item.title} src={createImgSrcStringFromBinary(item.thumbnail.contentType, item.thumbnail.data)} /> : <CircularProgress />}
                     </TableCell>
@@ -134,7 +134,7 @@ const Cart = () => {
               <Typography variant="h5">Order Summary</Typography>
               <Table className={classes.summaryTable} size="small">
                 <TableBody>
-                  {typeof cart === 'array' && cart.map(item =>
+                  {cart.length && cart.map(item =>
                     <TableRow key={item.title}>
                       <TableCell>
                         {item.title}
@@ -146,7 +146,7 @@ const Cart = () => {
                   )}
                   <TableRow>
                     <TableCell><strong>Subtotal:</strong></TableCell>
-                    <TableCell><strong>${typeof cart === 'array' && cart.reduce((totalPrice, item) => { return totalPrice + parseInt(item.price) }, 0)}</strong></TableCell>
+                    <TableCell><strong>${cart.length && cart.reduce((totalPrice, item) => { return totalPrice + parseInt(item.price) }, 0)}</strong></TableCell>
                   </TableRow>
                 </TableBody>
               </Table>

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const addressSchema = new mongoose.Schema(
   {
@@ -6,42 +7,48 @@ const addressSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: "Address must have a name",
-      index: true,
     },
     firstLine: {
       type: String,
       trim: true,
       required: "Please enter an address",
-      index: true,
     },
-    secondLineLine: {
+    secondLine: {
       type: String,
       trim: true,
-      index: true,
+    },
+    country: {
+      type: String,
+      required: true,
+      trim: true,
     },
     city: {
       type: String,
       trim: true,
       required: "Please enter a city",
-      index: true,
     },
     state: {
       type: String,
       trim: true,
-      required: "Please enter a city",
-      index: true,
+      required: "Please enter a state/province",
     },
     zip: {
-      type: Number,
+      type: String,
       trim: true,
-      required: "Please enter a zip code",
-      index: true,
     },
     phone: {
-      type: Number,
+      type: String,
       trim: true,
-      index: true,
     },
+    deliveryLastLine: {
+      type: String,
+      trim: true,
+    },
+    isValidatedByUser: {
+      type: Boolean,
+      default: false
+    },
+    user: { type: ObjectId, ref: "User" }
   },
   { timestamps: true }
 );

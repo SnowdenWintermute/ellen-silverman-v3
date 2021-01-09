@@ -1,10 +1,7 @@
 import React from 'react'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel';
-import { Paper, TextField, Select, MenuItem, Button, Grid } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
-import ImageInput from './ImageInput'
-import AdminFeatureHeader from '../admin/subComponents/AdminFeatureHeader';
+import countryList from '../../consts/countryList'
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -17,12 +14,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, seriesList, formFieldErrors }) => {
+const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, confirmedAddresses, setAddingNewAddress, formFieldErrors }) => {
   const classes = useStyles()
   const {
     fullName,
     firstLine,
     secondLine,
+    country,
     city,
     state,
     zip,
@@ -37,10 +35,24 @@ const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, serie
             <TextField className={classes.input} label="Full Name" variant="filled" width="75px" onChange={handleChange('fullName')} value={fullName} error={formFieldErrors.fullName && true} helperText={formFieldErrors.fullName ? formFieldErrors.fullName.message : ""} />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="First Line" variant="filled" onChange={handleChange('firstLine')} value={firstLine} error={formFieldErrors.firstLine && true} helperText={formFieldErrors.firstLine ? formFieldErrors.firstLine.message : ""} />
+            <TextField className={classes.input} label="Street" variant="filled" onChange={handleChange('firstLine')} value={firstLine} error={formFieldErrors.firstLine && true} helperText={formFieldErrors.firstLine ? formFieldErrors.firstLine.message : ""} />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Second Line" variant="filled" onChange={handleChange('secondLine')} value={secondLine} error={formFieldErrors.secondLine && true} helperText={formFieldErrors.secondLine ? formFieldErrors.secondLine.message : ""} />
+            <TextField className={classes.input} label="Appartment / POB / Etc" variant="filled" onChange={handleChange('secondLine')} value={secondLine} error={formFieldErrors.secondLine && true} helperText={formFieldErrors.secondLine ? formFieldErrors.secondLine.message : ""} />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl className={classes.input} variant="filled" error={formFieldErrors.country && true}>
+              <InputLabel id="select-country">Country</InputLabel>
+              {Object.keys(countryList).length > 0 && <Select className={classes.select} labelId="select-country" onChange={handleChange('country')} value={country}>
+                {countryList.length &&
+                  countryList.map((country, i) => (
+                    <MenuItem key={i} value={country.name}>
+                      {country.name}
+                    </MenuItem>
+                  ))}
+              </Select>}
+              {formFieldErrors.country && <FormHelperText>{formFieldErrors.country.message}</FormHelperText>}
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <TextField className={classes.input} label="City" variant="filled" onChange={handleChange('city')} value={city} error={formFieldErrors.city && true} helperText={formFieldErrors.city ? formFieldErrors.city.message : ""} />
@@ -54,8 +66,10 @@ const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, serie
           <Grid item xs={12}>
             <TextField className={classes.input} label="Phone Number" variant="filled" onChange={handleChange('phone')} value={phone} error={formFieldErrors.phone && true} helperText={formFieldErrors.phone ? formFieldErrors.state.message : ""} />
           </Grid>
-          <Grid item xs={12}>
-            <Button disabled={addressLoading} variant="contained" color="primary" type="submit">ADD ADDRESS</Button>
+          <Grid item container xs={12}>
+            <Button style={{ marginRight: 10 }} disabled={addressLoading} variant="contained" color="primary" type="submit">ADD ADDRESS</Button>
+            {confirmedAddresses.length > 0 && <Button onClick={() => setAddingNewAddress(false)} variant={"outlined"} color="primary">USE A SAVED ADDRESS</Button>}
+
           </Grid>
         </Grid>
       </div>

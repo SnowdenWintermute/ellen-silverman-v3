@@ -8,6 +8,7 @@
 .Toastify__toast-container--top-center {
 }
 .Toastify__toast-container--top-right {
+  margin-top: 75px;
 }
 .Toastify__toast-container--bottom-left {
 }
