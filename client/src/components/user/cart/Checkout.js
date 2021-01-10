@@ -8,23 +8,18 @@ import {
   TableRow,
   TableCell,
   makeStyles,
-  Card,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart, clearCart, lookupNewAddress, getUserAddresses, confirmNewAddress } from "../../../apiCalls/user";
+import { getCart, clearCart, lookupNewAddress, getUserAddresses, confirmNewAddress, removeAddress } from "../../../apiCalls/user";
 import BasicPaper from "../../common/paper/BasicPaper";
 import AddressForm from "../../forms/AddressForm";
 import { toast } from "react-toastify";
 import { updateCart } from "../../../store/actions/cart-actions"
 import ClearCartModal from './ClearCartModal'
 import ConfirmAddressModal from "./ConfirmAddressModal";
+import ConfirmedAddressCardList from './ConfirmedAddressCardList'
 
 const useStyles = makeStyles({
   cancelButton: {
@@ -32,6 +27,13 @@ const useStyles = makeStyles({
     color: "white",
     "&:hover": {
       background: "red",
+      filter: "brightness(85%)",
+    },
+  },
+  outlinedRedButton: {
+    border: "1px solid red",
+    color: "red",
+    "&:hover": {
       filter: "brightness(85%)",
     },
   },
@@ -90,7 +92,8 @@ const Checkout = ({ history }) => {
   const loadUserAddresses = useCallback(
     () => getUserAddresses(user.token).then(addresses => {
       setConfirmedAddresses(addresses.data)
-      if (addresses.data.length) {
+      console.log(addresses.data)
+      if (addresses.data[0] !== null && addresses.data.length) {
         console.log(addresses.data[0]._id)
         setSelectedAddress(addresses.data[0]._id)
       }
@@ -148,10 +151,30 @@ const Checkout = ({ history }) => {
     setConfirmAddressModalOpen(false)
   }
 
+  const handleRemoveAddress = async addressId => {
+    const newAddressList = await removeAddress(addressId, user.token)
+    console.log(newAddressList)
+    setConfirmedAddresses(newAddressList.data)
+    if (newAddressList.data[0]) setSelectedAddress(newAddressList.data[0]._id)
+  }
+
+  const handleClickDeleteAddress = addressId => {
+    const newAddressList = confirmedAddresses.map(address => {
+      if (address._id === addressId) {
+        address.flaggedForRemoval = true
+        console.log(address._id, addressId)
+        console.log("address flagged for removal")
+      }
+      return address
+    })
+    setConfirmedAddresses(newAddressList)
+  }
+
   const handleSelectAddressChange = (e) => {
     console.log(e)
     setSelectedAddress(e.target.value)
   }
+
 
   return (
     <div className="page-frame">
@@ -163,32 +186,8 @@ const Checkout = ({ history }) => {
                 <Typography variant="h5">Address</Typography>
               </Grid>
               <Grid item xs={12}>
-                {loadingSavedAddresses ? <CircularProgress /> : (confirmedAddresses.length > 0 && !addingNewAddress) ?
-                  <>
-                    <FormControl component="fieldset">
-                      <FormLabel component="legend">Select from saved addresses</FormLabel>
-                      <br />
-                      <RadioGroup row aria-label="selected address" name="selected address" value={selectedAddress} onChange={handleSelectAddressChange}>
-                        <Grid container spacing={1} style={{ marginBottom: 10, paddingRight: 10 }}>
-                          {confirmedAddresses.map(address =>
-                            <Grid item key={address._id}>
-                              <Card style={{ padding: 10, border: "1px solid", width: "210px" }}>
-                                <ul style={{ listStyle: "none" }}>
-                                  <li><strong>{address.fullName}</strong></li>
-                                  <li>{address.firstLine}</li>
-                                  {address.secondLine && <li>{address.secondLine}</li>}
-                                  <li>{address.deliveryLastLine}</li>
-                                  <li>℡ {address.phone}</li>
-                                </ul>
-                                <FormControlLabel value={address._id} control={<Radio color="primary" />} label="Selected" />
-                              </Card>
-                            </Grid>
-                          )}
-                        </Grid>
-                      </RadioGroup>
-                      <Button onClick={() => setAddingNewAddress(true)} variant="outlined" color="primary">ADD NEW ADDRESS</Button>
-                    </FormControl>
-                  </>
+                {loadingSavedAddresses ? <CircularProgress /> : (confirmedAddresses.length > 0 && confirmedAddresses[0] !== null && !addingNewAddress) ?
+                  <ConfirmedAddressCardList classes={classes} confirmedAddresses={confirmedAddresses} selectedAddress={selectedAddress} handleRemoveAddress={handleRemoveAddress} handleSelectAddressChange={handleSelectAddressChange} handleClickDeleteAddress={handleClickDeleteAddress} setAddingNewAddress={setAddingNewAddress} />
                   : <AddressForm
                     values={addressValues}
                     handleChange={handleAddressFieldChange}

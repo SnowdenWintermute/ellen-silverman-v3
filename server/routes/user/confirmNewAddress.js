@@ -11,9 +11,9 @@ exports.confirmNewAddress = async (req, res) => {
       user.addresses.push(addressToConfirm._id)
       await user.save()
     }
-    const unconfirmedAddressesToRemove = await Address.find({ user: user._id })
-    console.log("unconfirmedAddressesToRemove: ", unconfirmedAddressesToRemove)
-    unconfirmedAddressesToRemove.forEach(addressToRemove => { if (!addressToRemove.isValidatedByUser) addressToRemove.remove() })
+    const addressesToCheckForRemoval = await Address.find({ user: user._id })
+    console.log("addressesToCheckForRemoval: ", addressesToCheckForRemoval)
+    addressesToCheckForRemoval.forEach(addressToRemove => { if (!addressToRemove.isValidatedByUser) addressToRemove.remove() })
     user = await User.findOne({ email: req.user.email }).populate('addresses')
     res.json(user.addresses)
   } catch (error) {

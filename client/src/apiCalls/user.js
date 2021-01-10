@@ -42,3 +42,9 @@ export const confirmNewAddress = async (addressId, authToken) => await axios.put
     authToken,
   },
 })
+
+export const removeAddress = async (addressIdToRemove, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/address/remove`, { addressIdToRemove }, {
+  headers: {
+    authToken,
+  },
+})
