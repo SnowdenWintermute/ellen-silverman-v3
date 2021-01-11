@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { DeleteForever } from "@material-ui/icons";
 
-const ConfirmedAddressCardList = ({ classes, confirmedAddresses, selectedAddress, handleRemoveAddress, handleSelectAddressChange, handleClickDeleteAddress, setAddingNewAddress }) =>
+const ConfirmedAddressCardList = ({ classes, confirmedAddresses, selectedAddress, handleRemoveAddress, handleSelectAddressChange, handleClickDeleteAddress, handleCancelDeleteAddress, setAddingNewAddress }) =>
   <FormControl component="fieldset">
     <FormLabel component="legend">Select from saved addresses</FormLabel>
     <br />
@@ -22,11 +22,15 @@ const ConfirmedAddressCardList = ({ classes, confirmedAddresses, selectedAddress
       <Grid container spacing={1} style={{ marginBottom: 10, paddingRight: 10 }}>
         {confirmedAddresses[0] !== null && confirmedAddresses.length && confirmedAddresses.map(address =>
           <Grid item key={address._id}>
-            <Card style={{ padding: 10, border: "1px solid", width: "210px" }}>
+            <Card style={{ padding: 10, border: "1px solid", width: "210px", height: "100%" }}>
               {address.flaggedForRemoval ?
                 (<>
-                  <Typography variant="body2">Really delete this address?</Typography>
-                  <Button onClick={() => handleRemoveAddress(address._id)} variant="outlined" className={classes.outlinedRedButton}>CONFIRM</Button>
+                  <Typography variant="body2"><strong>Really delete this address?</strong></Typography>
+                  <div style={{ display: "flex", flexDirection: "column", height: "80%", justifyContent: "flex-end" }}>
+                    <Button onClick={() => handleRemoveAddress(address._id)} variant="outlined" className={classes.outlinedRedButton}>CONFIRM</Button>
+                    <Button onClick={() => handleCancelDeleteAddress(address._id)} variant="outlined" color="primary">CANCEL</Button>
+                  </div>
+
                 </>)
                 : (
                   <>

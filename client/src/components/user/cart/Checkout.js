@@ -36,6 +36,7 @@ const useStyles = makeStyles({
     "&:hover": {
       filter: "brightness(85%)",
     },
+    marginBottom: 10
   },
   input: {
     width: "100%",
@@ -139,9 +140,7 @@ const Checkout = ({ history }) => {
 
   const handleConfirmAddress = async e => {
     const newAddresses = await confirmNewAddress(addressFromServerToBeConfirmed._id, user.token)
-    console.log("new addresses: ", newAddresses)
     setConfirmedAddresses(newAddresses.data)
-    console.log(newAddresses.data[0]._id)
     setSelectedAddress(newAddresses.data[0]._id)
     setConfirmAddressModalOpen(false)
     setAddingNewAddress(false)
@@ -153,27 +152,27 @@ const Checkout = ({ history }) => {
 
   const handleRemoveAddress = async addressId => {
     const newAddressList = await removeAddress(addressId, user.token)
-    console.log(newAddressList)
     setConfirmedAddresses(newAddressList.data)
     if (newAddressList.data[0]) setSelectedAddress(newAddressList.data[0]._id)
+    else setSelectedAddress(null)
   }
 
   const handleClickDeleteAddress = addressId => {
     const newAddressList = confirmedAddresses.map(address => {
-      if (address._id === addressId) {
-        address.flaggedForRemoval = true
-        console.log(address._id, addressId)
-        console.log("address flagged for removal")
-      }
+      if (address._id === addressId) address.flaggedForRemoval = true
+      return address
+    })
+    setConfirmedAddresses(newAddressList)
+  }
+  const handleCancelDeleteAddress = addressId => {
+    const newAddressList = confirmedAddresses.map(address => {
+      if (address._id === addressId) address.flaggedForRemoval = false
       return address
     })
     setConfirmedAddresses(newAddressList)
   }
 
-  const handleSelectAddressChange = (e) => {
-    console.log(e)
-    setSelectedAddress(e.target.value)
-  }
+  const handleSelectAddressChange = (e) => setSelectedAddress(e.target.value)
 
 
   return (
@@ -187,7 +186,7 @@ const Checkout = ({ history }) => {
               </Grid>
               <Grid item xs={12}>
                 {loadingSavedAddresses ? <CircularProgress /> : (confirmedAddresses.length > 0 && confirmedAddresses[0] !== null && !addingNewAddress) ?
-                  <ConfirmedAddressCardList classes={classes} confirmedAddresses={confirmedAddresses} selectedAddress={selectedAddress} handleRemoveAddress={handleRemoveAddress} handleSelectAddressChange={handleSelectAddressChange} handleClickDeleteAddress={handleClickDeleteAddress} setAddingNewAddress={setAddingNewAddress} />
+                  <ConfirmedAddressCardList classes={classes} confirmedAddresses={confirmedAddresses} selectedAddress={selectedAddress} handleRemoveAddress={handleRemoveAddress} handleCancelDeleteAddress={handleCancelDeleteAddress} handleSelectAddressChange={handleSelectAddressChange} handleClickDeleteAddress={handleClickDeleteAddress} setAddingNewAddress={setAddingNewAddress} />
                   : <AddressForm
                     values={addressValues}
                     handleChange={handleAddressFieldChange}
@@ -231,8 +230,8 @@ const Checkout = ({ history }) => {
                         CANCEL ORDER
                       </Button>
                       <Button
-                        onClick={() => { }}
-                        disabled={true}
+                        onClick={() => { history.push('/payment') }}
+                        disabled={!selectedAddress}
                         variant="contained"
                         color="primary"
                       >
