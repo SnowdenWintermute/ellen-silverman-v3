@@ -7,6 +7,12 @@
   right: 10px;
   top: 7px;
 }
+.user-menu-icon-holder {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
 .cart-icon-holder {
   cursor: pointer;
   position: absolute;
@@ -19,13 +25,14 @@
 }
 .user-menu-links-holder {
   position: absolute;
+  width: 250px;
   right: 10px;
   margin-top: 3px;
   background: white;
   z-index: 1299;
   border: 1px solid black;
-  top: 47px;
-  padding: 10px 30px 10px 30px;
+  top: 40px;
+  /* padding: 10px; */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -35,6 +42,16 @@
   align-items: flex-start;
 }
 .user-menu-links-holder a {
-  padding: none;
+  font-family: "Josefin Slab";
+  font-size: 20px;
+  padding: 10px;
   margin: 0px;
+  border-bottom: 1px solid;
+  line-height: normal;
+}
+.user-menu-links-holder a:last-child {
+  border-bottom: 0px;
+}
+.user-menu-links-holder a:hover {
+  color: blue;
 }

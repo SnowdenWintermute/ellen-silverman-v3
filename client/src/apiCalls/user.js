@@ -43,7 +43,19 @@ export const confirmNewAddress = async (addressId, authToken) => await axios.put
   },
 })
 
+export const selectShippingAddress = async (addressId, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/address/select`, { addressId }, {
+  headers: {
+    authToken,
+  },
+})
+
 export const removeAddress = async (addressIdToRemove, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/address/remove`, { addressIdToRemove }, {
+  headers: {
+    authToken,
+  },
+})
+
+export const createOrder = async (stripeResponse, authToken) => await axios.post(`${process.env.REACT_APP_API}/user/order`, { stripeResponse }, {
   headers: {
     authToken,
   },

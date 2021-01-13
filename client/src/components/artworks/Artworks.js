@@ -25,7 +25,6 @@ export default class Artworks extends Component {
         page = <SeriesPage props={params} category={params.category} />;
         break;
       case "detailPage":
-        console.log(params.paintingSlug);
         page = <PaintingDetailedPage paintingSlug={params.paintingSlug} />;
         break;
       default:

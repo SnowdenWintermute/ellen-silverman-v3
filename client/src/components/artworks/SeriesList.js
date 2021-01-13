@@ -14,7 +14,6 @@ const SeriesList = () => {
       setLoading(true)
       try {
         const seriesListWithThumbnails = await getSeriesListWithThumbnails()
-        console.log(seriesListWithThumbnails)
         seriesListWithThumbnails.forEach((item, i) => {
           newCards.push(
             <PaintingCategoryCard

@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart, clearCart, lookupNewAddress, getUserAddresses, confirmNewAddress, removeAddress } from "../../../apiCalls/user";
+import { getCart, clearCart, lookupNewAddress, getUserAddresses, confirmNewAddress, selectShippingAddress, removeAddress } from "../../../apiCalls/user";
 import BasicPaper from "../../common/paper/BasicPaper";
 import AddressForm from "../../forms/AddressForm";
 import { toast } from "react-toastify";
@@ -72,6 +72,7 @@ const Checkout = ({ history }) => {
   const [confirmedAddresses, setConfirmedAddresses] = useState([])
   const [confirmAddressModalOpen, setConfirmAddressModalOpen] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState(null)
+  const [savingShippingAddressToCart, setSavingShippingAddressToCart] = useState(false)
   const classes = useStyles();
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const Checkout = ({ history }) => {
       dispatch(updateCart([]))
       history.push("/artworks")
     } catch (error) {
-      toast.error(error);
+      toast.error(JSON.stringify(error));
     }
   };
 
@@ -174,11 +175,21 @@ const Checkout = ({ history }) => {
 
   const handleSelectAddressChange = (e) => setSelectedAddress(e.target.value)
 
+  const handleSubmitOrder = async () => {
+    setSavingShippingAddressToCart(true)
+    try {
+      await selectShippingAddress(selectedAddress, user.token)
+      history.push('/payment')
+    } catch (error) {
+      toast.error(JSON.stringify(error));
+    }
+    setSavingShippingAddressToCart(false)
+  }
 
   return (
     <div className="page-frame">
       <BasicPaper>
-        {cart && (
+        {savingShippingAddressToCart ? <CircularProgress /> : cart && (
           <Grid container>
             <Grid container item xs={12} sm={8}>
               <Grid item xs={12}>
@@ -230,7 +241,7 @@ const Checkout = ({ history }) => {
                         CANCEL ORDER
                       </Button>
                       <Button
-                        onClick={() => { history.push('/payment') }}
+                        onClick={handleSubmitOrder}
                         disabled={!selectedAddress}
                         variant="contained"
                         color="primary"

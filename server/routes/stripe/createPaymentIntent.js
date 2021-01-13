@@ -5,12 +5,13 @@ const Painting = require('../../models/painting')
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 exports.createPaymentIntent = async (req, res) => {
-  console.log("creating payment intent")
-  console.log(req.body)
-  console.log(req.headers)
+  const user = await User.findOne({ email: req.user.email })
+  const { cartTotal } = await Cart.findOne({ orderedBy: user._id })
+  const numberOfCentsToCharge = cartTotal * 100
+  console.log("charging " + numberOfCentsToCharge + " cents")
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 100,
+      amount: numberOfCentsToCharge,
       currency: 'usd'
     })
     res.json({ clientSecret: paymentIntent.client_secret })

@@ -13,11 +13,9 @@ const SeriesPage = (params) => {
   useEffect(() => {
     const asyncFunc = async () => {
       const newCards = [];
-      console.log(params);
       const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(
         params.category
       );
-      console.log(paintingsInSeries);
       paintingsInSeries.forEach((painting, i) => {
         if (painting.thumbnail) {
           newCards.push(

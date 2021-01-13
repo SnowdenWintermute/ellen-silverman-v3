@@ -4,10 +4,8 @@ const getPaintingsInSeries = require('../utils/series/getPaintingsInSeries')
 
 exports.remove = async (req, res) => {
   try {
-    console.log(req.body)
     const { seriesName } = req.body
     const seriesToBeDeleted = await Series.findOne({ name: seriesName })
-    console.log("seriesToBeDeleted", seriesToBeDeleted)
     const paintingsInSeriesToBeDeleted = await getPaintingsInSeries(seriesToBeDeleted._id)
     for (const painting of paintingsInSeriesToBeDeleted) {
       await painting.remove()

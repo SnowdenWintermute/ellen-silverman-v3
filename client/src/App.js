@@ -28,7 +28,7 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import UserRoute from "./components/routes/UserRoute";
 import Cart from "./components/user/cart/Cart";
 import Checkout from "./components/user/cart/Checkout";
-import StripePayment from "./components/user/cart/StripePayment";
+import Payment from "./components/user/cart/Payment";
 
 
 import AdminRoute from "./components/routes/AdminRoute";
@@ -117,7 +117,7 @@ const App = () => {
           />
           <Route exact path="/cart" component={Cart} />
           <UserRoute exact path="/checkout" component={Checkout} />
-          <UserRoute exact path="/payment" component={StripePayment} />
+          <UserRoute exact path="/payment" component={Payment} />
           <UserRoute exact path="/user/history" component={UserHistory} />
           <AdminRoute
             exact

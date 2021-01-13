@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { createPaymentIntent } from '../../../apiCalls/stripe'
+import { createOrder, clearCart } from '../../../apiCalls/user'
+import { Button } from '@material-ui/core'
+import { updateCart } from "../../../store/actions/cart-actions"
+import { toast } from 'react-toastify'
 
 export const StripeWidget = ({ history }) => {
   const dispatch = useDispatch()
@@ -29,6 +33,22 @@ export const StripeWidget = ({ history }) => {
     asyncFunc()
   }, [user])
 
+  const handleSuccess = async (payload) => {
+    console.log(JSON.stringify(payload, null, 2))
+    setError(null)
+    setProcessing(false)
+    setSucceeded(true)
+    try {
+      await createOrder(payload, user.token)
+      await clearCart(user.token);
+      localStorage.removeItem('cart')
+      dispatch(updateCart([]))
+      toast.success("Order paid and saved")
+    } catch (error) {
+      toast.error(JSON.stringify(error))
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setProcessing(true)
@@ -44,10 +64,7 @@ export const StripeWidget = ({ history }) => {
       if (payload.error) {
         setError(`Payment failed: ${payload.error.message}`)
       } else {
-        console.log(JSON.stringify(payload, null, 2))
-        setError(null)
-        setProcessing(false)
-        setSucceeded(true)
+        handleSuccess(payload)
       }
     } catch (error) {
       console.log(error)
@@ -64,9 +81,10 @@ export const StripeWidget = ({ history }) => {
     style: {
       base: {
         color: "#32325d",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "Roboto, sans-serif",
         fontSmoothing: "antialiased",
         fontSize: "16px",
+        backgroundColor: "white",
         "::placeholder": {
           color: "#32325d",
         },
@@ -74,6 +92,8 @@ export const StripeWidget = ({ history }) => {
       invalid: {
         color: "#fa755a",
         iconColor: "#fa755a",
+        height: 70,
+        backgroundColor: "white"
       },
     },
   };
@@ -81,21 +101,24 @@ export const StripeWidget = ({ history }) => {
   return (
     <>
       {succeeded && <p className={"result-message"}>Payment successful. <Link className="standard-link underlined" to="user/history">See it in your purchase history</Link></p>}
-      <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
+      <form id="payment-form" onSubmit={handleSubmit}>
         {error && error}
         <CardElement
           id="card-element"
           options={cardStyle}
           onChange={handleChange}
         />
-        <button
-          className="stripe-button"
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: 10, width: "100%" }}
           disabled={processing || disabled || succeeded}
+          type="submit"
         >
           <span id="button-text">
             {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
           </span>
-        </button>
+        </Button>
       </form>
     </>
   )

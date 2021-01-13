@@ -50,7 +50,13 @@ exports.addPaintingsFromCSV = async (req, res) => {
     painting.slug = slugify(painting.title)
     painting.title_lower = painting.title.toLowerCase()
     if (seriesList[painting.series]) painting.series = seriesList[painting.series]._id
-    painting.sold.toLowerCase() === "true" ? painting.sold = true : painting.sold = false
+    if (painting.sold.toLowerCase() === "true") {
+      painting.sold = true
+      painting.stock = 0
+    }
+    else {
+      painting.sold = false
+    }
   })
   for (const painting of paintings) {
     try {

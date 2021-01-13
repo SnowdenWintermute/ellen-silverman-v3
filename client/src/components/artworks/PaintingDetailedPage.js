@@ -41,11 +41,11 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
     // scroll top
     window.scrollTo(0, 0)
     // prevent context menu on long press
-    window.oncontextmenu = function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      return false;
-    };
+    // window.oncontextmenu = function (event) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    //   return false;
+    // };
     return function cleanup() {
       window.oncontextmenu = () => { };
     };
@@ -72,7 +72,6 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
       cart.push(paintingWithNoImages)
       let unique = _.uniqWith(cart, _.isEqual)
       localStorage.setItem('cart', JSON.stringify(unique))
-      console.log(JSON.parse(localStorage.getItem('cart')))
       toast.success(`Added ${painting.title} to cart`)
       setPaintingIsInCart(true)
       dispatch(updateCart(cart))
@@ -114,11 +113,11 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
     return <div>No painting by that name found</div>;
   } else
     return (
-      <div className="painting-details-page">
+      <div className="page-frame">
         <div className="painting-details-content-holder">
           <MagnifierContainer className="painting-details-img">
             <SideBySideMagnifier
-              imageSrc={createImgSrcStringFromBinary(
+              imageSrc={painting.image && createImgSrcStringFromBinary(
                 painting.image.contentType,
                 painting.image.data
               )}

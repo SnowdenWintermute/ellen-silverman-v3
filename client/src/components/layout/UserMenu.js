@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import firebase from "firebase";
 import { ReactComponent as UserIcon } from "../../icons/userIcon.svg";
-import { Badge, Icon, IconButton } from '@material-ui/core'
+import { Badge, Icon, ClickAwayListener } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles({
   icon: {
@@ -36,14 +37,15 @@ const UserMenu = ({ hideMenu }) => {
   const cart = useSelector((state) => state.cart)
   const [showMenu, setShowMenu] = useState(false)
   const classes = useStyles()
-  useEffect(() => {
-    const clearUserDropdown = (e) => {
-      if (e.target.getAttribute("name") !== "user-menu")
-        setShowMenu(false);
-    };
-    window.addEventListener("click", (e) => clearUserDropdown(e));
-    return () => window.removeEventListener("click", clearUserDropdown);
-  }, [setShowMenu]);
+
+  // useEffect(() => {
+  //   const clearUserDropdown = (e) => {
+  //     if (e.target.getAttribute("name") !== "user-menu")
+  //       setShowMenu(false);
+  //   };
+  //   window.addEventListener("click", (e) => clearUserDropdown(e));
+  //   return () => window.removeEventListener("click", clearUserDropdown);
+  // }, [setShowMenu]);
 
   useEffect(() => {
     window.addEventListener('keydown', e => {
@@ -55,6 +57,8 @@ const UserMenu = ({ hideMenu }) => {
   }, [showMenu])
 
   const menuLinks = (<ul className={`user-menu-links-holder`}>
+    {user && user.role === "admin" && <Link to="/admin" onClick={hideMenu}>Admin Dashboard</Link>}
+    {user && <Link to="/user/history" onClick={hideMenu}>Order History</Link>}
     {!user && <Link to="/register" onClick={hideMenu}>
       Register
             </Link>}
@@ -70,28 +74,31 @@ const UserMenu = ({ hideMenu }) => {
     }}>
       Logout
             </Link>}
-    {user && user.role === "admin" && <Link to="/admin" onClick={hideMenu}>Admin Dashboard</Link>}
   </ul>)
 
   return (
-    <>
-      <div className="cart-icon-holder">
-        <Link to="/cart">
-          <Icon className={classes.icon}>
-            <Badge className={classes.badge} badgeContent={cart && cart.length} color="primary">
-            </Badge>
-            <ShoppingCartIcon />
-          </Icon>
-        </Link>
-      </div>
+    <ClickAwayListener onClickAway={() => { setShowMenu(false) }}>
+      <div>
+        <div className="cart-icon-holder">
+          <Link to="/cart">
+            <Icon className={classes.icon}>
+              <Badge className={classes.badge} badgeContent={cart && cart.length} color="primary">
+              </Badge>
+              <ShoppingCartIcon />
+            </Icon>
+          </Link>
+        </div>
 
-      <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {
-        setShowMenu(!showMenu)
-      }}>
-        {showMenu && menuLinks}
-        <UserIcon className="user-menu-icon" name="user-menu" />
+        <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {
+          setShowMenu(!showMenu)
+        }}>
+          {showMenu && menuLinks}
+          <Icon className={classes.icon}>
+            <AccountCircleIcon />
+          </Icon>
+        </div>
       </div>
-    </>
+    </ClickAwayListener>
   )
 }
 

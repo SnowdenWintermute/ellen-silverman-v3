@@ -10,9 +10,7 @@ exports.getSeriesWithThumbnails = async (req, res) => {
     for (const series of allSeries) {
       const firstPaintingInSeries = await Painting.findOne({ series: series._id, thumbnail: { $ne: null } }) || null
       if (firstPaintingInSeries) {
-        console.log("at least one painting found in series " + series.name)
         const thumbnail = { ...firstPaintingInSeries.thumbnail }
-        console.log("thumbnail for painting: ", thumbnail)
         const thumbnailToSend = thumbnail ? thumbnail : {}
         if (thumbnailToSend.data !== undefined) {
           seriesToReturn.push({ ...series._doc, thumbnail: { ...thumbnailToSend } })
