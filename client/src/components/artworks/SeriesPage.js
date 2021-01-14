@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import PaintingCard from "../paintings/PaintingCard";
 import { getPaintingsInSeriesWithThumbnails } from "../../apiCalls/series";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
+import { CircularProgress } from "@material-ui/core";
 
 const SeriesPage = (params) => {
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,13 +39,14 @@ const SeriesPage = (params) => {
         }
       });
       setCards(newCards);
+      setLoading(false)
     };
     asyncFunc();
-  }, []);
+  }, [params.category]);
 
   return (
     <div className="page-frame">
-      <div className="galleryHolder"> {cards}</div>
+      <div className="galleryHolder"> {loading ? <div className="flex-center"><CircularProgress /></div> : cards}</div>
     </div>
   );
 };

@@ -1,0 +1,16 @@
+.orders-holder {
+}
+.order-card {
+  margin: 0 auto;
+}
+.order-card-header {
+  background: #e9e7e2;
+  width: 100%;
+  padding: 10px;
+}
+.order-card-header-table-header {
+  text-align: left;
+}
+.order-card-header-table-header:last-child {
+  text-align: right;
+}

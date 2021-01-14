@@ -92,11 +92,11 @@ const UserMenu = ({ hideMenu }) => {
         <div className={"user-menu-icon-holder"} name="user-menu" onClick={() => {
           setShowMenu(!showMenu)
         }}>
-          {showMenu && menuLinks}
           <Icon className={classes.icon}>
             <AccountCircleIcon />
           </Icon>
         </div>
+        {showMenu && menuLinks}
       </div>
     </ClickAwayListener>
   )

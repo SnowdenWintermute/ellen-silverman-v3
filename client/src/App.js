@@ -20,7 +20,7 @@ import AddOrEditPainting from "./components/admin/AddOrEditPainting";
 import Register from "./components/auth/Register";
 import RegisterComplete from "./components/auth/RegisterComplete";
 import Login from "./components/auth/Login";
-import UserHistory from "./components/user/UserHistory";
+import UserHistory from "./components/user/history/UserHistory";
 import { auth } from "./firebase";
 import { currentUser } from "./apiCalls/auth";
 import ForgotPassword from "./components/auth/ForgotPassword";

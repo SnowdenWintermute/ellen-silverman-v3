@@ -34,7 +34,7 @@ const SeriesList = () => {
   }, [])
 
   return <div className="page-frame">
-    <div className="galleryHolder">{loading ? <CircularProgress /> : cards}</div>;
+    <div className="galleryHolder">{loading ? <div className="flex-center"><CircularProgress /></div> : cards}</div>;
     </div>
 
 }

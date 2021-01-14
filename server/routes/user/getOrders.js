@@ -10,10 +10,10 @@ exports.getOrders = async (req, res) => {
         path: 'painting',
         select: "-image"
       }
-    })
-    console.log(orders)
+    }).populate("shippingAddress")
     res.json(orders)
   } catch (error) {
+    console.log(error)
     res.json(error)
   }
 }

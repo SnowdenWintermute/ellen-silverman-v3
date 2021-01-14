@@ -8,13 +8,12 @@
   top: 7px;
 }
 .user-menu-icon-holder {
-  cursor: pointer;
   position: absolute;
+  cursor: pointer;
   right: 10px;
   top: 7px;
 }
 .cart-icon-holder {
-  cursor: pointer;
   position: absolute;
   height: 40px;
   right: 70px;
@@ -31,7 +30,7 @@
   background: white;
   z-index: 1299;
   border: 1px solid black;
-  top: 40px;
+  top: 47px;
   /* padding: 10px; */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -48,6 +47,8 @@
   margin: 0px;
   border-bottom: 1px solid;
   line-height: normal;
+  width: 100%;
+  text-align: left;
 }
 .user-menu-links-holder a:last-child {
   border-bottom: 0px;

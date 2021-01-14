@@ -104,13 +104,13 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
   }
   if (loading) {
     return <div className="page-frame">
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div className="flex-center">
         <CircularProgress />
       </div>
     </div>
   }
   else if (!Object.keys(painting).length > 0) {
-    return <div>No painting by that name found</div>;
+    return <div className="flex-center">No painting by that name found</div>;
   } else
     return (
       <div className="page-frame">

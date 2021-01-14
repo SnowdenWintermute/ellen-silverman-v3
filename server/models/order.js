@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema(
     orderTotal: Number,
     totalAfterDiscount: Number,
     shippingAddress: { type: ObjectId, ref: "Address" },
+    tracking: {},
     orderedBy: { type: ObjectId, ref: "User" },
     paymentIntent: {
       type: Object

@@ -60,3 +60,9 @@ export const createOrder = async (stripeResponse, authToken) => await axios.post
     authToken,
   },
 })
+
+export const getOrders = async (authToken) => await axios.get(`${process.env.REACT_APP_API}/user/order`, {
+  headers: {
+    authToken,
+  },
+})

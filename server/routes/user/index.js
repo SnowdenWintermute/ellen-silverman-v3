@@ -11,6 +11,7 @@ const { confirmNewAddress } = require('./confirmNewAddress')
 const { selectShippingAddress } = require('./selectShippingAddress')
 const { removeAddress } = require('./removeAddress')
 const { createOrder } = require('./createOrder')
+const { getOrders } = require('./getOrders')
 
 userMainRouter.post("/cart", authCheck, save);
 userMainRouter.get("/cart", authCheck, get);
@@ -23,5 +24,6 @@ userMainRouter.put("/address/remove", authCheck, removeAddress);
 userMainRouter.get("/address", authCheck, getUserAddresses);
 
 userMainRouter.post("/order", authCheck, createOrder)
+userMainRouter.get("/order", authCheck, getOrders)
 
 module.exports = userMainRouter;
