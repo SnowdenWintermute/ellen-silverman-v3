@@ -134,56 +134,10 @@ a:hover {
   box-shadow: 5px 5px 3px black;
 }
 
-/* Contact */
-.pageDiv {
-  min-height: calc(100vh - 5vh - 70px - 90px);
-}
-#contactDiv {
-  /* background-image: url("./img/4.png"); */
-  background-position: center;
-  background-size: cover;
-  object-fit: cover;
-  margin-top: 0;
-  padding-bottom: 3vh;
-}
-#contactForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.contactInput {
-  background-color: #f5f5f5;
-  resize: none;
-  width: 50%;
-  color: black;
-  font-family: "Roboto Condensed", sans-serif;
-  height: 6vh;
-  font-size: 2em;
-  border: 1px solid black;
-  box-shadow: 5px 5px 3px black;
-  margin-top: 1vh;
-  padding-left: 1vw;
-}
-.contactInputText {
-  padding-top: 1vh;
-  height: 35vh;
-}
-#formSubmit {
-  margin-top: 2vh;
-  color: black;
-  font-family: "Roboto Condensed", sans-serif;
-  height: 6vh;
-  font-size: 2em;
-  border: 1px solid black;
-  box-shadow: 5px 5px 3px black;
-  width: 50%;
-}
-
 .page-frame {
   padding-top: 40px;
   padding-bottom: 60px;
-  min-height: calc(100vh - 5vh - 70px - 93px);
+  min-height: calc(100vh - 70px - 40px - 100px);
 }
 
 .underlined {
@@ -196,4 +150,10 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.TextField-without-border-radius .MuiInputBase-formControl {
+  border-radius: 0;
+  /* display: inline-block; */
+  /* border: 1px solid blue; */
 }

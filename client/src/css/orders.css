@@ -14,3 +14,73 @@
 .order-card-header-table-header:last-child {
   text-align: right;
 }
+.order-card-header-table-datum:last-child {
+  text-align: right;
+}
+.order-card-body {
+  width: 100%;
+  padding: 10px;
+}
+.order-card-body-table {
+  width: 100%;
+}
+.order-card-body-table th {
+  text-align: left;
+}
+.order-card-body-table th:last-child {
+  text-align: right;
+}
+.order-painting-card-holder {
+  /* width: 100%; */
+  /* min-width: 800px; */
+  width: 600px;
+}
+.order-painting-card {
+  border: 1px solid;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  background: #e9e7e2;
+  width: 100%;
+}
+.order-painting-image {
+  display: block;
+  width: 200px;
+  margin: 20px;
+  border: 1px solid;
+}
+.order-painting-info-text-holder {
+  padding: 20px;
+  /* white-space: nowrap; */
+}
+.order-card-info-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.order-card-info {
+  padding-bottom: 7px;
+}
+
+.order-shipping-info-holder {
+  display: block;
+  margin-left: 10px;
+  /* margin-right: 10px; */
+  width: calc(100% - 10px);
+  padding: 10px;
+  border: 1px solid;
+}
+.order-shipping-address-card {
+  max-height: fit-content;
+  list-style: none;
+  /* border: 1px solid red; */
+}
+.order-shipping-info-holder-narrow-screen {
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 10px;
+}

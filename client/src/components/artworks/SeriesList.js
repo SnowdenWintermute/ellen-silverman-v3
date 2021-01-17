@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PaintingCategoryCard from "../paintings/PaintingCategoryCard";
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
 
 const SeriesList = () => {
   const [cards, setCards] = useState([])
@@ -14,12 +14,13 @@ const SeriesList = () => {
       setLoading(true)
       try {
         const seriesListWithThumbnails = await getSeriesListWithThumbnails()
-        seriesListWithThumbnails.forEach((item, i) => {
+        console.log(seriesListWithThumbnails)
+        seriesListWithThumbnails.forEach((series, i) => {
           newCards.push(
             <PaintingCategoryCard
-              img={createImgSrcStringFromBinary(item.thumbnail.contentType, item.thumbnail.data)}
-              series={item.name}
-              linkTo={`/artworks/${item.slug}`}
+              img={createImgSrcStringFromBinary(series.thumbnail.contentType, series.thumbnail.data)}
+              series={series.name}
+              linkTo={`/artworks/${series.slug}`}
               key={i}
             />
           );
@@ -34,7 +35,10 @@ const SeriesList = () => {
   }, [])
 
   return <div className="page-frame">
-    <div className="galleryHolder">{loading ? <div className="flex-center"><CircularProgress /></div> : cards}</div>;
+    {!loading && <Typography variant="h5" style={{ marginLeft: 20 }}>Select a Series</Typography>}
+    <div className="galleryHolder">
+      {loading ? <div className="flex-center"><CircularProgress /></div> : cards}
+    </div>;
     </div>
 
 }

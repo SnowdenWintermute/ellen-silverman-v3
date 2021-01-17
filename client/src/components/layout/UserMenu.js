@@ -57,15 +57,16 @@ const UserMenu = ({ hideMenu }) => {
   }, [showMenu])
 
   const menuLinks = (<ul className={`user-menu-links-holder`}>
-    {user && user.role === "admin" && <Link to="/admin" onClick={hideMenu}>Admin Dashboard</Link>}
-    {user && <Link to="/user/history" onClick={hideMenu}>Order History</Link>}
-    {!user && <Link to="/register" onClick={hideMenu}>
+    {user && user.role === "admin" && <Link to="/admin" onClick={() => setShowMenu(false)}>Admin Dashboard</Link>}
+    {user && <Link to="/user/history" onClick={() => setShowMenu(false)}>Order History</Link>}
+    {!user && <Link to="/register" onClick={() => setShowMenu(false)}>
       Register
             </Link>}
-    {!user && <Link to="/login" onClick={hideMenu}>
+    {!user && <Link to="/login" onClick={() => setShowMenu(false)}>
       Login
             </Link>}
     {user && <Link to="/login" onClick={() => {
+      setShowMenu(false)
       firebase.auth().signOut();
       dispatch({
         type: "LOGOUT",

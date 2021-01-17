@@ -152,7 +152,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
             >
               View other paintings in the {painting.series.name} series
             </Link>
-            {!painting.sold &&
+            {(!painting.sold && painting.price) &&
               <>
                 <br />
                 <br />

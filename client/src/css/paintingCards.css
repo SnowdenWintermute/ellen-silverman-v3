@@ -1,8 +1,3 @@
-.galleryHolderHolder {
-  display: block;
-  margin: 0 auto;
-  min-height: calc(100vh - 184px);
-}
 .galleryHolder {
   padding: 10px;
   display: flex;

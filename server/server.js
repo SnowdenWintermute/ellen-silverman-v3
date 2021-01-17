@@ -29,6 +29,7 @@ app.use('/api/paintings', require('./routes/paintings'))
 app.use('/api/series', require('./routes/series'))
 app.use('/api/user', require('./routes/user'))
 app.use('/api/stripe', require('./routes/stripe'))
+app.use('/api/admin', require('./routes/admin'))
 
 // port
 const port = process.env.PORT || 8000;

@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, Typography } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getOrders } from '../../../apiCalls/user'
@@ -26,7 +26,11 @@ const UserHistory = () => {
         <CircularProgress />
       </div>}
       <div className="orders-holder">
-        {!loadingOrders && orders.length > 0 && orders.map(order => <OrderCard order={order} />).reverse()}
+        {!loadingOrders && <BasicPaper>
+          <Typography variant="h5">Order History</Typography>
+          {orders.length > 0 && orders.map(order => <OrderCard order={order} key={order._id} />).reverse()}
+          {orders.length < 1 && <Typography variant="body1">No orders yet...</Typography>}
+        </BasicPaper>}
       </div>
     </div>
   )

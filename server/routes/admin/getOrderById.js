@@ -1,10 +1,8 @@
 const Order = require('../../models/order')
-const User = require('../../models/user')
 
-exports.getOrders = async (req, res) => {
+exports.getOrderById = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email })
-    const orders = await Order.find({ orderedBy: user._id }).populate({
+    const orders = await Order.findById(req.params.id).populate({
       path: "paintings",
       populate: {
         path: 'painting',
@@ -13,7 +11,7 @@ exports.getOrders = async (req, res) => {
           path: "series"
         }
       }
-    }).populate("shippingAddress")
+    }).populate("shippingAddress").populate("orderedBy")
     res.json(orders)
   } catch (error) {
     console.log(error)

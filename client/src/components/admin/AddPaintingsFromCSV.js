@@ -71,7 +71,7 @@ const AddPaintingsFromCSV = () => {
     <div className="page-frame">
       <MaterialPaperNarrow className={classes.paper}>
         <Grid container item xs={12}>
-          <AdminFeatureHeader headerText={"Add and Update Paintings from CSV"} subHeaderText={"Any paintings in the selected .csv file will overwrite paintings on the database"} />
+          <AdminFeatureHeader headerText={"Add and Update Paintings from CSV"} subHeaderText={"NOTE: Any paintings in the selected .csv file will overwrite paintings in the database"} />
           <Grid item xs={12}>
             <form onSubmit={handleSubmit}>
               {(loading && progress !== 100) ? <LinearProgress variant="determinate" value={progress} /> : loading && <LinearProgress />}

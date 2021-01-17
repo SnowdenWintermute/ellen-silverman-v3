@@ -101,7 +101,7 @@ export const StripeWidget = ({ history }) => {
   return (
     <>
       {succeeded && <p className={"result-message"}>Payment successful. <Link className="standard-link underlined" to="user/history">See it in your purchase history</Link></p>}
-      <form id="payment-form" onSubmit={handleSubmit}>
+      {!succeeded && <form id="payment-form" onSubmit={handleSubmit}>
         {error && error}
         <CardElement
           id="card-element"
@@ -119,7 +119,7 @@ export const StripeWidget = ({ history }) => {
             {processing ? <div className="spinner" id="spinner"></div> : "Pay"}
           </span>
         </Button>
-      </form>
+      </form>}
     </>
   )
 }
