@@ -1,11 +1,23 @@
-import { CircularProgress, Typography } from '@material-ui/core'
+import { CircularProgress, Typography, makeStyles } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getOrders } from '../../../apiCalls/user'
 import BasicPaper from '../../common/paper/BasicPaper'
 import OrderCard from './OrderCard'
 
+const useStyles = makeStyles((theme) => ({
+  pageHeader: {
+    marginBottom: 20,
+    maxWidth: 1000,
+    margin: "0 auto",
+  },
+  pageTitle: {
+    marginBottom: 10
+  },
+}))
+
 const UserHistory = () => {
+  const classes = useStyles()
   const user = useSelector(state => state.user)
   const [orders, setOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(true)
@@ -27,7 +39,9 @@ const UserHistory = () => {
       </div>}
       <div className="orders-holder">
         {!loadingOrders && <BasicPaper>
-          <Typography variant="h5">Order History</Typography>
+          <div className={classes.pageHeader}>
+            <Typography variant="h5" className={classes.pageTitle}>Order History</Typography>
+          </div>
           {orders.length > 0 && orders.map(order => <OrderCard order={order} key={order._id} />).reverse()}
           {orders.length < 1 && <Typography variant="body1">No orders yet...</Typography>}
         </BasicPaper>}

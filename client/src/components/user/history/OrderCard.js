@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import { Card, Typography, FormControl, InputLabel, MenuItem, Button, Grid, makeStyles, CircularProgress, Select } from "@material-ui/core"
 import OrderPaintingCard from './OrderPaintingCard'
 import OrderShippingAddressCard from './OrderShippingAddressCard'
-import StandardModal from '../../common/modal/StandardModal'
+import ConfirmOrderStatusChangeModal from './ConfirmOrderStatusChangeModal'
+import RequestReturnModal from './RequestReturnModal'
 import { changeOrderStatus } from '../../../apiCalls/admin'
+import { submitReturnRequest } from '../../../apiCalls/user'
 import { toast } from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
@@ -29,12 +32,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const OrderCard = ({ order, isAdmin, user }) => {
-  // const isAdmin = false
+const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
+  isAdmin = false
   const classes = useStyles()
+  const user = useSelector(state => state.user)
   const [orderStatus, setOrderStatus] = useState(order.status)
   const [orderPreviousStatus, setOrderPreviousStatus] = useState(order.status)
   const [confirmOrderStatusChangeModalOpen, setConfirmOrderStatusChangeModalOpen] = useState(false)
+  const [requestReturnModalOpen, setRequestReturnModalOpen] = useState(false)
+  const mountedRef = useRef(true)
 
   const onOrderStatusChange = (e) => {
     setOrderPreviousStatus(orderStatus)
@@ -50,13 +56,28 @@ const OrderCard = ({ order, isAdmin, user }) => {
   const onConfirmStatusChange = async () => {
     try {
       const updatedOrder = await changeOrderStatus(order._id, orderStatus, user.token)
+      if (!mountedRef) return null
       console.log(updatedOrder)
-      // setOrderStatus(updatedOrder.data.status)
       toast.success("Successfully changed order status to " + updatedOrder.data.status)
+      console.log(updatedOrder.data._id)
+      removeOrderFromList(updatedOrder.data._id)
     } catch (error) {
       toast.error(JSON.stringify(error))
     }
     setConfirmOrderStatusChangeModalOpen(false)
+  }
+
+  const handleReturnRequest = async ({ orderId, selectedPaintings, returnNotes }) => {
+    try {
+      const res = await submitReturnRequest(orderId, selectedPaintings, returnNotes, user.token)
+      if (res.data.error) toast.error(res.data.error)
+      console.log(res)
+      setRequestReturnModalOpen(false)
+    } catch (error) {
+      console.log(error)
+      toast.error(JSON.stringify(error))
+      setRequestReturnModalOpen(false)
+    }
   }
 
   const getOrderStatusElement = () =>
@@ -87,21 +108,12 @@ const OrderCard = ({ order, isAdmin, user }) => {
       :
       (<Typography variant="body1"><strong>Status:</strong> {order.status && order.status.toUpperCase()}</Typography>)
 
+  if (!order._id) return null
+
   return (
     <Card className={classes.orderCard} elevation={3}>
-      <StandardModal open={confirmOrderStatusChangeModalOpen} handleClose={() => setConfirmOrderStatusChangeModalOpen(false)}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="h5">
-              Change status of order {order._id} to {orderStatus.toUpperCase()}?
-        </Typography>
-          </Grid>
-          <Grid item xs={12} container justify="space-between">
-            <Button variant="outlined" color="primary" onClick={onCancelStatusChange}>CANCEL</Button>
-            <Button variant="contained" color="primary" onClick={onConfirmStatusChange}>CONFIRM</Button>
-          </Grid>
-        </Grid>
-      </StandardModal>
+      <ConfirmOrderStatusChangeModal open={confirmOrderStatusChangeModalOpen} handleClose={() => setConfirmOrderStatusChangeModalOpen(false)} order={order} orderStatus={orderStatus} onCancelStatusChange={onCancelStatusChange} onConfirmStatusChange={onConfirmStatusChange} />
+      <RequestReturnModal open={requestReturnModalOpen} handleClose={() => setRequestReturnModalOpen(false)} handleReturnRequest={handleReturnRequest} order={order} />
       <Grid container>
         <Grid item xs={12}>
           <table className="order-card-header">
@@ -153,6 +165,8 @@ const OrderCard = ({ order, isAdmin, user }) => {
               </Grid>
               <Grid item xs={12}>
                 <OrderShippingAddressCard order={order} address={order.shippingAddress} isAdmin={isAdmin} />
+                <br />
+                {!isAdmin && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
               </Grid>
             </Grid>
           </Grid>

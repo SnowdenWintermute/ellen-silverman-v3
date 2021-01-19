@@ -27,7 +27,7 @@ const OrderFilterBar = ({ onSearchOrderById, orderIdSearching, onSelectFilter, s
     <form className={classes.searchForm} onSubmit={onSearchOrderById}>
       <Grid container justify="space-between">
         <Grid item className="TextField-without-border-radius">
-          <TextField className={classnames(classes.orderSearchInput, classes.textField)} variant="filled" value={orderIdSearching} onChange={e => setOrderIdSearching(e.target.value)} placeholder="Search orders..." />
+          <TextField className={classnames(classes.orderSearchInput, classes.textField)} variant="filled" value={orderIdSearching} onChange={e => setOrderIdSearching(e.target.value)} placeholder="Search orders by id" />
           <Button type="submit" variant="outlined" className={classnames(classes.searchButton, classes.squareElement)}><Icon><SearchIcon /></Icon></Button>
         </Grid>
         <Grid item>
@@ -45,7 +45,7 @@ const OrderFilterBar = ({ onSearchOrderById, orderIdSearching, onSelectFilter, s
           </FormControl>
         </Grid>
       </Grid>
-    </form>
+    </form >
   )
 }
 export default OrderFilterBar

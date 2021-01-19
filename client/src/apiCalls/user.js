@@ -66,3 +66,11 @@ export const getOrders = async (authToken) => await axios.get(`${process.env.REA
     authToken,
   },
 })
+
+export const submitReturnRequest = async (orderId, selectedPaintings, returnNotes, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/order/return`,
+  { orderId, selectedPaintings, returnNotes },
+  {
+    headers: {
+      authToken,
+    },
+  })

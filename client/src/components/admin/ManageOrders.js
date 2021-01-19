@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     maxWidth: 1000,
     margin: "0 auto",
-    [theme.breakpoints.down('xs')]: {
-      overflowX: "scroll"
-    }
   },
   pageTitle: {
     marginBottom: 10
@@ -42,10 +39,6 @@ const ManageOrders = () => {
   }, [setOrders, orderStatusFilter, user.token])
 
   useEffect(() => {
-    fetchFilteredOrders()
-  }, [fetchFilteredOrders])
-
-  useEffect(() => {
     fetchFilteredOrders(orderStatusFilter)
   }, [fetchFilteredOrders, orderStatusFilter])
 
@@ -69,6 +62,13 @@ const ManageOrders = () => {
     }
   }
 
+  const removeOrderFromList = (orderId) => {
+    console.log(orderId)
+    const newOrderList = orders.map(order => order._id !== orderId && order)
+    console.log(newOrderList)
+    setOrders(newOrderList)
+  }
+
   return (
     <div className="page-frame">
       <div className="orders-holder">
@@ -83,7 +83,7 @@ const ManageOrders = () => {
             <CircularProgress />
           </div>}
           {!loadingOrders && <>
-            {orders.length > 0 && orders.map(order => <OrderCard order={order} key={order._id} isAdmin={true} user={user} />).reverse()}
+            {orders.length > 0 && orders.map(order => order._id && <OrderCard order={order} key={order._id} isAdmin={true} user={user} removeOrderFromList={removeOrderFromList} />).reverse()}
             {orders.length < 1 && <Typography variant="body1" className={classes.pageHeader}>No orders found with selected parameters.</Typography>}
           </>
           }

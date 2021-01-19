@@ -10,13 +10,21 @@ const orderSchema = new mongoose.Schema(
           ref: "Painting"
         },
         count: Number,
-        subtotal: Number
+        subtotal: Number,
+        returnRequested: {
+          type: Boolean,
+          default: false
+        },
+        reasonForReturnRequest: {
+          type: String,
+          default: ""
+        }
       },
     ],
     orderTotal: Number,
     totalAfterDiscount: Number,
     shippingAddress: { type: ObjectId, ref: "Address" },
-    tracking: {},
+    tracking: String,
     orderedBy: { type: ObjectId, ref: "User" },
     paymentIntent: {
       type: Object

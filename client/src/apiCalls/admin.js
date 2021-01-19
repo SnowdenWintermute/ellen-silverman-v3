@@ -17,3 +17,9 @@ export const changeOrderStatus = async (id, newStatus, authToken) => await axios
     authToken,
   },
 })
+
+export const updateOrderTracking = async (id, newTracking, authToken) => await axios.put(`${process.env.REACT_APP_API}/admin/orders/tracking`, { id, newTracking }, {
+  headers: {
+    authToken,
+  },
+})

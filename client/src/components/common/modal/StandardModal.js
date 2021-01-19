@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
     top: `${10}%`,
     left: `${50}%`,
     transform: `translate(-${50}%, -${0}%)`,
+    [theme.breakpoints.down('sm')]: {
+      width: "95%"
+    },
   },
+  scrolly: {
+    overflowY: "scroll"
+  }
 }));
 
 const StandardModal = ({ children, open, handleClose }) => {
@@ -26,7 +32,7 @@ const StandardModal = ({ children, open, handleClose }) => {
       onClose={handleClose}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      style={{ overflow: "scroll" }}
+      className={classes.scrolly}
     >
       <div className={classes.modalDiv}>
         {children}
