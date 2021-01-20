@@ -15,6 +15,10 @@ const orderSchema = new mongoose.Schema(
           type: Boolean,
           default: false
         },
+        returned: {
+          type: Boolean,
+          default: false
+        },
         reasonForReturnRequest: {
           type: String,
           default: ""

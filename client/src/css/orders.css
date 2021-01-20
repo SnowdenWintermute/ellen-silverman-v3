@@ -45,6 +45,9 @@
   background: #e9e7e2;
   width: 100%;
 }
+.order-painting-image-holder {
+  position: relative;
+}
 .order-painting-image {
   display: block;
   width: 200px;
@@ -83,4 +86,13 @@
   flex-direction: column;
   padding: 10px;
   margin-bottom: 10px;
+}
+.painting-return-request-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  color: #fcbe11;
+  text-shadow: 1px 1px 5px black;
 }

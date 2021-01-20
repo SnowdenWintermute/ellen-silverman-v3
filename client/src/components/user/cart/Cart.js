@@ -134,7 +134,7 @@ const Cart = () => {
               <Typography variant="h5">Order Summary</Typography>
               <Table className={classes.summaryTable} size="small">
                 <TableBody>
-                  {cart.length && cart.map(item =>
+                  {cart.length > 0 && cart.map(item =>
                     <TableRow key={item.title}>
                       <TableCell>
                         {item.title}

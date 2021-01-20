@@ -7,13 +7,17 @@ const useStyles = makeStyles({
   viewButton: {
     marginTop: 10,
     width: "100%"
-  }
+  },
 })
-const OrderPaintingCard = ({ painting }) => {
+const OrderPaintingCard = ({ paintingOrderObject }) => {
   const classes = useStyles()
+  const { painting } = paintingOrderObject
   return (
     <div className="order-painting-card">
-      <img className="order-painting-image" alt={painting.title} src={createImgSrcStringFromBinary(painting.thumbnail.contentType, painting.thumbnail.data)} />
+      <div className="order-painting-image-holder">
+        <img className="order-painting-image" alt={painting.title} src={createImgSrcStringFromBinary(painting.thumbnail.contentType, painting.thumbnail.data)} />
+        {paintingOrderObject.returnRequested && <div className={"painting-return-request-stamp"}><Typography variant="h5"><strong>Return Requested</strong></Typography></div>}
+      </div>
       <ul style={{ listStyle: "none" }} className="order-painting-info-text-holder">
         <li>
           <Link className="cart-item-link" target="_blank" to={`/artworks/${painting.series.slug}/${painting.slug}`}>

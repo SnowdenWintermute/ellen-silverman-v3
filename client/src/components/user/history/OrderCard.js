@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { Card, Typography, FormControl, InputLabel, MenuItem, Button, Grid, makeStyles, CircularProgress, Select } from "@material-ui/core"
 import OrderPaintingCard from './OrderPaintingCard'
@@ -33,20 +33,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
-  isAdmin = false
   const classes = useStyles()
   const user = useSelector(state => state.user)
+  const [orderState, setOrderState] = useState(order)
   const [orderStatus, setOrderStatus] = useState(order.status)
   const [orderPreviousStatus, setOrderPreviousStatus] = useState(order.status)
   const [confirmOrderStatusChangeModalOpen, setConfirmOrderStatusChangeModalOpen] = useState(false)
   const [requestReturnModalOpen, setRequestReturnModalOpen] = useState(false)
+
   const mountedRef = useRef(true)
 
-  const onOrderStatusChange = (e) => {
+  const onOrderStatusChange = useCallback((e) => {
     setOrderPreviousStatus(orderStatus)
     setOrderStatus(e.target.value)
     setConfirmOrderStatusChangeModalOpen(true)
-  }
+  }, [orderStatus])
 
   const onCancelStatusChange = () => {
     setOrderStatus(orderPreviousStatus)
@@ -55,7 +56,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
 
   const onConfirmStatusChange = async () => {
     try {
-      const updatedOrder = await changeOrderStatus(order._id, orderStatus, user.token)
+      const updatedOrder = await changeOrderStatus(orderState._id, orderStatus, user.token)
       if (!mountedRef) return null
       console.log(updatedOrder)
       toast.success("Successfully changed order status to " + updatedOrder.data.status)
@@ -71,7 +72,12 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
     try {
       const res = await submitReturnRequest(orderId, selectedPaintings, returnNotes, user.token)
       if (res.data.error) toast.error(res.data.error)
-      console.log(res)
+      else {
+        toast.success("Return request received. Check your email for updates.")
+        setOrderStatus(res.data.status)
+        setOrderState(res.data)
+        console.log(res.data.status)
+      }
       setRequestReturnModalOpen(false)
     } catch (error) {
       console.log(error)
@@ -80,7 +86,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
     }
   }
 
-  const getOrderStatusElement = () =>
+  const getOrderStatusElement = useCallback(() =>
     isAdmin ?
       <FormControl variant="filled">
         <InputLabel>Status</InputLabel>
@@ -106,7 +112,8 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
         </Select>
       </FormControl>
       :
-      (<Typography variant="body1"><strong>Status:</strong> {order.status && order.status.toUpperCase()}</Typography>)
+      (<Typography variant="body1"><strong>Status:</strong> {orderStatus && orderStatus.toUpperCase()}</Typography>),
+    [isAdmin, onOrderStatusChange, orderStatus])
 
   if (!order._id) return null
 
@@ -133,13 +140,13 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
             <tbody>
               <tr>
                 <td className="order-card-header-table-datum">
-                  {order._id}
+                  {orderState._id}
                 </td>
                 <td className="order-card-header-table-datum">
-                  ${order.orderTotal}
+                  ${orderState.orderTotal}
                 </td>
                 <td className="order-card-header-table-datum">
-                  {new Date(order.createdAt).toLocaleDateString() + " at " + new Date(order.createdAt).toLocaleTimeString()}
+                  {new Date(orderState.createdAt).toLocaleDateString() + " at " + new Date(orderState.createdAt).toLocaleTimeString()}
                 </td>
               </tr>
             </tbody>
@@ -152,9 +159,9 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
                 <Typography variant="body1"><strong>Works Purchased:</strong></Typography>
               </Grid>
               <Grid item xs={12}>
-                {order.paintings.map((painting, i) =>
+                {orderState.paintings.map((painting, i) =>
                   painting.painting && painting.painting.thumbnail ?
-                    <OrderPaintingCard key={painting.painting.title} painting={painting.painting} />
+                    <OrderPaintingCard key={painting.painting.title} paintingOrderObject={painting} />
                     : <CircularProgress />
                 )}
               </Grid>
@@ -164,7 +171,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
                 {getOrderStatusElement()}
               </Grid>
               <Grid item xs={12}>
-                <OrderShippingAddressCard order={order} address={order.shippingAddress} isAdmin={isAdmin} />
+                <OrderShippingAddressCard order={orderState} address={orderState.shippingAddress} isAdmin={isAdmin} />
                 <br />
                 {!isAdmin && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
               </Grid>
