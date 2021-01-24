@@ -1,24 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import ImageFader from "./ImageFader";
 import ImageFadeSlideshow from "./ImageFadeSlideshow";
 import ElementSlider from "./ElementSlider";
 
 export default class LandingPage extends Component {
   render() {
-    let timer = 7000;
+    // let timer = 7000;
     return (
       <div>
-        <ImageFadeSlideshow
-          slideTimer={timer}
-          slides={[
-            "/img/The Professor's Interiors/Director's Office.jpg",
-            "./img/Salt Marsh/Salt Marsh, Birds.jpg",
-            "./img/South Dakota Trip/Devil's Tower.jpg",
-            "./img/Forest Path/A Walk in the Woods.jpg",
-            "./img/Cold River Camp/Cold River Vatican City.jpg",
-          ]}
-        />
+        <ImageFader delayInMiliseconds={5000} images={["./img/Salt Marsh/Salt Marsh, Birds.jpg",
+          "./img/South Dakota Trip/Devil's Tower.jpg",
+          "./img/The Professor's Interiors/Director's Office.jpg",
+          "./img/Forest Path/A Walk in the Woods.jpg",
+          "./img/Cold River Camp/Cold River Vatican City.jpg"]} />
+        {/*
         <ElementSlider
           slideTimer={timer}
           slides={[
@@ -44,7 +41,7 @@ export default class LandingPage extends Component {
               hiddenClass: "element-slider-hidden-top",
             },
           ]}
-        />
+        /> */}
       </div>
     );
   }

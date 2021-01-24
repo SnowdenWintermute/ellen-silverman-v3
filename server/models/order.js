@@ -37,7 +37,8 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "processing",
       enum: ["processing", "shipped", "return requested", "returned", "cancelled", "completed"]
-    }
+    },
+    history: [{ message: String, timestamp: Date }]
   },
   { timestamps: true }
 );

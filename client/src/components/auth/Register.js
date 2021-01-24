@@ -104,7 +104,7 @@ const Register = ({ history }) => {
       />
 
       <div className="auth-bottom-links">
-        <Link to="/login">Have account? Log in here</Link>
+        <Link className="auth-link" to="/login">Have account? Log in here</Link>
 
         <button type="submit" className="button button-standard-size button-basic" disabled={loading || !email}>
           Register

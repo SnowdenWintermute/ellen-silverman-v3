@@ -1,18 +1,18 @@
 const nodemailer = require("nodemailer");
-const getNodemailerTransportOptions = require('./getNodemailerTransportOptions')
+const getNodemailerTransportOptions = require('../getNodemailerTransportOptions')
 const adminEmail = process.env.IN_DEVELOPMENT_MODE ? "michael.p.silverman@gmail.com" : "mcguffsilverman@gmail.com"
+const rootUrl = process.env.ROOT_URL;
 
 module.exports = (order) => {
   console.log("admin notified: " + adminEmail)
   try {
-    const rootUrl = "https://mcguffsilverman.com";
     const output = `A new order has been placed! \n 
-    ${order.paintings.map(painting => painting.painting.title + ": " + painting.painting.price) + "\n"}
-      Once shipped, please update the status at https://mcguffsilverman.com/admin/orders
+    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "\n"}
+      Once shipped, please update the status at ${rootUrl}/admin/orders
     `;
     const textOutput = `A new order has been placed! \n 
-    ${order.paintings.map(painting => painting.painting.title + ": " + painting.painting.price) + "\n"}
-      Once shipped, please update the status at https://mcguffsilverman.com/admin/orders
+    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "\n"}
+      Once shipped, please update the status at ${rootUrl}/admin/orders
     `;
 
     // create reusable transporter object using the default SMTP transport

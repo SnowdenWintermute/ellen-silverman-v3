@@ -1,17 +1,17 @@
 const nodemailer = require("nodemailer");
-const createNewOrderEmailBody = require("./createNewOrderEmailBody");
-const getNodemailerTransportOptions = require('./getNodemailerTransportOptions')
+const getNodemailerTransportOptions = require('../getNodemailerTransportOptions')
+const rootUrl = process.env.ROOT_URL
 
-module.exports = async (user, order) => {
-  console.log("mailing order confirmation to " + user.email)
+module.exports = async (order, user) => {
+  console.log("mailing tracking update to " + user.email)
   if (!user.email) return
   try {
-    const rootUrl = "https://mcguffsilverman.com";
-    const output = createNewOrderEmailBody(user, order);
-    const textOutput = `Thank you for your order. We will email you when your items ship. \n 
-    ${order.paintings.map(painting => painting.painting.title + ": " + painting.painting.price) + "\n"}
-      You can view your orders at https://mcguffsilverman.com/user/history
+    const output = `Your order id ${order._id} has been successfully cancelled. \n
+      You can view and manage your orders at <a href="https://mcguffsilverman.com/user/history">https://mcguffsilverman.com/user/history</a>
     `;
+    const textOutput = `Your order id ${order._id} has been successfully cancelled. \n
+    You can view and manage your orders at https://mcguffsilverman.com/user/history
+  `;
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport(getNodemailerTransportOptions());
@@ -20,7 +20,7 @@ module.exports = async (user, order) => {
     let info = await transporter.sendMail({
       from: 'no-reply@mcguffsilverman.com', // sender address
       to: user.email, // list of receivers
-      subject: "Order Placed", // Subject line
+      subject: "Order Cancelled", // Subject line
       text: textOutput, // plain text body
       html: output // html body
     });

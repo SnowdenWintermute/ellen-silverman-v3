@@ -139,10 +139,10 @@ const Login = ({ history }) => {
             onChange={(e) => onChange(e)}
           ></input>
           <div className="forgot-password">
-            <Link to="request-password-reset">Forgot password?</Link>
+            <Link className="auth-link" to="request-password-reset">Forgot password?</Link>
           </div>
           <div className="auth-bottom-links">
-            <Link to="/register">Create account</Link>
+            <Link className="auth-link" to="/register">Create account</Link>
             <input
               type="submit"
               className="button button-standard-size button-basic"

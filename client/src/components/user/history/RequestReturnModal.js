@@ -45,7 +45,7 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
                 order.paintings.map(painting => <Fragment key={painting.painting.title}>
                   <FormControlLabel
 
-                    control={<Checkbox color="primary" checked={selectedPaintings[painting.painting.title]} onChange={handleChange} name={painting.painting.title} />}
+                    control={<Checkbox color="primary" checked={selectedPaintings[painting.painting.title]} disabled={painting.returnRequested} onChange={handleChange} name={painting.painting.title} />}
                     label={painting.painting.title}
                   />
                   {

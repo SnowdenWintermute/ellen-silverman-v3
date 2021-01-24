@@ -142,7 +142,7 @@ const Checkout = ({ history }) => {
   const handleConfirmAddress = async e => {
     const newAddresses = await confirmNewAddress(addressFromServerToBeConfirmed._id, user.token)
     setConfirmedAddresses(newAddresses.data)
-    setSelectedAddress(newAddresses.data[0]._id)
+    setSelectedAddress(newAddresses.data[newAddresses.data.length - 1]._id)
     setConfirmAddressModalOpen(false)
     setAddingNewAddress(false)
   }

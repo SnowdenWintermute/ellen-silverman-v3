@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     borderTop: "0px"
   },
   selectElement: {
-    width: 170
+    width: 190
   },
 }))
 

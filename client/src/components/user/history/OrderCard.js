@@ -6,8 +6,9 @@ import OrderShippingAddressCard from './OrderShippingAddressCard'
 import ConfirmOrderStatusChangeModal from './ConfirmOrderStatusChangeModal'
 import RequestReturnModal from './RequestReturnModal'
 import { changeOrderStatus } from '../../../apiCalls/admin'
-import { submitReturnRequest } from '../../../apiCalls/user'
+import { submitReturnRequest, cancelOrder } from '../../../apiCalls/user'
 import { toast } from "react-toastify"
+import CancelOrderModal from './CancelOrderModal'
 
 const useStyles = makeStyles((theme) => ({
   orderCard: {
@@ -40,6 +41,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
   const [orderPreviousStatus, setOrderPreviousStatus] = useState(order.status)
   const [confirmOrderStatusChangeModalOpen, setConfirmOrderStatusChangeModalOpen] = useState(false)
   const [requestReturnModalOpen, setRequestReturnModalOpen] = useState(false)
+  const [cancelOrderModalOpen, setCancelOrderModalOpen] = useState(false)
 
   const mountedRef = useRef(true)
 
@@ -86,6 +88,21 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
     }
   }
 
+  const submitCancelOrder = async (orderId) => {
+    try {
+      const newOrder = await cancelOrder(orderId, user.token)
+      if (newOrder.data.error) return toast.error(newOrder.data.error)
+      setOrderState(newOrder.data)
+      setOrderStatus(newOrder.data.status)
+      setCancelOrderModalOpen(false)
+      toast.success(`Order ${newOrder.data._id} successfully cancelled`)
+    } catch (error) {
+      console.log(error)
+      toast.error(JSON.stringify(error))
+      setCancelOrderModalOpen(false)
+    }
+  }
+
   const getOrderStatusElement = useCallback(() =>
     isAdmin ?
       <FormControl variant="filled">
@@ -119,8 +136,9 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
 
   return (
     <Card className={classes.orderCard} elevation={3}>
-      <ConfirmOrderStatusChangeModal open={confirmOrderStatusChangeModalOpen} handleClose={() => setConfirmOrderStatusChangeModalOpen(false)} order={order} orderStatus={orderStatus} onCancelStatusChange={onCancelStatusChange} onConfirmStatusChange={onConfirmStatusChange} />
-      <RequestReturnModal open={requestReturnModalOpen} handleClose={() => setRequestReturnModalOpen(false)} handleReturnRequest={handleReturnRequest} order={order} />
+      <ConfirmOrderStatusChangeModal open={confirmOrderStatusChangeModalOpen} handleClose={() => setConfirmOrderStatusChangeModalOpen(false)} order={orderState} orderStatus={orderStatus} onCancelStatusChange={onCancelStatusChange} onConfirmStatusChange={onConfirmStatusChange} />
+      <RequestReturnModal open={requestReturnModalOpen} handleClose={() => setRequestReturnModalOpen(false)} handleReturnRequest={handleReturnRequest} order={orderState} />
+      <CancelOrderModal open={cancelOrderModalOpen} handleClose={() => setCancelOrderModalOpen(true)} cancelOrder={submitCancelOrder} order={order} />
       <Grid container>
         <Grid item xs={12}>
           <table className="order-card-header">
@@ -159,7 +177,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
                 <Typography variant="body1"><strong>Works Purchased:</strong></Typography>
               </Grid>
               <Grid item xs={12}>
-                {orderState.paintings.map((painting, i) =>
+                {orderState.paintings && orderState.paintings.length > 0 && orderState.paintings.map((painting, i) =>
                   painting.painting && painting.painting.thumbnail ?
                     <OrderPaintingCard key={painting.painting.title} paintingOrderObject={painting} />
                     : <CircularProgress />
@@ -173,7 +191,8 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
               <Grid item xs={12}>
                 <OrderShippingAddressCard order={orderState} address={orderState.shippingAddress} isAdmin={isAdmin} />
                 <br />
-                {!isAdmin && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
+                {(!isAdmin && orderState.status === "completed" && orderState.paintings.filter(item => item.returnRequested).length !== orderState.paintings.length) && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
+                {(!isAdmin && orderState.status === "processing") && <Button variant="outlined" color="primary" onClick={() => setCancelOrderModalOpen(true)}>Cancel Order</Button>}
               </Grid>
             </Grid>
           </Grid>

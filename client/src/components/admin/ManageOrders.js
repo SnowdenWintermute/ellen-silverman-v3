@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { makeStyles, CircularProgress, Typography, TextField, Button, Icon, MenuItem, FormControl, InputLabel, Select, Grid, Card } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { getOrdersByStatus, getOrderById } from '../../apiCalls/admin'
+import { getOwnOrdersByStatus, getOwnOrderById } from '../../apiCalls/user'
 import BasicPaper from '../common/paper/BasicPaper'
 import OrderCard from '../user/history/OrderCard'
 import { toast } from 'react-toastify';
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ManageOrders = () => {
+const ManageOrders = ({ isAdmin }) => {
   const classes = useStyles()
   const user = useSelector(state => state.user)
   const [orders, setOrders] = useState([])
@@ -27,16 +28,18 @@ const ManageOrders = () => {
   const [orderIdSearching, setOrderIdSearching] = useState("")
 
   const fetchFilteredOrders = useCallback(async () => {
+    if (!orderStatusFilter) return
     try {
+      console.log(isAdmin)
       setLoadingOrders(true)
-      const res = await getOrdersByStatus(orderStatusFilter, user.token)
-      console.log(res.data)
+      const res = isAdmin ? await getOrdersByStatus(orderStatusFilter, user.token) : await getOwnOrdersByStatus(orderStatusFilter, user.token)
+      console.log(res)
       setOrders(res.data)
       setLoadingOrders(false)
     } catch (error) {
       toast.error(JSON.stringify(error))
     }
-  }, [setOrders, orderStatusFilter, user.token])
+  }, [setOrders, orderStatusFilter, user.token, isAdmin])
 
   useEffect(() => {
     fetchFilteredOrders(orderStatusFilter)
@@ -49,13 +52,15 @@ const ManageOrders = () => {
   const onSearchOrderById = async e => {
     e.preventDefault()
     try {
-      setOrderStatusFilter("select")
-      const order = await getOrderById(orderIdSearching, user.token)
+      setOrderStatusFilter(null)
+      const order = isAdmin ? await getOrderById(orderIdSearching, user.token) : await getOwnOrderById(orderIdSearching, user.token)
       console.log(order)
-      if (!order.data.status) {
+      if (isAdmin && !order.data.status) {
         toast.error("No order by that Id exists")
       } else {
-        setOrders([order.data])
+        console.log(`order id ${order.data._id} found`)
+        if (order.data._id) setOrders([order.data])
+        else setOrders([])
       }
     } catch (error) {
       toast.error(JSON.stringify(error))
@@ -83,7 +88,7 @@ const ManageOrders = () => {
             <CircularProgress />
           </div>}
           {!loadingOrders && <>
-            {orders.length > 0 && orders.map(order => order._id && <OrderCard order={order} key={order._id} isAdmin={true} user={user} removeOrderFromList={removeOrderFromList} />).reverse()}
+            {orders.length > 0 && orders.map(order => order._id && <OrderCard order={order} key={order._id} isAdmin={isAdmin} user={user} removeOrderFromList={removeOrderFromList} />).reverse()}
             {orders.length < 1 && <Typography variant="body1" className={classes.pageHeader}>No orders found with selected parameters.</Typography>}
           </>
           }

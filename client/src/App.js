@@ -145,7 +145,7 @@ const App = () => {
             path="/admin/add-multiple-painting-photos"
             component={AddMultiplePaintingPhotos}
           />
-          <AdminRoute exact path="/admin/orders" component={ManageOrders} />
+          <AdminRoute exact path="/admin/orders" render={() => <ManageOrders isAdmin={true} />} />
           <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Switch>

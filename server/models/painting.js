@@ -110,7 +110,8 @@ const paintingSchema = new mongoose.Schema(
     },
     catalogueIndex: {
       type: Number
-    }
+    },
+    viewCounter: { type: ObjectId, ref: "ViewCounter" }
   },
   { timestamps: true }
 );

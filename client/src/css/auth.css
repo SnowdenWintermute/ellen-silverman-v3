@@ -73,6 +73,9 @@
   margin-bottom: 35px;
   font-size: 18px;
 }
+.auth-link {
+  font-family: "Roboto";
+}
 .auth-bottom-links {
   font-size: 18px;
   display: flex;

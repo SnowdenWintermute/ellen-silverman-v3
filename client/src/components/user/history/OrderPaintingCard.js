@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, Table, Typography } from '@material-ui/core'
+import { Button, makeStyles, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import createImgSrcStringFromBinary from "../../utils/createImgSrcStringFromBinary"
@@ -6,7 +6,7 @@ import createImgSrcStringFromBinary from "../../utils/createImgSrcStringFromBina
 const useStyles = makeStyles({
   viewButton: {
     marginTop: 10,
-    width: "100%"
+    width: "100px"
   },
 })
 const OrderPaintingCard = ({ paintingOrderObject }) => {

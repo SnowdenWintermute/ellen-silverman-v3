@@ -3,8 +3,8 @@ const Cart = require('../../models/cart')
 const Order = require('../../models/order')
 const markPaintingsAsSoldOrDecrementStock = require("./markPaintingsAsSoldOrDecrementStock")
 const { cloneDeep } = require('lodash')
-const sendOrderEmail = require('./sendOrderEmail')
-const sendAdminOrderNotificationEmail = require('./sendAdminOrderNotificationEmail')
+const sendOrderEmail = require('../../emails/user/sendOrderEmail')
+const sendAdminOrderNotificationEmail = require('../../emails/admin/sendAdminOrderNotificationEmail')
 
 exports.createOrder = async (req, res) => {
   const { paymentIntent } = req.body.stripeResponse

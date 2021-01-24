@@ -40,6 +40,7 @@
   display: flex;
   width: fit-content;
   align-items: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
   margin-bottom: 10px;
   background: #e9e7e2;

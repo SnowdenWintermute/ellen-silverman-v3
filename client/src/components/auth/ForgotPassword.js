@@ -57,7 +57,7 @@ const ForgotPassword = ({ history }) => {
             autoFocus
           />
           <div className="auth-bottom-links">
-            <Link to="/login">Back to Login</Link>
+            <Link className="auth-link" to="/login">Back to Login</Link>
             <button className="button button-standard-size button-basic" disabled={!email}>
               Submit
         </button>

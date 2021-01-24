@@ -20,7 +20,7 @@ const ConfirmedAddressCardList = ({ classes, confirmedAddresses, selectedAddress
     <br />
     <RadioGroup row aria-label="selected address" name="selected address" value={selectedAddress} onChange={handleSelectAddressChange}>
       <Grid container spacing={1} style={{ marginBottom: 10, paddingRight: 10 }}>
-        {confirmedAddresses[0] !== null && confirmedAddresses.length && confirmedAddresses.map(address =>
+        {confirmedAddresses[0] !== null && confirmedAddresses.length && confirmedAddresses.reverse().map(address =>
           <Grid item key={address._id}>
             <Card style={{ padding: 10, border: "1px solid", width: "210px", height: "100%" }}>
               {address.flaggedForRemoval ?

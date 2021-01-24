@@ -61,7 +61,13 @@ export const createOrder = async (stripeResponse, authToken) => await axios.post
   },
 })
 
-export const getOrders = async (authToken) => await axios.get(`${process.env.REACT_APP_API}/user/order`, {
+export const getOwnOrdersByStatus = async (status, authToken) => await axios.get(`${process.env.REACT_APP_API}/user/order/${status}`, {
+  headers: {
+    authToken,
+  },
+})
+
+export const getOwnOrderById = async (orderId, authToken) => await axios.get(`${process.env.REACT_APP_API}/user/order/id/${orderId}`, {
   headers: {
     authToken,
   },
@@ -69,6 +75,14 @@ export const getOrders = async (authToken) => await axios.get(`${process.env.REA
 
 export const submitReturnRequest = async (orderId, selectedPaintings, returnNotes, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/order/return`,
   { orderId, selectedPaintings, returnNotes },
+  {
+    headers: {
+      authToken,
+    },
+  })
+
+export const cancelOrder = async (orderId, authToken) => await axios.put(`${process.env.REACT_APP_API}/user/order/cancel`,
+  { orderId },
   {
     headers: {
       authToken,
