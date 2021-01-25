@@ -56,3 +56,14 @@
 .user-menu-links-holder a:hover {
   color: blue;
 }
+
+@media only screen and (max-width: 800px) {
+  .user-menu-icon-holder {
+    right: 15px;
+    top: 16px;
+  }
+  .cart-icon-holder {
+    right: 75px;
+    top: 16px;
+  }
+}

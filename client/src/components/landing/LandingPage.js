@@ -1,47 +1,18 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-
+import AnimatedLandingLinks from "./AnimatedLandingLinks";
 import ImageFader from "./ImageFader";
-import ImageFadeSlideshow from "./ImageFadeSlideshow";
-import ElementSlider from "./ElementSlider";
 
 export default class LandingPage extends Component {
   render() {
     // let timer = 7000;
     return (
       <div>
-        <ImageFader delayInMiliseconds={5000} images={["./img/Salt Marsh/Salt Marsh, Birds.jpg",
+        <ImageFader delayInMiliseconds={8000} images={["./img/Salt Marsh/Salt Marsh, Birds.jpg",
           "./img/South Dakota Trip/Devil's Tower.jpg",
           "./img/The Professor's Interiors/Director's Office.jpg",
           "./img/Forest Path/A Walk in the Woods.jpg",
           "./img/Cold River Camp/Cold River Vatican City.jpg"]} />
-        {/*
-        <ElementSlider
-          slideTimer={timer}
-          slides={[
-            {
-              element: (
-                <React.Fragment>
-                  <Link to="/artworks">
-                    <h1 className="slide-text slide-button">Browse Artworks</h1>
-                  </Link>
-                </React.Fragment>
-              ),
-              showClass: "element-slider-show",
-              hiddenClass: "element-slider-hidden-top",
-            },
-            {
-              element: (
-                <React.Fragment>
-                  <h1 className="slide-text">Lucretia E. McGuff-Silverman</h1>
-                  <p className="slide-text">Professional Artist</p>
-                </React.Fragment>
-              ),
-              showClass: "element-slider-show",
-              hiddenClass: "element-slider-hidden-top",
-            },
-          ]}
-        /> */}
+        <AnimatedLandingLinks />
       </div>
     );
   }

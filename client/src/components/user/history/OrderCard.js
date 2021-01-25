@@ -138,7 +138,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
     <Card className={classes.orderCard} elevation={3}>
       <ConfirmOrderStatusChangeModal open={confirmOrderStatusChangeModalOpen} handleClose={() => setConfirmOrderStatusChangeModalOpen(false)} order={orderState} orderStatus={orderStatus} onCancelStatusChange={onCancelStatusChange} onConfirmStatusChange={onConfirmStatusChange} />
       <RequestReturnModal open={requestReturnModalOpen} handleClose={() => setRequestReturnModalOpen(false)} handleReturnRequest={handleReturnRequest} order={orderState} />
-      <CancelOrderModal open={cancelOrderModalOpen} handleClose={() => setCancelOrderModalOpen(true)} cancelOrder={submitCancelOrder} order={order} />
+      <CancelOrderModal open={cancelOrderModalOpen} handleClose={() => setCancelOrderModalOpen(false)} cancelOrder={submitCancelOrder} order={order} />
       <Grid container>
         <Grid item xs={12}>
           <table className="order-card-header">
@@ -191,7 +191,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
               <Grid item xs={12}>
                 <OrderShippingAddressCard order={orderState} address={orderState.shippingAddress} isAdmin={isAdmin} />
                 <br />
-                {(!isAdmin && orderState.status === "completed" && orderState.paintings.filter(item => item.returnRequested).length !== orderState.paintings.length) && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
+                {(!isAdmin && (orderState.status === "completed" || orderState.status === "return requested" || orderState.paintings.map(painting => painting.returnRequested).length !== orderState.paintings.length) && orderState.paintings.filter(item => item.returnRequested).length !== orderState.paintings.length) && <Button variant="outlined" color="primary" onClick={() => setRequestReturnModalOpen(true)}>Request Return</Button>}
                 {(!isAdmin && orderState.status === "processing") && <Button variant="outlined" color="primary" onClick={() => setCancelOrderModalOpen(true)}>Cancel Order</Button>}
               </Grid>
             </Grid>
