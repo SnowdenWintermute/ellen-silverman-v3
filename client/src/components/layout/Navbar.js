@@ -20,7 +20,7 @@ const Navbar = () => {
   });
 
   function updateWindowDimensions() {
-    if (window.innerWidth > 700) {
+    if (window.innerWidth > 800) {
       setHamburgerMenuShowing(false);
     }
     setWidth(window.innerWidth);

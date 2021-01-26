@@ -1,0 +1,53 @@
+.fader-titles {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: 30%;
+  width: 100%;
+  z-index: 0;
+  /* border: 1px solid red; */
+  transition: 1s;
+}
+.fader-titles-hidden {
+  opacity: 0;
+}
+.fader-title {
+  color: white;
+  font-family: "Josefin Slab", "Source Sans Pro", sans-serif;
+  font-style: oblique;
+  font-size: 24px;
+  /* min-width: 40%; */
+  text-shadow: 2px 2px 5px black;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 1);
+  border: 1px solid white;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  transition: 3s cubic-bezier(0.23, 1, 0.32, 1);
+  /* transform: scaleX(100%); */
+  z-index: 12;
+}
+
+.faster-transition {
+  transition: 1s;
+}
+
+.fader-title-hidden {
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-100px);
+  /* display: none; */
+}
+.fader-title-outgoing {
+  transform: translateX(50px);
+}
+
+@media only screen and (max-width: 800px) {
+  .fader-title {
+    width: calc(100% - 60px);
+    text-align: center;
+    display: none;
+  }
+}

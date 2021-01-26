@@ -2,6 +2,8 @@
   opacity: 0;
   transform: translateX(-10%);
 }
+.landing-page {
+}
 .landing-links {
   z-index: 11;
   color: white;
@@ -72,5 +74,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .landing-header {
+    text-align: center;
   }
 }
