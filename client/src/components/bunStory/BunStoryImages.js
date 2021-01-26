@@ -27,6 +27,13 @@ const BunStoryImages = (props) => {
   const [lydiasClass, setLydiasClass] = useState("lydias-pos-1");
   const [porchClass, setPorchClass] = useState("porch-pos-1");
   const [studyClass, setStudyClass] = useState("study-pos-1");
+  const [englishLivingRoomClass, setEnglishLivingRoomClass] = useState("english-lr-pos-1")
+  const [professorsFrontHallClass, setProfessorsFrontHallClass] = useState("front-hall-pos-1")
+  const [tiledHallwayClass, setTiledHallwayClass] = useState("tiled-hallway-pos-1")
+  const [enclosedPorchClass, setEnclosedPorchClass] = useState("enclosed-porch-pos-1")
+
+
+
 
   const textRefs = useSelector((state) => state.story.textRefs);
   const textRefsCurrent = textRefs && textRefs.current;
@@ -354,6 +361,34 @@ const BunStoryImages = (props) => {
             src={"../img/The Professor's Interiors/The Professor's Study.jpg"}
             className={`bun-story-img study ${studyClass}`}
             alt="The Professor's Study"
+          />
+        </div>
+        <div className={`bun-story-page`}>
+          <img
+            src={"../img/The Professor's Interiors/English Living Room.jpg"}
+            className={`bun-story-img study ${englishLivingRoomClass}`}
+            alt="English Living Room"
+          />
+        </div>
+        <div className={`bun-story-page`}>
+          <img
+            src={"../img/The Professor's Interiors/The Professor's Front Hall.jpg"}
+            className={`bun-story-img study ${professorsFrontHallClass}`}
+            alt="The Professor's Front Hall"
+          />
+        </div>
+        <div className={`bun-story-page`}>
+          <img
+            src={"../img/The Professor's Interiors/The Tiled Hallway.jpg"}
+            className={`bun-story-img study ${tiledHallwayClass}`}
+            alt="The Tiled Hallway"
+          />
+        </div>
+        <div className={`bun-story-page`}>
+          <img
+            src={"../img/The Professor's Interiors/Harry's Enclosed Porch.jpg"}
+            className={`bun-story-img study ${enclosedPorchClass}`}
+            alt="Harry's Enclosed Porch"
           />
         </div>
       </div>
