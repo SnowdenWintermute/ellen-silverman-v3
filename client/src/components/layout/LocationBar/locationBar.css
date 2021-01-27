@@ -1,0 +1,10 @@
+.location-bar {
+  padding: 10px;
+  font-family: "Josefin Slab";
+  font-size: 19px;
+  /* height: 30px; */
+  border-bottom: 1px solid grey;
+}
+.location-bar a:hover {
+  color: blue;
+}

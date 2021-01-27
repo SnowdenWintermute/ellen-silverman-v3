@@ -8,6 +8,7 @@ import createImgSrcStringFromBinary from '../../utils/createImgSrcStringFromBina
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import BasicPaper from '../../common/paper/BasicPaper'
 import { updateCart } from "../../../store/actions/cart-actions";
+import './cart.css'
 
 import { saveCart } from '../../../apiCalls/user'
 

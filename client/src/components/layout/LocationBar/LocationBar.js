@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as navActions from "../../store/actions/nav-actions";
+import * as navActions from "../../../store/actions/nav-actions";
+import './locationBar.css'
 
 const PageLabel = (props) => {
   const [pageLabelHeight, setPageLabelHeight] = useState();
@@ -45,8 +46,8 @@ const PageLabel = (props) => {
     capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
   }
   return (
-    <div className="pageLabel" id="pageLabel" ref={pageLabelEl}>
-      <p style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="location-bar" ref={pageLabelEl}>
+      <span>
         <Link to={`/`}>Lucretia E. McGuff-Silverman</Link>
         {currentPage ? " - " : ""}
         <Link to={`/${currentPage}`}>{capitalizedCurrentPage}</Link>
@@ -60,8 +61,7 @@ const PageLabel = (props) => {
             {paintingName}
           </Link>
         )}
-      </p>
-      <hr />
+      </span>
     </div>
   );
 };

@@ -23,7 +23,7 @@
   border: 1px solid black;
   background: #fafafa;
   font-family: "Josefin Slab";
-  height: 252px;
+  height: fit-content;
   padding: 20px;
   font-size: 1.2em;
 }

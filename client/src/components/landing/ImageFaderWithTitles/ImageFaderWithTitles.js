@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
-import ImageFader from "../ImageFader";
+import ImageFader from "../ImageFader/ImageFader";
 import './imageFaderWithTitles.css'
 
 const ImageFaderWithTitles = ({

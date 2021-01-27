@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as HomeIcon } from "../../home.svg";
+// import { ReactComponent as HomeIcon } from "../../home.svg";
 import HamburgerMenu from "react-hamburger-menu";
 import Swipe from "react-easy-swipe";
 import UserMenu from './UserMenu'
@@ -37,10 +37,10 @@ const Navbar = () => {
 
   let homeButtonContent, navClass;
 
-  if (width < 700) {
+  if (width < 800) {
     homeButtonContent = "Home";
   } else {
-    homeButtonContent = <HomeIcon className="home-button-icon"></HomeIcon>;
+    homeButtonContent = <div className="home-button-icon"><img className="home-button-icon" src="./mcguffsilverman-sunset-logo.png" alt="home"></img></div>;
   }
 
   if (!hamburgerMenuShowing) navClass = "menu";

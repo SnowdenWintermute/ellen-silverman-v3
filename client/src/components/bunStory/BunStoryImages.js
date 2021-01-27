@@ -248,6 +248,10 @@ const BunStoryImages = (props) => {
       setItalianClass("story-image-small italian-end-grid-1");
       setLydiasClass("story-image-small lydias-end-grid-1");
       setPorchClass("story-image-small porch-end-grid-1");
+      setEnglishLivingRoomClass("story-image-small english-lr-end-grid-1")
+      setProfessorsFrontHallClass("story-image-small front-hall-end-grid-1")
+      setTiledHallwayClass("story-image-small tiled-hallway-end-grid-1")
+      setEnclosedPorchClass("story-image-small enclosed-porch-end-grid-1")
     }
     if (getTextTop("text102") < appearZone) {
       setStudyClass("story-image-small-2 study-end-grid-2");
@@ -258,6 +262,10 @@ const BunStoryImages = (props) => {
       setItalianClass("story-image-small-2 italian-end-grid-2");
       setLydiasClass("story-image-small-2 lydias-end-grid-2");
       setPorchClass("story-image-small-2 porch-end-grid-2");
+      setEnglishLivingRoomClass("story-image-small english-lr-end-grid-2")
+      setProfessorsFrontHallClass("story-image-small front-hall-end-grid-2")
+      setTiledHallwayClass("story-image-small tiled-hallway-end-grid-2")
+      setEnclosedPorchClass("story-image-small enclosed-porch-end-grid-2")
     }
   }, [
     textRefs,

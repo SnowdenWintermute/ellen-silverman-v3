@@ -16,21 +16,24 @@
   left: 40px;
   width: calc(100vw - 40px);
 }
+.landing-header,
+.landing-link {
+  border: 5px solid white;
+  background-color: black !important;
+  cursor: pointer;
+  color: white;
+  transition: 0.9s;
+  border-radius: 8px;
+  display: flex;
+  padding: 20px;
+}
+
 .landing-header {
   font-size: 48px;
   margin-bottom: 20px;
-  padding: 20px;
-  border: 5px solid white;
   max-width: fit-content;
-  background-color: black !important;
+  flex-direction: column;
   font-family: "Josefin Slab";
-  transition: 0.9s;
-  cursor: pointer;
-  /* background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.9)
-  ); */
 }
 .landing-header:hover {
   background-color: rgba(0, 0, 0, 0.3) !important;
@@ -40,20 +43,12 @@
   font-size: 28px;
   text-align: center;
 }
-.landing-icon-holder {
+.landing-link {
   width: 100%;
   max-width: 400px;
-  border: 5px solid white;
-  background-color: black !important;
-  padding: 20px;
-  border-radius: 8px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  cursor: pointer;
-  transition: 0.9s;
-  color: white;
 }
 .landing-icon-holder:hover {
   background-color: rgba(0, 0, 0, 0.3) !important;
@@ -69,13 +64,26 @@
 
 @media only screen and (max-width: 800px) {
   .landing-links {
+    top: 90px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 18px;
   }
   .landing-header {
+    max-width: 400px;
+    width: 100%;
     text-align: center;
+    font-size: 20px;
+  }
+  .landing-header-sub-text {
+    font-size: 16px;
+  }
+  .landing-icon-holder {
+    padding: 10px;
+    padding-left: 20px;
+    margin-bottom: 10px;
   }
 }

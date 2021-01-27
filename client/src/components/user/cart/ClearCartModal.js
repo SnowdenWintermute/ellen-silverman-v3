@@ -1,6 +1,7 @@
 import React from 'react'
 import StandardModal from '../../common/modal/StandardModal'
 import { Grid, Typography, Button } from '@material-ui/core'
+import RedButton from '../../common/button/RedButton'
 
 const ClearCartModal = ({ open, handleClose, handleCancelOrder, history, classes }) => {
   return (
@@ -12,9 +13,7 @@ const ClearCartModal = ({ open, handleClose, handleCancelOrder, history, classes
         </Typography>
         </Grid>
         <Grid item xs={6}>
-          <Button onClick={handleCancelOrder}
-            variant="contained"
-            className={classes.cancelButton}>CONFIRM CANCEL</Button>
+          <RedButton onClick={handleCancelOrder} title="CONFIRM CANCEL" />
         </Grid>
         <Grid item xs={6}>
           <Button onClick={() => history.push("/cart")} variant="outlined" color="primary">EDIT CART</Button>

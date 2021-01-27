@@ -20,16 +20,9 @@ import { updateCart } from "../../../store/actions/cart-actions"
 import ClearCartModal from './ClearCartModal'
 import ConfirmAddressModal from "./ConfirmAddressModal";
 import ConfirmedAddressCardList from './ConfirmedAddressCardList'
+import RedButton from '../../common/button/RedButton'
 
-const useStyles = makeStyles({
-  cancelButton: {
-    background: "red",
-    color: "white",
-    "&:hover": {
-      background: "red",
-      filter: "brightness(85%)",
-    },
-  },
+const useStyles = makeStyles(theme => ({
   outlinedRedButton: {
     border: "1px solid red",
     color: "red",
@@ -48,7 +41,7 @@ const useStyles = makeStyles({
     textAlign: "center",
     marginBottom: 10
   }
-});
+}));
 
 const Checkout = ({ history }) => {
   const dispatch = useDispatch()
@@ -232,14 +225,8 @@ const Checkout = ({ history }) => {
                 </Table>
                 <Grid item container justify="space-between">
                   {user ? (
-                    <>
-                      <Button
-                        onClick={() => setCancelModalOpen(true)}
-                        variant="contained"
-                        className={classes.cancelButton}
-                      >
-                        CANCEL ORDER
-                      </Button>
+                    <div className="checkout-main-buttons-holder">
+                      <RedButton onClick={() => setCancelModalOpen(true)} title="CANCEL ORDER" />
                       <Button
                         onClick={handleSubmitOrder}
                         disabled={!selectedAddress}
@@ -248,7 +235,7 @@ const Checkout = ({ history }) => {
                       >
                         SUBMIT ORDER
                       </Button>
-                    </>
+                    </div>
                   ) : (
                       <Button variant="outlined" color="primary">
                         Log in to check out

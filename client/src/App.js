@@ -6,7 +6,7 @@ import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/layout/Navbar";
-import PageLabel from "./components/layout/PageLabel";
+import LocationBar from "./components/layout/LocationBar/LocationBar";
 import Footer from "./components/layout/Footer";
 import Artworks from "./components/artworks/Artworks";
 import LandingPage from "./components/landing/LandingPage";
@@ -91,7 +91,7 @@ const App = () => {
           <Route
             exact
             path="/:page/:category?/:painting?/"
-            component={PageLabel}
+            component={LocationBar}
           />
         </Switch>
         <Switch>

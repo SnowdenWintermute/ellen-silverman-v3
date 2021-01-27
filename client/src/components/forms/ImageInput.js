@@ -6,7 +6,6 @@ import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
 
 const useStyles = makeStyles(theme => ({
   root: {
-
     [theme.breakpoints.up("sm")]: {
       height: "220px",
     },

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
+import './imageFaderSlideshow.css'
 
 const ImageFader = ({ imageSourceArray, delayInMiliseconds }) => {
   const [incomingImageIndex, setIncomingImageIndex] = useState(0);
   const indexHolder = useRef(0);
   const slideTimeout = useRef(null);
+  const startShowTimeout = useRef(null)
 
   const changeSlides = () => {
     if (indexHolder.current >= imageSourceArray.length - 1)
@@ -14,9 +16,10 @@ const ImageFader = ({ imageSourceArray, delayInMiliseconds }) => {
   };
 
   useEffect(() => {
-    setTimeout(changeSlides, delayInMiliseconds);
+    startShowTimeout.current = setTimeout(changeSlides, delayInMiliseconds);
     return () => {
       clearTimeout(slideTimeout.current);
+      clearTimeout(startShowTimeout.current)
     };
   }, []);
 

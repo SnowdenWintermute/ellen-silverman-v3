@@ -17,3 +17,9 @@
   opacity: 0.9;
   transition: opacity 2100ms ease-in-out 0s;
 }
+
+@media only screen and (max-height: 400px) {
+  .fader-slide {
+    height: 700px;
+  }
+}

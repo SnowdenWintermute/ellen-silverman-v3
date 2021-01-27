@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ReactComponent as DownArrow } from "../../arrow-down-circle.svg";
 
 const ScrollIndicator = ({ showClass }) => {
   const [downArrowClass, setDownArrowClass] = useState("arrow-up");
+  const arrowAnimationTimeoutHolder = useRef(null)
 
   const animateArrow = useCallback(
     () => {
-      setTimeout(() => {
+      arrowAnimationTimeoutHolder.current = setTimeout(() => {
         if (downArrowClass === "arrow-up") setDownArrowClass("arrow-down");
         if (downArrowClass === "arrow-down") setDownArrowClass("arrow-up");
       }, 2000);
@@ -16,6 +17,7 @@ const ScrollIndicator = ({ showClass }) => {
 
   useEffect(() => {
     animateArrow();
+    return () => clearTimeout(arrowAnimationTimeoutHolder.current)
   }, [animateArrow]);
 
   return (

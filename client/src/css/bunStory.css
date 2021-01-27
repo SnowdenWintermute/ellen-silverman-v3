@@ -394,19 +394,23 @@
 }
 .english-lr-pos-1 {
   opacity: 0;
+  transform: translateY(-100%);
 }
 .front-hall-pos-1 {
   opacity: 0;
+  transform: translateX(-25%) translateY(-100%);
 }
 .tiled-hallway-pos-1 {
   opacity: 0;
+  transform: translateX(-50%) translateY(-100%);
 }
 .enclosed-porch-pos-1 {
   opacity: 0;
+  transform: translateX(50%) translateY(-100%);
 }
 .teaTime-end-grid-1 {
   transition-delay: 100;
-  transform: scale(0.3) translate(-150%, -50%);
+  transform: scale(0.3) translate(-165%, -90%);
 }
 .museum-end-grid-1 {
   transition-delay: 200;
@@ -418,11 +422,11 @@
 }
 .directors-end-grid-1 {
   transition-delay: 400;
-  transform: scale(0.3) translate(-250%, -225%);
+  transform: scale(0.3) translate(-150%, -25%);
 }
 .italian-end-grid-1 {
   transition-delay: 500;
-  transform: scale(0.2) translate(250%, -195%);
+  transform: scale(0.2) translate(-60%, -10%);
 }
 .lydias-end-grid-1 {
   transition-delay: 600;
@@ -436,6 +440,22 @@
   transition-delay: 800;
   transform: scale(0.3) translate(-170%, 99%);
 }
+.english-lr-end-grid-1 {
+  transition-delay: 900;
+  transform: scale(0.3) translateY(50%);
+}
+.front-hall-end-grid-1 {
+  transition-delay: 1000;
+  transform: scale(0.3) translateX(-180%) translateY(110%);
+}
+.tiled-hallway-end-grid-1 {
+  transition-delay: 1100;
+  transform: scale(0.3) translateX(-5%) translateY(-110%);
+}
+.enclosed-porch-end-grid-1 {
+  transition-delay: 1200;
+  transform: scale(0.3) translateX(90%) translateY(-50%);
+}
 
 .teaTime-end-grid-2,
 .museum-end-grid-2,
@@ -444,6 +464,11 @@
 .italian-end-grid-2,
 .lydias-end-grid-2,
 .porch-end-grid-2,
-.study-end-grid-2 {
+.study-end-grid-2,
+.english-lr-end-grid-2,
+.front-hall-end-grid-2,
+.tiled-hallway-end-grid-2,
+.enclosed-porch-end-grid-2 {
   transform: translate(-0%, -0%);
+  opacity: 0;
 }
