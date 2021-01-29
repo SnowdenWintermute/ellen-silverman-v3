@@ -48,27 +48,21 @@
     height: calc(320px - 70px);
     width: 100%;
   }
-  .galleryHolder {
-    justify-content: center;
-  }
 }
 @media only screen and (max-width: 600px) {
   .painting-card-body {
     height: 270px;
-    width: 50%;
+    width: calc(50% - 4px);
+    margin: 2px;
   }
   .painting-card-img-link img {
     height: 200px;
     width: 100%;
   }
   .galleryHolder {
-    padding: 0;
+    padding: 1px;
   }
-  .painting-card-body {
-    margin: 0;
-    width: 50%;
-    /* margin-bottom: 10px; */
-    /* height: 570px;
-    width: 98%; */
+  .painting-card-info-text {
+    text-align: center;
   }
 }

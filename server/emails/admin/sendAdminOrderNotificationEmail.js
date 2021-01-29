@@ -6,12 +6,12 @@ const rootUrl = process.env.ROOT_URL;
 module.exports = (order) => {
   console.log("admin notified: " + adminEmail)
   try {
-    const output = `A new order has been placed! \n 
-    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "\n"}
+    const output = `A new order has been placed! <br/><br/> 
+    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "<br/><br/>"}
       Once shipped, please update the status at ${rootUrl}/admin/orders
     `;
-    const textOutput = `A new order has been placed! \n 
-    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "\n"}
+    const textOutput = `A new order has been placed! <br/><br/> 
+    ${order.paintings.map(painting => painting.painting.title + ": $" + painting.painting.price) + "<br/><br/>"}
       Once shipped, please update the status at ${rootUrl}/admin/orders
     `;
 

@@ -54,20 +54,28 @@
 }
 
 .home-button-icon {
-  height: 80%;
-  max-height: 70px;
-  margin: 6px 10px 10px 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 45px;
+  transition: 0.3s;
+  border-radius: 50%;
+  border: 2px solid white;
+  /* opacity: 0.8; */
+}
+.home-button-text {
+  display: none;
 }
 .home-button-icon:hover {
-  fill: blue;
+  /* opacity: 1; */
+  /* transform: scale(2) skewY(25%, 25%); */
+  border: 2px solid blue;
 }
 #home-button-link {
-  width: 70px;
+  height: 45px;
+  width: 45px;
+  margin: 10px 10px 10px 10px;
+  border-radius: 50%;
+  /* background-color: blue; */
+  /* border: 1px solid white; */
 }
-
 #top-bar {
   position: absolute;
   top: 50px;
@@ -79,6 +87,9 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .home-button-text {
+    display: block;
+  }
   #hamburger {
     display: block;
     cursor: pointer;
@@ -115,12 +126,7 @@
     width: 100%;
     background: #e7e7e3;
     border-bottom: 2px solid black;
-    /* position: relative;
-    z-index: 999; */
   }
-  /* #toggle:checked + .menu {
-    display: block;
-  } */
   .contactInput {
     width: 80%;
   }
@@ -132,7 +138,13 @@
     font-size: 1em;
     top: 60%;
   }
+  .home-button-icon {
+    display: none;
+  }
   #home-button-link {
     width: 100%;
+    border-radius: 0;
+    height: 70px;
+    margin: 0px;
   }
 }

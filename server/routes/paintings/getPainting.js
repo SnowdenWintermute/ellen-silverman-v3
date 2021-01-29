@@ -1,5 +1,6 @@
 const Painting = require("../../models/painting")
 
+// used for cart, checkout etc
 exports.get = async (req, res) => {
   try {
     const paintingToReturn = await Painting.findOne({ slug: req.params.slug }).select("-image")

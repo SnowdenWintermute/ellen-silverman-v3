@@ -3,7 +3,7 @@ const getNodemailerTransportOptions = require('../getNodemailerTransportOptions'
 const rootUrl = process.env.ROOT_URL
 
 module.exports = async (order, user) => {
-  console.log("mailing tracking update to " + user.email)
+  console.log("mailing cancellation update update to " + user.email)
   if (!user.email) return
   try {
     const output = `Your order id ${order._id} has been successfully cancelled. \n

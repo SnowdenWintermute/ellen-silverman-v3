@@ -7,9 +7,8 @@ import UserMenu from './UserMenu'
 
 
 const Navbar = () => {
-  const [width, setWidth] = useState(null);
-  // const [height, setHeight] = useState(null);
   const [hamburgerMenuShowing, setHamburgerMenuShowing] = useState(false);
+  const [logoShowClass, setLogoShowClass] = useState("hidden")
 
   useEffect(() => {
     updateWindowDimensions();
@@ -23,8 +22,6 @@ const Navbar = () => {
     if (window.innerWidth > 800) {
       setHamburgerMenuShowing(false);
     }
-    setWidth(window.innerWidth);
-    // setHeight(window.innerHeight);
   }
 
   function showOrHideMenu() {
@@ -35,13 +32,7 @@ const Navbar = () => {
     setHamburgerMenuShowing(false);
   }
 
-  let homeButtonContent, navClass;
-
-  if (width < 800) {
-    homeButtonContent = "Home";
-  } else {
-    homeButtonContent = <div className="home-button-icon"><img className="home-button-icon" src="./mcguffsilverman-sunset-logo.png" alt="home"></img></div>;
-  }
+  let navClass;
 
   if (!hamburgerMenuShowing) navClass = "menu";
   else navClass = "menu-show";
@@ -67,7 +58,9 @@ const Navbar = () => {
           </div>
           <div className={navClass}>
             <Link id="home-button-link" to="/" onClick={hideMenu}>
-              {homeButtonContent}
+              {/* {homeButtonContent} */}
+              <span className="home-button-text">Home</span>
+              <img className={logoShowClass} onLoad={() => setLogoShowClass("home-button-icon")} src="/mcguffsilverman-sunset-logo-small.png" alt="home" />
             </Link>
             <Link to="/artworks" onClick={hideMenu}>
               Artworks

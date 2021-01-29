@@ -17,7 +17,12 @@ const seriesSchema = new mongoose.Schema(
       index: true,
       required: true
     },
-    viewCounter: { type: ObjectId, ref: "ViewCounter" }
+    viewCounter: { type: ObjectId, ref: "ViewCounter" },
+    years: {
+      start: Number,
+      end: Number
+    },
+    numberOfPaintings: Number
   },
   { timestamps: true }
 );

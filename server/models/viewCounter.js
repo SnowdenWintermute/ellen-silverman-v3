@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const viewCounter = new mongoose.Schema(
   {
-    views: Number,
-    uniqueViewIps: [],
+    views: { type: Number, default: 0 },
+    uniqueIps: [],
   },
   { timestamps: true }
 );

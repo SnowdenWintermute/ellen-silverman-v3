@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ViewCounter = require("./viewCounter");
 const { ObjectId } = mongoose.Schema;
 
 const imageValidatior = [

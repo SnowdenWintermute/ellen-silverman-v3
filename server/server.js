@@ -6,6 +6,7 @@ require("dotenv").config();
 
 // app
 const app = express();
+app.set('trust proxy', true);
 
 // db
 mongoose

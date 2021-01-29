@@ -1,5 +1,4 @@
 const Series = require('../../models/series')
-const Painting = require('../../models/painting')
 const getPaintingsInSeries = require('../utils/series/getPaintingsInSeries')
 
 exports.remove = async (req, res) => {

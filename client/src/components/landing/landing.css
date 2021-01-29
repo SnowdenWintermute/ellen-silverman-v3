@@ -50,9 +50,8 @@
   align-items: center;
   margin-bottom: 20px;
 }
-.landing-icon-holder:hover {
+.landing-link:hover {
   background-color: rgba(0, 0, 0, 0.3) !important;
-  transition: 0.3s;
 }
 .landing-info-stacked-text {
   display: flex;
