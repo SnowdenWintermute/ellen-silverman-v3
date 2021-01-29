@@ -6,7 +6,7 @@ require("dotenv").config();
 
 // app
 const app = express();
-app.set('trust proxy', true);
+app.set("trust proxy", true);
 
 // db
 mongoose
@@ -25,12 +25,13 @@ app.use(bodyParser.json({ limit: "4mb" }));
 app.use(cors());
 
 // routes middleware
-app.use('/api/auth', require('./routes/auth'))
-app.use('/api/paintings', require('./routes/paintings'))
-app.use('/api/series', require('./routes/series'))
-app.use('/api/user', require('./routes/user'))
-app.use('/api/stripe', require('./routes/stripe'))
-app.use('/api/admin', require('./routes/admin'))
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/paintings", require("./routes/paintings"));
+app.use("/api/series", require("./routes/series"));
+app.use("/api/user", require("./routes/user"));
+app.use("/api/stripe", require("./routes/stripe"));
+app.use("/api/admin", require("./routes/admin"));
+app.use("/api/page", require("./routes/page"));
 
 // port
 const port = process.env.PORT || 8000;
