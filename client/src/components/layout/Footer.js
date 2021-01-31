@@ -8,7 +8,7 @@ export default function Footer() {
         <Link to="/index">Home</Link>&nbsp;|
         <Link to="/artworks">Artworks</Link>&nbsp;|
         <Link to="/exhibitions">Exhibitions</Link>&nbsp;|
-        <Link to="/cv">CV</Link>&nbsp;|
+        <Link to="/about">CV</Link>&nbsp;|
         <Link to="/contact">Contact</Link>
       </div>
       <p>L. E. McGuff-Silverman</p>

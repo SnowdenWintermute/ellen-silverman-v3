@@ -1,5 +1,14 @@
 import axios from "axios"
 
+export const getSeries = async (seriesId) => {
+  try {
+    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/${seriesId}`)
+    return fetchedSeries.data
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+}
 export const getSeriesList = async () => {
   try {
     const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/list`)
@@ -22,7 +31,7 @@ export const getSeriesListWithThumbnails = async () => {
 
 export const getPaintingsInSeriesWithThumbnails = async (seriesSlug) => {
   try {
-    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/${seriesSlug}`)
+    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/paintings/${seriesSlug}`)
     return fetchedSeries.data
   } catch (err) {
     console.log(err)

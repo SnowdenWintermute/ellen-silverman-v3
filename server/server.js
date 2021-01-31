@@ -31,7 +31,7 @@ app.use("/api/series", require("./routes/series"));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/stripe", require("./routes/stripe"));
 app.use("/api/admin", require("./routes/admin"));
-app.use("/api/page", require("./routes/page"));
+app.use("/api/pages", require("./routes/page"));
 
 // port
 const port = process.env.PORT || 8000;

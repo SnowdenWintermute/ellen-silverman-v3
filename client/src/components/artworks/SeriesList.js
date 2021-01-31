@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
-import PaintingCategoryCard from "../paintings/PaintingCategoryCard";
+import SeriesCard from "../series/SeriesCard";
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
-import { CircularProgress, Typography } from "@material-ui/core";
+import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  topBar: {
+    width: "100%",
+    marginLeft: 10,
+    marginRight: 10
+  },
+  sortFilter: {
+    width: 200,
+    maxWidth: "100%"
+  }
+})
 
 const SeriesList = () => {
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(false)
+  const [sortParameter, setSortParameter] = useState("newest")
+  const classes = useStyles()
 
   useEffect(() => {
     const newCards = []
@@ -16,14 +30,15 @@ const SeriesList = () => {
         const seriesListWithThumbnails = await getSeriesListWithThumbnails()
         console.log(seriesListWithThumbnails)
         seriesListWithThumbnails.forEach((series, i) => {
-          newCards.push(
-            <PaintingCategoryCard
+          console.log(series)
+          newCards.push({
+            series,
+            cardElement: (<SeriesCard
               img={createImgSrcStringFromBinary(series.thumbnail.contentType, series.thumbnail.data)}
-              series={series.name}
-              linkTo={`/artworks/${series.slug}`}
+              series={series}
               key={i}
-            />
-          );
+            />)
+          });
         });
         setCards(newCards)
       } catch (error) {
@@ -34,12 +49,41 @@ const SeriesList = () => {
     asyncFunc()
   }, [])
 
+  const onSelectSortParameter = (e) => {
+    setSortParameter(e.target.value)
+    const newCards = [...cards]
+    if (e.target.value === "oldest") newCards.sort((a, b) => a.series.years.earliest - b.series.years.earliest)
+    if (e.target.value === "newest") newCards.sort((a, b) => b.series.years.latest - a.series.years.latest || b.series.years.earliest - a.series.years.earliest)
+    if (e.target.value === "most sold") newCards.sort((a, b) => b.series.numberSold - a.series.numberSold)
+    if (e.target.value === "most paintings") newCards.sort((a, b) => b.series.numberOfPaintings - a.series.numberOfPaintings)
+    setCards(newCards)
+  }
+
   return <div className="page-frame">
-    {!loading && <Typography variant="h5" style={{ marginLeft: 20 }}>Select a Series</Typography>}
     <div className="galleryHolder">
-      {loading ? <div className="flex-center"><CircularProgress /></div> : cards}
-    </div>;
+      {!loading && (
+        <Card className={classes.topBar}>
+          <Grid container justify="space-between" alignItems="center">
+            <Grid item>
+              <Typography variant="h5" style={{ marginLeft: "20px" }}>Select a Series</Typography>
+            </Grid>
+            <Grid item>
+              <FormControl variant="filled" className={classes.sortFilter}>
+                <InputLabel>Sort</InputLabel>
+                <Select labelId="select-sort" onChange={(e) => onSelectSortParameter(e)} value={sortParameter}>
+                  <MenuItem value={"newest"}>Newest</MenuItem>
+                  <MenuItem value={"oldest"}>Oldest</MenuItem>
+                  <MenuItem value={"most sold"}>Most Sold</MenuItem>
+                  <MenuItem value={"most paintings"}>Most Paintings</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Card>
+      )}
+      {loading ? <div className="flex-center"><CircularProgress /></div> : cards.map(card => card.cardElement)}
     </div>
+  </div>
 
 }
 export default SeriesList

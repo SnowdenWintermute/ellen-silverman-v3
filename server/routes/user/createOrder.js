@@ -5,6 +5,7 @@ const markPaintingsAsSoldOrDecrementStock = require("./markPaintingsAsSoldOrDecr
 const { cloneDeep } = require('lodash')
 const sendOrderEmail = require('../../emails/user/sendOrderEmail')
 const sendAdminOrderNotificationEmail = require('../../emails/admin/sendAdminOrderNotificationEmail')
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.createOrder = async (req, res) => {
   const { paymentIntent } = req.body.stripeResponse
@@ -18,10 +19,17 @@ exports.createOrder = async (req, res) => {
     newOrder.shippingAddress = userCart.shippingAddress
     newOrder.orderedBy = user._id
     await newOrder.save()
-    const newOrderForConfirmationEmail = await Order.findById(newOrder._id).populate({ path: "paintings", populate: { path: "painting", select: "title price" } })
+    const newOrderForConfirmationEmail = await Order.findById(newOrder._id).populate({ path: "paintings", populate: { path: "painting", select: "title price", populate: { path: "series" } } })
     await sendOrderEmail(user, newOrderForConfirmationEmail)
     sendAdminOrderNotificationEmail(newOrderForConfirmationEmail)
-    markPaintingsAsSoldOrDecrementStock(newOrder)
+    await markPaintingsAsSoldOrDecrementStock(newOrder)
+    const seriesIds = []
+    newOrderForConfirmationEmail.paintings.forEach(painting => {
+      console.log("order painting")
+      console.log(painting)
+      if (!seriesIds.includes(painting.painting.series._id)) seriesIds.push(painting.painting.series._id)
+    })
+    seriesIds.forEach(id => updateSeriesMetadata(id))
     res.json({ ok: true })
   } catch (error) {
     console.log(error)

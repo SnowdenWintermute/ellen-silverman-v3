@@ -54,7 +54,7 @@ const AnimatedLandingLinks = () => {
         </Icon>
         Browse Portfolio
       </Link>
-      <Link Link to="/the-professor" className={`landing-link${bunStoryHiddenClass}`}>
+      <Link to="/the-professor" className={`landing-link${bunStoryHiddenClass}`}>
         <Icon className={classes.icon}>
           <MenuBookIcon />
         </Icon>

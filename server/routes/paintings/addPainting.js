@@ -5,6 +5,7 @@ const Painting = require('../../models/painting');
 const slugify = require("slugify");
 const parseFormFieldsAndFiles = require('../utils/parseFormFieldsAndFiles');
 const sharp = require('sharp');
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.create = async (req, res) => {
   try {
@@ -28,6 +29,7 @@ exports.create = async (req, res) => {
     }
     painting.save().then((result) => {
       console.log("Painting added")
+      updateSeriesMetadata(painting.series)
       res.json(result);
     }).catch(err => {
       console.log(err)

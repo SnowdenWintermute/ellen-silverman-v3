@@ -1,5 +1,5 @@
 .galleryHolder {
-  padding: 10px;
+  padding: 20px;
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
@@ -10,6 +10,7 @@
   margin: 10px;
   border: 1px solid black;
   transition: 0.3s;
+  position: relative;
 }
 .painting-card-body:hover {
   box-shadow: 1px 1px 3px black;
@@ -29,7 +30,7 @@
   object-position: center;
 }
 .painting-card-info-text {
-  font-family: "Roboto Condensed", "Sans Serif";
+  font-family: "Roboto", "open-sans";
   height: 70px;
   display: flex;
   align-items: center;
@@ -38,7 +39,23 @@
   background-color: #e9e7e2;
   overflow: hidden;
 }
-
+.painting-card-price-holder {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  display: none;
+  background: white;
+  /* box-shadow: 0px 4px 5px black; */
+}
+.painting-card-price-holder-sold {
+  display: block;
+}
+.painting-card-price {
+  display: block;
+  /* transform: rotateZ(45deg); */
+}
 @media only screen and (max-width: 775px) {
   .painting-card-body {
     height: 320px;

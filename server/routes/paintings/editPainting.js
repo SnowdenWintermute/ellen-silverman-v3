@@ -2,8 +2,10 @@ const parseFormFieldsAndFiles = require('../utils/parseFormFieldsAndFiles')
 const Painting = require('../../models/painting')
 const sharp = require('sharp')
 const fs = require('fs')
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.edit = async (req, res) => {
+  console.log("editing painting")
   const parsedForm = await parseFormFieldsAndFiles(req)
   console.log("parsed form: ", parsedForm)
   try {
@@ -23,6 +25,7 @@ exports.edit = async (req, res) => {
       paintingToBeEdited.thumbnail.contentType = image.type
     }
     await paintingToBeEdited.save()
+    updateSeriesMetadata(paintingToBeEdited.series)
     return res.status(200).json(paintingToBeEdited)
   } catch (error) {
     console.log(error)

@@ -14,31 +14,31 @@ export default class LandingPage extends Component {
               series: "Salt Marsh",
               title: "Salt Marsh, Birds",
               composition: "acrylic on canvas",
-              link: "/artworks/salt-marsh/"
+              linkToPaintingDetailPage: "/artworks/salt-marsh/"
             },
             {
               series: "South Dakota Trip",
               title: "Devil's Tower",
               composition: "acrylic on canvas",
-              link: "/artworks/salt-marsh/"
+              linkToPaintingDetailPage: "/artworks/salt-marsh/"
             },
             {
               series: "The Professor's Interiors",
               title: "Director's Office",
               composition: "acrylic on paper",
-              link: "/artworks/salt-marsh/"
+              linkToPaintingDetailPage: "/artworks/salt-marsh/"
             },
             {
               series: "Forest Path",
               title: "A Walk in the Woods",
               composition: "acrylic on canvas",
-              link: "/artworks/salt-marsh/"
+              linkToPaintingDetailPage: "/artworks/salt-marsh/"
             },
             {
               series: "Cold River Camp",
               title: "Cold River Vatican City",
               composition: "watercolor on paper",
-              link: "/artworks/salt-marsh/"
+              linkToPaintingDetailPage: "/artworks/salt-marsh/"
             },
           ]}
           imageSourceArray={[

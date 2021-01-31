@@ -37,6 +37,7 @@ import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageOrders from "./components/admin/ManageOrders";
+import AddPage from "./components/admin/AddPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -144,6 +145,11 @@ const App = () => {
             exact
             path="/admin/add-multiple-painting-photos"
             component={AddMultiplePaintingPhotos}
+          />
+          <AdminRoute
+            exact
+            path="/admin/add-page"
+            component={AddPage}
           />
           <AdminRoute exact path="/admin/orders" render={() => <ManageOrders isAdmin={true} />} />
           <AdminRoute exact path="/admin" component={AdminDashboard} />

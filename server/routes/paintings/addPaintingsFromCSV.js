@@ -3,17 +3,7 @@ convertCSVtoJSON = require('../utils/convertCSVtoJSON')
 const Painting = require('../../models/painting');
 const Series = require('../../models/series')
 const slugify = require("slugify");
-
-// parse form for csv file
-// convert csv to json
-// for each painting
-//  fetch series' ids
-//  assign a slug
-//  check if painting exists
-//  update or save new painting
-//  add errors or success info
-// send errors
-// send successful upload info
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.addPaintingsFromCSV = async (req, res) => {
   const files = await parseFiles(req)
@@ -75,5 +65,6 @@ exports.addPaintingsFromCSV = async (req, res) => {
       errors.push({ error: err, paintingTitle: painting.title })
     }
   }
+  Object.keys(seriesList).forEach(seriesName => { if (seriesList[seriesName]) updateSeriesMetadata(seriesList[seriesName]._id) })
   res.json({ paintingsUpdated, paintingsAdded, errors })
 }

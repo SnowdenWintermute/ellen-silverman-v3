@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button, Dialog } from '@material-ui/core'
 import { uploadPaintingCSVFormData } from '../../apiCalls/paintings'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import AddedPaintingsResultsAccordion from './AddedPaintingsResultsAccordion';
-import StandardModal from '../common/modal/StandardModal'
 import FileInput from '../forms/FileInput'
 import { toast } from "react-toastify"
 import { makeStyles } from '@material-ui/core/styles'
@@ -15,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   showResultsButton: {
     marginTop: "10px",
     width: "100%"
+  },
+  dialog: {
+    padding: 20
   }
 }));
 
@@ -82,11 +84,13 @@ const AddPaintingsFromCSV = () => {
           </Grid>
         </Grid>
       </MaterialPaperNarrow>
-      <StandardModal open={open} handleClose={handleClose}>
-        <h2 id="simple-modal-title">Results</h2>
-        <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />
-        <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
-      </StandardModal>
+      <Dialog open={open} handleClose={handleClose}>
+        <div className={classes.dialog}>
+          <h2 id="simple-modal-title">Results</h2>
+          <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />
+          <Button variant="contained" color="primary" onClick={() => setOpen(false)} style={{ float: "right", width: "140px" }}>OK</Button>
+        </div>
+      </Dialog>
     </div>
 
   )

@@ -3,15 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function PaintingCard({
   img,
-  series,
-  title,
-  slug,
-  height,
-  width,
-  price,
+  painting
 }) {
+  const { series, slug, title, price, sold } = painting
   return (
     <div className="painting-card-body">
+      <div className={`painting-card-price-holder ${sold && "painting-card-price-holder-sold"}`}>
+        <span className="painting-card-price">{sold ? "SOLD" : `$${price}`}</span>
+      </div>
       <Link
         className="painting-card-img-link"
         to={`/artworks/${series.slug}/${slug}/`}

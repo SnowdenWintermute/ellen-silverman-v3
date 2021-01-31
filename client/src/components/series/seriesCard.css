@@ -1,0 +1,33 @@
+.series-card-body {
+  /* height: 400px; */
+  width: 350px;
+  margin: 10px;
+  border: 1px solid black;
+  transition: 0.3s;
+}
+.series-card-body:hover {
+  box-shadow: 1px 1px 3px black;
+}
+.series-card-title {
+  font-family: "Josefin Slab", "open-sans" !important;
+  font-size: 24px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.series-card-info-text {
+  font-family: "Roboto", "open-sans";
+  padding: 10px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 775px) {
+  .series-card-body {
+    width: 45%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .series-card-body {
+    width: calc(50% - 4px);
+    margin: 2px;
+  }
+}

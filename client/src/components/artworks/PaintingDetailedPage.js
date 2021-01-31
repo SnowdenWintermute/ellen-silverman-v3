@@ -98,7 +98,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
 
   let paintingCost;
   if (painting.price && !painting.sold) {
-    paintingCost = `Cost unframed: ${painting.price}`;
+    paintingCost = `Cost unframed: $${painting.price}`;
   } else {
     paintingCost = "Sold";
   }

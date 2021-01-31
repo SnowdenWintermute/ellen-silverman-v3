@@ -1,8 +1,8 @@
 const sendAdminCancelledOrderNotificationEmail = require('../../emails/admin/sendAdminCancelledOrderNotificationEmail')
 const sendCancelOrderEmail = require('../../emails/user/sendCancelOrderEmail')
 const Order = require('../../models/order')
-const Painting = require('../../models/painting')
 const User = require('../../models/user')
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.cancelOrder = async (req, res) => {
   try {
@@ -19,10 +19,13 @@ exports.cancelOrder = async (req, res) => {
     order.status = "cancelled"
     order.history.push({ message: "Order cancelled", timestamp: Date.now() })
     await order.save()
+    const seriesIds = []
     order.paintings.forEach(painting => {
       painting.painting.sold = false
       painting.painting.save()
+      if (!seriesIds.includes(painting.painting.series._id)) seriesIds.push(painting.painting.series._id)
     })
+    seriesIds.forEach(id => updateSeriesMetadata(id))
     sendCancelOrderEmail(order, user)
     sendAdminCancelledOrderNotificationEmail(order)
     console.log(`Order id ${order._id} cancelled`)

@@ -6,6 +6,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import PanoramaIcon from '@material-ui/icons/Panorama';
 import ListIcon from '@material-ui/icons/List';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import DashboardCard from './DashboardCard'
 import MaterialPaperBasic from '../layout/MaterialPaperBasic';
 
@@ -56,6 +57,9 @@ const AdminDashboard = () => {
           </Grid>
           <Grid item xs={6} lg={3} className={classes.gridItem}>
             <DashboardCard title={"Manage Orders"} url={"/admin/orders"} icon={<LocalShippingIcon />} />
+          </Grid>
+          <Grid item xs={6} lg={3} className={classes.gridItem}>
+            <DashboardCard title={"Add Page"} url={"/admin/add-page"} icon={<AddBoxIcon />} />
           </Grid>
         </Grid>
       </MaterialPaperBasic>

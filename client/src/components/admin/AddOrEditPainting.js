@@ -89,6 +89,7 @@ const AddOrEditPainting = (props) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("submat")
     e.preventDefault();
     try {
       setLoading(true);
@@ -97,6 +98,7 @@ const AddOrEditPainting = (props) => {
       else res = await addPainting(formData, user.token);
       console.log({ ...res });
       if (res.response) {
+        if (res.response.data.err) toast.error(res.response.data.err)
         if (res.response.data.error) {
           if (
             res.response.data.error.errors &&
