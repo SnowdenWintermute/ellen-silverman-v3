@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import SeriesList from "./SeriesList";
 import SeriesPage from "./SeriesPage";
-import PaintingDetailedPage from "./PaintingDetailedPage";
+import PaintingDetailedPage from "../paintings/PaintingDetailedPage";
 
 export default class Artworks extends Component {
   render() {

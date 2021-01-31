@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PaintingCard from "../paintings/PaintingCard";
+import PaintingCard from "../paintings/PaintingCard/PaintingCard";
 import { getPaintingsInSeriesWithThumbnails } from "../../apiCalls/series";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
 import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";

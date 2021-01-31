@@ -62,7 +62,7 @@ const AnimatedLandingLinks = () => {
           <div>
             "The Professor"
             <div>
-              E-Story
+              Painted Novel
             </div>
           </div>
         </div>

@@ -51,7 +51,7 @@ const SeriesAndPaintingList = ({
           <Accordion square expanded={expanded === i} key={`series-${i}`} onChange={handlePanelChange(i)}>
             <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
               <Typography>
-                {series.name} {`(${series.numberOfPaintings})`}
+                {series.name} {`(${series.numberOfPaintings}) Veiws: ${series.viewCounter ? series.viewCounter.views : 0}`}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
@@ -59,7 +59,7 @@ const SeriesAndPaintingList = ({
                 <TableBody>
                   {paintingLists[series._id] && paintingLists[series._id].map((painting, i) => (
                     <TableRow key={`error-${i}`}>
-                      <TableCell align="left" style={{ width: '200px' }}>{painting.title}</TableCell>
+                      <TableCell align="left">{painting.title} ({painting.viewCounter ? painting.viewCounter.views : 0} views)</TableCell>
                       <TableCell align="right">
                         <Link to={`/admin/edit-painting/${painting.slug}`}>
                           <IconButton>

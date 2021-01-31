@@ -239,6 +239,12 @@ const BunStoryImages = (props) => {
     if (getTextTop("text93") < appearZone) setStudyClass("study-pos-4");
     if (getTextTop("text95") < appearZone) setStudyClass("study-pos-5");
     if (getTextTop("text98") < appearZone) setStudyClass("study-pos-6");
+    if (getTextTop("text100") < appearZone) {
+      setEnglishLivingRoomClass("story-image-small english-lr-pos-1")
+      setProfessorsFrontHallClass("story-image-small front-hall-pos-1")
+      setTiledHallwayClass("story-image-small tiled-hallway-pos-1")
+      setEnclosedPorchClass("story-image-small enclosed-porch-pos-1")
+    }
     if (getTextTop("text101") < appearZone) {
       setStudyClass("story-image-small study-end-grid-1");
       setTeaTimeClass("story-image-small teaTime-end-grid-1");

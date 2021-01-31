@@ -7,7 +7,7 @@ const { create } = require("./createPage");
 const { getPage } = require("./getPage");
 
 pageMainRouter.post("/", authCheck, adminCheck, create);
-pageMainRouter.get("/:slug", authCheck, adminCheck, getPage);
+pageMainRouter.get("/:slug", getPage);
 pageMainRouter.put("/:slug", incrementPageViewCounter);
 
 module.exports = pageMainRouter;

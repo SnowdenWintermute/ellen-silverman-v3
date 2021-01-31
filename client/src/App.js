@@ -10,7 +10,7 @@ import LocationBar from "./components/layout/LocationBar/LocationBar";
 import Footer from "./components/layout/Footer";
 import Artworks from "./components/artworks/Artworks";
 import LandingPage from "./components/landing/LandingPage";
-import FullResolutionImage from "./components/artworks/FullResolutionImage";
+import FullResolutionImage from "./components/paintings/FullResolutionImage";
 import Cv from "./components/cv/Cv";
 import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";

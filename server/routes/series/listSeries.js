@@ -3,7 +3,7 @@ const Paintings = require('../../models/painting')
 
 // return a list of all series with the number of paintings in each one
 exports.list = async (req, res) => {
-  const seriesList = await Series.find({}).sort({ createdAt: -1 }).exec()
+  const seriesList = await Series.find({}).sort({ createdAt: -1 }).populate('viewCounter').exec()
   const listToReturn = []
   let i = 0
   for (const series of seriesList) {

@@ -440,6 +440,18 @@
   transition-delay: 800;
   transform: scale(0.3) translate(-170%, 99%);
 }
+.english-lr-pos-1 {
+  opacity: 0;
+}
+.front-hall-pos-1 {
+  opacity: 0;
+}
+.tiled-hallway-pos-1 {
+  opacity: 0;
+}
+.enclosed-porch-pos-1 {
+  opacity: 0;
+}
 .english-lr-end-grid-1 {
   transition-delay: 900;
   transform: scale(0.3) translateY(50%);

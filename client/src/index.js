@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import "./css/style.css";
 import "./css/nav.css";
 import "./css/elementSlider.css";
-import "./css/paintingDetailsPage.css";
-import "./css/paintingCards.css";
 import "./css/cv.css";
 import "./css/exhibitions.css";
 import "./css/contact.css";

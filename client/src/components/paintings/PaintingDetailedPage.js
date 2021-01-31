@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress'
 import _ from 'lodash'
 import {
@@ -17,11 +17,13 @@ import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary"
 import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
 import { updateCart } from "../../store/actions/cart-actions";
+import "./paintingDetailsPage.css"
 
 const PaintingDetailedPage = ({ paintingSlug }, props) => {
   const [painting, setPainting] = useState({});
   const [paintingIsInCart, setPaintingIsInCart] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [showZoomFrame, setShowZoomFrame] = useState(false)
 
   // redux
   const { user, cart } = useSelector(state => ({ ...state }))
@@ -116,15 +118,24 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
       <div className="page-frame">
         <div className="painting-details-content-holder">
           <MagnifierContainer className="painting-details-img">
-            <SideBySideMagnifier
-              imageSrc={painting.image && createImgSrcStringFromBinary(
-                painting.image.contentType,
-                painting.image.data
-              )}
-              alwaysInPlace={true}
-            ></SideBySideMagnifier>
+            <div onMouseEnter={() => {
+              setShowZoomFrame(true)
+              console.log("enter")
+            }} onMouseOut={() => setShowZoomFrame(false)}>
+              <SideBySideMagnifier
+                imageSrc={painting.image && createImgSrcStringFromBinary(
+                  painting.image.contentType,
+                  painting.image.data
+                )}
+                // alwaysInPlace={true}
+                touchActivation={"longTouch"}
+                mouseActivation={"click"}
+                style={{ zIndex: "2", position: "relative" }}
+              ></SideBySideMagnifier>
+            </div>
+            {showZoomFrame && <div className="zoom-frame">Loading zoom...</div>}
           </MagnifierContainer>
-          <div className="painting-details-text-box">
+          {<div className="painting-details-text-box">
             <div className="painting-title">{painting.title}</div>
             <div className="painting-detail-text">Original Painting</div>
             <div className="painting-detail-text">
@@ -160,7 +171,7 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
                   <Button variant="contained" onClick={handleRemoveFromCart}>Remove from Cart</Button>
                   : <Button variant="contained" color="primary" onClick={handleAddToCart}>Add to Cart</Button>}
               </>}
-          </div>
+          </div>}
         </div>
       </div>
     );

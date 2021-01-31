@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getPage } from '../../apiCalls/page'
 
 const Credits = ({ creditsShowing }) => {
   const [boxClass, setBoxClass] = useState("transparent-above");
@@ -8,6 +9,16 @@ const Credits = ({ creditsShowing }) => {
   const [textClass2, setTextClass2] = useState("transparent-above");
   const [textClass3, setTextClass3] = useState("transparent-above");
   const [textClass4, setTextClass4] = useState("transparent-above");
+  const [pageInfo, setPageInfo] = useState(null)
+
+  useEffect(() => {
+    const asyncFunc = async () => {
+      console.log("ey")
+      const newPageInfo = await getPage("the-professor-story")
+      setPageInfo(newPageInfo.data)
+    }
+    asyncFunc()
+  }, [])
 
   useEffect(() => {
     if (creditsShowing) {
@@ -49,6 +60,11 @@ const Credits = ({ creditsShowing }) => {
         Web design by Mike Silverman
       </p>
       <div className={`story-credits-text credits-text-4 ${textClass4}`}>
+        <p>
+          {pageInfo && pageInfo.viewCounter && `This story has been viewed ${pageInfo.viewCounter.views} times`}
+        </p>
+        <br>
+        </br>
         <Link
           className={"story-credits-text"}
           to={"/artworks/The-Professor's-Interiors"}
