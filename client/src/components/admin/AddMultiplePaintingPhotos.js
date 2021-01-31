@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { uploadMultiplePaintingImages } from '../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import AddedPaintingImagesResultsAccordion from './AddedPaintingImagesResultsAcc
 import StandardModal from '../common/modal/StandardModal'
 import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
 import MultipleImageInput from '../forms/MultipleImageInput'
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,7 @@ const AddMultiplePaintingPhotos = () => {
   const classes = useStyles();
   const [inputKey, setInputKey] = useState(0)
   const [photos, setPhotos] = useState([])
-  const [formData, setFormData] = useState(null)
+  const formData = useRef(new FormData())
   const [imagesTotalSize, setImagesTotalSize] = useState(0)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -51,37 +52,40 @@ const AddMultiplePaintingPhotos = () => {
   const [errors, setErrors] = useState([])
 
   const user = useSelector(state => state.user)
-  useEffect(() => { setFormData(new FormData()) }, [])
 
   const handleChange = (e) => {
     setPhotos([...e.target.files])
     let totalSize = 0
+    formData.current = new FormData()
+
     for (const file of e.target.files) {
       totalSize += file.size
-      formData.set(file.name, file)
+      formData.current.set(file.name, file)
     }
     setImagesTotalSize(totalSize)
   }
 
-  const handleProgressEvent = progressEvent => {
-    setProgress(parseInt(Math.round(progressEvent.loaded * 100)) / progressEvent.total)
-  }
+  const handleProgressEvent = progressEvent => setProgress(parseInt(Math.round(progressEvent.loaded * 100)) / progressEvent.total)
 
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)
-    const res = await uploadMultiplePaintingImages(formData, user.token, handleProgressEvent)
-    setLoading(false)
-    setProgress(0)
-    setPhotos([])
-    setImagesTotalSize(0)
-    setFormData(new FormData())
-    setInputKey(inputKey + 1)
-    setOpen(true)
-    setImagesAdded(res.data.paintingImagesSaved)
-    setImagesUpdated(res.data.paintingImagesUpdated)
-    setErrors(res.data.errors)
-    console.log({ ...res })
+    try {
+      const res = await uploadMultiplePaintingImages(formData.current, user.token, handleProgressEvent)
+      setLoading(false)
+      setProgress(0)
+      setPhotos([])
+      setImagesTotalSize(0)
+      formData.current = new FormData()
+      setInputKey(inputKey + 1)
+      setOpen(true)
+      setImagesAdded(res.data.paintingImagesSaved)
+      setImagesUpdated(res.data.paintingImagesUpdated)
+      setErrors(res.data.errors)
+      console.log({ ...res })
+    } catch (error) {
+      toast.error(JSON.stringify(error))
+    }
   }
 
   const handleClose = () => setOpen(false)
@@ -115,7 +119,7 @@ const AddMultiplePaintingPhotos = () => {
         </Grid>
         {(imagesAdded.length > 0 || imagesUpdated.length > 0 || errors.length > 0) && <Button className={classes.showResultsButton} variant="outlined" color="primary" onClick={() => setOpen(true)}>Show most recent upload results</Button>}
       </MaterialPaperNarrow>
-      <Dialog open={open} handleClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <div className={classes.dialog}>
           <h2 id="simple-modal-title">Results</h2>
           <AddedPaintingImagesResultsAccordion paintingImagesAdded={imagesAdded} paintingImagesUpdated={imagesUpdated} errors={errors} />

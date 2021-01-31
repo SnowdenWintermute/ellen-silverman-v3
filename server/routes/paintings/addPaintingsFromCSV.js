@@ -4,9 +4,11 @@ const Painting = require('../../models/painting');
 const Series = require('../../models/series')
 const slugify = require("slugify");
 const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
+// const addSeriesFromCSV = require('./addSeriesFromCSV')
 
 exports.addPaintingsFromCSV = async (req, res) => {
   const files = await parseFiles(req)
+  console.log(files)
   let paintings
   try {
     paintings = await convertCSVtoJSON(files.csv.path)
@@ -23,16 +25,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
     else continue
   }
 
-  //if want add series from csv too
-  // for (const painting of paintings) {
-  //   if (!painting.series) continue
-  //   if (!seriesList[painting.series]) {
-  //     const seriesToAddToList = await Series.findOne({ name: painting.series })
-  //     if (!seriesToAddToList) seriesList[painting.series] = await new Series({ name: painting.series, slug: slugify(painting.series) }).save()
-  //     else seriesList[painting.series] = seriesToAddToList
-  //   }
-  //   else continue
-  // }
+  // addSeriesFromCSV(paintings, seriesList) // use with caution
 
   // assign slug and series id to paintings
   paintings.forEach(painting => {

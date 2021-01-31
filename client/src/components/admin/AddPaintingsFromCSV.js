@@ -47,24 +47,22 @@ const AddPaintingsFromCSV = () => {
     setProgress(parseInt(Math.round(progressEvent.loaded * 100)) / progressEvent.total)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    uploadPaintingCSVFormData(formData, user.token, handleProgressEvent).then(res => {
-      console.log({ ...res })
-      if (res.response && res.response.data.error) {
-        console.log("ey")
-        toast.error(res.response.data.error.message)
-      }
+    try {
+      const res = await uploadPaintingCSVFormData(formData, user.token, handleProgressEvent)
+      if (res.response && res.response.data.error) toast.error(res.response.data.error.message)
       res.data.paintingsAdded && setPaintingsAdded(res.data.paintingsAdded)
       res.data.paintingsUpdated && setPaintingsUpdated(res.data.paintingsUpdated)
       res.data.errors && setErrors(res.data.errors)
       setOpen(true)
       setLoading(false)
-    }).catch(err => {
-      console.log(err)
+    } catch (error) {
+      console.log(error)
+      toast.error(JSON.stringify(error))
       setLoading(false)
-    })
+    }
   }
 
   const handleClose = () => setOpen(false)
@@ -84,7 +82,7 @@ const AddPaintingsFromCSV = () => {
           </Grid>
         </Grid>
       </MaterialPaperNarrow>
-      <Dialog open={open} handleClose={handleClose}>
+      <Dialog open={open} onClose={handleClose}>
         <div className={classes.dialog}>
           <h2 id="simple-modal-title">Results</h2>
           <AddedPaintingsResultsAccordion paintingsAdded={paintingsAdded} paintingsUpdated={paintingsUpdated} errors={errors} />

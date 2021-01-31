@@ -68,68 +68,47 @@ export const editPainting = async (painting, authToken) => {
   }
 };
 
-export const removePainting = async (id, authToken) => {
-  try {
-    const deletedPainting = await axios.delete(
-      `${process.env.REACT_APP_API}/paintings`,
-      {
-        headers: {
-          authToken,
-        },
-        data: {
-          id,
-        },
-      }
-    );
-    return deletedPainting;
-  } catch (err) {
-    console.log(err);
-    return err;
+export const removePainting = async (id, authToken) => await axios.delete(
+  `${process.env.REACT_APP_API}/paintings`,
+  {
+    headers: {
+      authToken,
+    },
+    data: {
+      id,
+    },
   }
-};
+);
 
-export const uploadPaintingCSVFormData = async (csvFormData, authToken, handleProgressEvent) => {
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API}/paintings/upload-csv`,
-      csvFormData,
-      {
-        headers: {
-          authToken,
-          "Content-Type": `multipart/form-data; boundary=${csvFormData._boundary}`,
-        },
-        onUploadProgress: (progressEvent) => {
-          handleProgressEvent(progressEvent);
-        },
-      }
-    );
-    return res;
-  } catch (err) {
-    return err;
+export const uploadPaintingCSVFormData = async (csvFormData, authToken, handleProgressEvent) => await axios.post(
+  `${process.env.REACT_APP_API}/paintings/upload-csv`,
+  csvFormData,
+  {
+    headers: {
+      authToken,
+      "Content-Type": `multipart/form-data; boundary=${csvFormData._boundary}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      handleProgressEvent(progressEvent);
+    },
   }
-};
+);
+
 
 export const uploadMultiplePaintingImages = async (
   formData,
   authToken,
   handleProgressEvent
-) => {
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API}/paintings/upload-multiple-painting-images`,
-      formData,
-      {
-        headers: {
-          authToken,
-          "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-        },
-        onUploadProgress: (progressEvent) => {
-          handleProgressEvent(progressEvent);
-        },
-      }
-    );
-    return res;
-  } catch (err) {
-    return err;
+) => await axios.post(
+  `${process.env.REACT_APP_API}/paintings/upload-multiple-painting-images`,
+  formData,
+  {
+    headers: {
+      authToken,
+      "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+    },
+    onUploadProgress: (progressEvent) => {
+      handleProgressEvent(progressEvent);
+    },
   }
-};
+);

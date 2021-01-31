@@ -56,10 +56,7 @@ const MultipleImageInput = ({ handleChange, selectedImages, imagesTotalSize, cla
   const classes = useStyles()
   const hiddenFileInput = useRef(null)
 
-  const handleClick = event => {
-    console.log("ey")
-    hiddenFileInput.current.click();
-  };
+  const handleClick = event => hiddenFileInput.current.click()
 
   return (
     <Grid container justify="space-between" alignItems="center" onClick={handleClick} className={classnames(classes.root, className)}>
