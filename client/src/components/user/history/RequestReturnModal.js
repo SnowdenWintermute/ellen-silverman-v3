@@ -9,6 +9,7 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
     const newSelectedPaintings = {}
     const newReturnNotes = {}
     for (const painting in order.paintings) {
+      if (!order.paintings[painting].painting) continue
       newSelectedPaintings[order.paintings[painting].painting.title] = false
       newReturnNotes[order.paintings[painting].painting.title] = ""
     }
@@ -31,6 +32,8 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
     return result
   }
 
+  console.log(order.paintings)
+
   return (
     <StandardModal open={open} handleClose={handleClose}>
       <Grid container spacing={1}>
@@ -42,7 +45,7 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
             <FormLabel component="legend">Choose an item to return</FormLabel>
             <FormGroup>
               {
-                order.paintings.map(painting => <Fragment key={painting.painting.title}>
+                order.paintings.map(painting => painting.painting && <Fragment key={painting.painting.title}>
                   <FormControlLabel
 
                     control={<Checkbox color="primary" checked={selectedPaintings[painting.painting.title]} disabled={painting.returnRequested} onChange={handleChange} name={painting.painting.title} />}

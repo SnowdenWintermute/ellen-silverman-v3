@@ -88,7 +88,7 @@ const ManageOrders = ({ isAdmin }) => {
             <CircularProgress />
           </div>}
           {!loadingOrders && <>
-            {orders.length > 0 && orders.map(order => order._id && <OrderCard order={order} key={order._id} isAdmin={isAdmin} user={user} removeOrderFromList={removeOrderFromList} />).reverse()}
+            {orders.length > 0 && orders.map(order => order._id && <OrderCard order={order} key={order._id} loadingOrders={loadingOrders} isAdmin={isAdmin} user={user} removeOrderFromList={removeOrderFromList} />).reverse()}
             {orders.length < 1 && <Typography variant="body1" className={classes.pageHeader}>No orders found with selected parameters.</Typography>}
           </>
           }

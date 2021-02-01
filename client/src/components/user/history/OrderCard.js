@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
+const OrderCard = ({ order, isAdmin, removeOrderFromList, loadingOrders }) => {
   const classes = useStyles()
   const user = useSelector(state => state.user)
   const [orderState, setOrderState] = useState(order)
@@ -179,8 +179,8 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList }) => {
               <Grid item xs={12}>
                 {orderState.paintings && orderState.paintings.length > 0 && orderState.paintings.map((painting, i) =>
                   painting.painting && painting.painting.thumbnail ?
-                    <OrderPaintingCard key={painting.painting.title} paintingOrderObject={painting} />
-                    : <CircularProgress />
+                    <OrderPaintingCard key={painting.painting.title} paintingOrderObject={painting} /> : loadingOrders ?
+                      <CircularProgress /> : "Painting not in Database"
                 )}
               </Grid>
             </Grid>
