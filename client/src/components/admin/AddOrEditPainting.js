@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 // api
@@ -15,7 +15,7 @@ const AddOrEditPainting = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [seriesList, setSeriesList] = useState([]);
-  const [formData, setFormData] = useState(null);
+  const formData = useRef(new FormData());
   const [formFieldErrors, setFormFieldErrors] = useState({});
   const initialValues = {
     title: "",
@@ -39,7 +39,6 @@ const AddOrEditPainting = (props) => {
     try {
       const fetchedSeriesList = await getSeriesList();
       setSeriesList(fetchedSeriesList);
-      setFormData(new FormData());
     } catch (err) {
       console.log(err);
       toast.error(err);
@@ -54,14 +53,19 @@ const AddOrEditPainting = (props) => {
     const { paintingSlug } = props.match.params;
     const getPaintingAndSetInitialValues = async () => {
       if (paintingSlug) {
-        const paintingToEdit = await getPainting(paintingSlug);
-        setEditMode(true);
-        const newValues = { ...initialValues };
-        Object.keys(newValues).forEach((valueKey) => {
-          newValues[valueKey] = paintingToEdit.data[valueKey] || "";
-          if (formData) formData.set(valueKey, paintingToEdit.data[valueKey]);
-        });
-        setValues({ ...newValues });
+        try {
+          const paintingToEdit = await getPainting(paintingSlug);
+          setEditMode(true);
+          const newValues = { ...initialValues };
+          Object.keys(newValues).forEach((valueKey) => {
+            newValues[valueKey] = paintingToEdit.data[valueKey] || "";
+            if (formData)
+              formData.current.set(valueKey, paintingToEdit.data[valueKey]);
+          });
+          setValues({ ...newValues });
+        } catch (error) {
+          toast.error(error);
+        }
       }
     };
     getPaintingAndSetInitialValues();
@@ -69,7 +73,7 @@ const AddOrEditPainting = (props) => {
 
   const handleChange = (name) => (event) => {
     const value = name === "image" ? event.target.files[0] : event.target.value;
-    formData.set(name, value);
+    formData.current.set(name, value);
     if (name === "image") {
       if (event.target.files[0]) {
         if (!editMode) {
@@ -79,7 +83,7 @@ const AddOrEditPainting = (props) => {
             image: event.target.files[0],
             title: titleFromImageName,
           });
-          formData.set("title", titleFromImageName);
+          formData.current.set("title", titleFromImageName);
         } else setValues({ ...values, image: event.target.files[0] });
       } else setValues({ ...values, image: null, title: "" });
     } else setValues({ ...values, [name]: value });
@@ -89,16 +93,16 @@ const AddOrEditPainting = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("submat")
+    console.log("submat");
     e.preventDefault();
     try {
       setLoading(true);
       let res;
-      if (editMode) res = await editPainting(formData, user.token);
-      else res = await addPainting(formData, user.token);
+      if (editMode) res = await editPainting(formData.current, user.token);
+      else res = await addPainting(formData.current, user.token);
       console.log({ ...res });
       if (res.response) {
-        if (res.response.data.err) toast.error(res.response.data.err)
+        if (res.response.data.err) toast.error(res.response.data.err);
         if (res.response.data.error) {
           if (
             res.response.data.error.errors &&
