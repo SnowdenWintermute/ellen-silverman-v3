@@ -32,12 +32,17 @@ const PaintingDetailedPage = ({ paintingSlug }, props) => {
   useEffect(() => {
     const asyncFunc = async () => {
       setLoading(true)
-      const newPainting = await getPaintingWithFullImage(paintingSlug);
+      try {
+        const newPainting = await getPaintingWithFullImage(paintingSlug);
+        setPainting({ ...newPainting.data });
+      } catch (error) {
+        console.log(error)
+        toast.error(JSON.stringify(error))
+      }
       setLoading(false)
-      setPainting({ ...newPainting.data });
     };
     asyncFunc();
-  }, []);
+  }, [paintingSlug]);
 
   useEffect(() => {
     // scroll top

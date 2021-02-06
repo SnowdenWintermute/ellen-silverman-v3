@@ -38,7 +38,7 @@ const AddOrEditPainting = (props) => {
   const initFormDataAndLoadSeriesList = useCallback(async () => {
     try {
       const fetchedSeriesList = await getSeriesList();
-      setSeriesList(fetchedSeriesList);
+      setSeriesList(fetchedSeriesList.data);
     } catch (err) {
       console.log(err);
       toast.error(err);
@@ -93,14 +93,12 @@ const AddOrEditPainting = (props) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("submat");
     e.preventDefault();
     try {
       setLoading(true);
       let res;
       if (editMode) res = await editPainting(formData.current, user.token);
       else res = await addPainting(formData.current, user.token);
-      console.log({ ...res });
       if (res.response) {
         if (res.response.data.err) toast.error(res.response.data.err);
         if (res.response.data.error) {

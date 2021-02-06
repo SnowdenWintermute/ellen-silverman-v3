@@ -9,6 +9,7 @@ import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import BasicPaper from '../../common/paper/BasicPaper'
 import { updateCart } from "../../../store/actions/cart-actions";
 import './cart.css'
+import { toast } from 'react-toastify'
 
 import { saveCart } from '../../../apiCalls/user'
 
@@ -30,8 +31,6 @@ const Cart = () => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(Object.prototype.toString.call(cart) === '[object Array]')
-    console.log(cart)
     if (!cart.length) return
     const promises = []
     const newCart = [...cart]
@@ -39,11 +38,12 @@ const Cart = () => {
       promises.push(new Promise((resolve, reject) => getPaintingThumbnail(item._id).then(thumbnail => {
         item.thumbnail = thumbnail.data
         resolve()
-      })))
+      }).catch(error => reject(error))
+      ))
     })
     Promise.all(promises).then(result => {
       setCartItems(newCart)
-    })
+    }).catch(error => toast.error(JSON.stringify(error)))
   }, [cart])
 
   const removeItemFromCart = (id) => {

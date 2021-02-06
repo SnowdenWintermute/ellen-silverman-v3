@@ -1,65 +1,31 @@
 import axios from "axios";
 
-export const getPainting = async (slug) =>
-  await axios.get(`${process.env.REACT_APP_API}/paintings/${slug}`);
+export const getPainting = async (slug) => await axios.get(`${process.env.REACT_APP_API}/paintings/${slug}`);
 
-export const getPaintingWithFullImage = async (slug) => {
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API}/paintings/with-full-image/${slug}`
-    );
-    return res;
-  } catch (err) {
-    return err;
-  }
-};
+export const getPaintingWithFullImage = async (slug) => await axios.get(`${process.env.REACT_APP_API}/paintings/with-full-image/${slug}`);
 
-export const getPaintingThumbnail = async (id) => {
-  try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API}/paintings/thumbnail/${id}`
-    );
-    return res;
-  } catch (err) {
-    return err;
-  }
-};
+export const getPaintingThumbnail = async (id) => await axios.get(`${process.env.REACT_APP_API}/paintings/thumbnail/${id}`);
 
-export const addPainting = async (painting, authToken) => {
-  try {
-    const res = await axios.post(
-      `${process.env.REACT_APP_API}/paintings`,
-      painting,
-      {
-        headers: {
-          authToken,
-          "Content-Type": `multipart/form-data; boundary=${painting._boundary}`,
-        },
-      }
-    );
-    return res;
-  } catch (err) {
-    return err;
-  }
-};
+export const addPainting = async (painting, authToken) => await axios.post(
+  `${process.env.REACT_APP_API}/paintings`,
+  painting,
+  {
+    headers: {
+      authToken,
+      "Content-Type": `multipart/form-data; boundary=${painting._boundary}`,
+    },
+  });
 
-export const editPainting = async (painting, authToken) => {
-  try {
-    const res = await axios.put(
-      `${process.env.REACT_APP_API}/paintings`,
-      painting,
-      {
-        headers: {
-          authToken,
-          "Content-Type": `multipart/form-data; boundary=${painting._boundary}`,
-        },
-      }
-    );
-    return res;
-  } catch (err) {
-    return err;
-  }
-};
+export const editPainting = async (painting, authToken) => await axios.put(
+  `${process.env.REACT_APP_API}/paintings`,
+  painting,
+  {
+    headers: {
+      authToken,
+      "Content-Type": `multipart/form-data; boundary=${painting._boundary}`,
+    },
+  });
+
 
 export const removePainting = async (id, authToken) =>
   await axios.delete(`${process.env.REACT_APP_API}/paintings`, {

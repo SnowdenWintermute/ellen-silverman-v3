@@ -11,9 +11,11 @@
   border: 1px solid black;
   transition: 0.3s;
   position: relative;
+  display: block;
 }
 .painting-card-body:hover {
   box-shadow: 1px 1px 3px black;
+  transform: scale(1.025);
 }
 .painting-card-img-link {
   display: block;

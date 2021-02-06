@@ -4,6 +4,7 @@ import { getPaintingsInSeriesWithThumbnails } from "../../apiCalls/series";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
 import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
 import { getSeries } from '../../apiCalls/series'
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles(theme => ({
   topBar: {
@@ -37,31 +38,39 @@ const SeriesPage = (params) => {
   }, []);
 
   useEffect(() => {
-    const asyncFunc = async () => {
-      const newCards = [];
-      const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(params.category);
-      const series = await getSeries(paintingsInSeries[0].series._id)
-      setSeries(series)
-      setSeriesName(paintingsInSeries[0].series.name)
-      paintingsInSeries.forEach((painting, i) => {
-        if (painting.thumbnail) {
-          newCards.push({
-            painting,
-            element: <PaintingCard
-              img={createImgSrcStringFromBinary(
-                painting.thumbnail.contentType,
-                painting.thumbnail.data
-              )}
-              painting={painting}
-              key={i}
-            />
-          });
-        }
-      });
-      setCards(newCards);
+    try {
+      const asyncFunc = async () => {
+        const newCards = [];
+        const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(params.category);
+        const series = await getSeries(paintingsInSeries[0].series._id)
+        setSeries(series.data)
+        if (series) setSeriesName(paintingsInSeries[0].series.name)
+        paintingsInSeries.forEach((painting, i) => {
+          if (painting.thumbnail) {
+            newCards.push({
+              painting,
+              element: <PaintingCard
+                img={createImgSrcStringFromBinary(
+                  painting.thumbnail.contentType,
+                  painting.thumbnail.data
+                )}
+                painting={painting}
+                key={i}
+              />
+            });
+          }
+        });
+        setCards(newCards);
+        setLoading(false)
+
+      };
+      asyncFunc();
+    } catch (error) {
+      console.log(error)
+      toast.error(JSON.stringify(error))
       setLoading(false)
-    };
-    asyncFunc();
+    }
+
   }, [params.category]);
 
   const onSelectSortParameter = (e) => {
@@ -77,7 +86,7 @@ const SeriesPage = (params) => {
   return (
     <div className="page-frame">
       <div className="galleryHolder">
-        {!loading &&
+        {!loading && series &&
           <Card className={classes.topBar}>
             <Grid container>
               <Grid container item xs={12} justify="space-between" alignItems="center">
@@ -117,7 +126,7 @@ const SeriesPage = (params) => {
           </Card>
         }
 
-        {loading ? <div className="flex-center"><CircularProgress /></div> : cards.map(card => card.element)}
+        {loading ? <div className="flex-center"><CircularProgress /></div> : cards.length > 0 ? cards.map(card => card.element) : "No paintings found in this series, or no such series exists."}
       </div>
     </div>
   );

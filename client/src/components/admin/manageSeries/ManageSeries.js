@@ -62,7 +62,7 @@ const ManageSeries = () => {
     setSeriesListLoading(true)
     try {
       const fetchedSeriesList = await getSeriesList()
-      setSeriesList(fetchedSeriesList)
+      setSeriesList(fetchedSeriesList.data)
     } catch (err) {
       console.log(err)
       toast.error(err)

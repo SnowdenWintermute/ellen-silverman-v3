@@ -4,20 +4,26 @@ import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary"
 
 const FullResolutionImage = ({ match }) => {
   const [imgUrl, setImgUrl] = useState("")
+  const [error, setError] = useState("")
   useEffect(() => {
     const asyncFunc = async () => {
-      const painting = await getPaintingWithFullImage(match.params.painting)
-      console.log(painting.data)
-      if (painting.data.image) setImgUrl(createImgSrcStringFromBinary(painting.data.image.contentType, painting.data.image.data))
+      try {
+        const painting = await getPaintingWithFullImage(match.params.painting)
+        if (painting.data.image) setImgUrl(createImgSrcStringFromBinary(painting.data.image.contentType, painting.data.image.data))
+      } catch (error) {
+        console.log(error)
+        setError(JSON.stringify(error))
+      }
     }
     asyncFunc()
   }, [])
   return (
     <React.Fragment>
-      <img
+      {error && error}
+      {imgUrl && <img
         src={imgUrl}
         alt={match.params.painting}
-      />
+      />}
     </React.Fragment>
   );
 

@@ -4,8 +4,7 @@ module.exports = incrementVeiwableObjectViewCounter = async (
   viewableObject,
   viewerIp
 ) => {
-  console.log("IP Address " + viewerIp + " viewed an item");
-  console.log(viewableObject);
+  if (!viewableObject) throw new Error("No viewable entitity found")
   if (!viewableObject.viewCounter) {
     viewableObject.viewCounter = new ViewCounter();
     viewableObject.save();

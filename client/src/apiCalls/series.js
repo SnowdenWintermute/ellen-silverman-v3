@@ -1,23 +1,8 @@
 import axios from "axios"
 
-export const getSeries = async (seriesId) => {
-  try {
-    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/${seriesId}`)
-    return fetchedSeries.data
-  } catch (err) {
-    console.log(err)
-    return err
-  }
-}
-export const getSeriesList = async () => {
-  try {
-    const fetchedSeries = await axios.get(`${process.env.REACT_APP_API}/series/list`)
-    return fetchedSeries.data
-  } catch (err) {
-    console.log(err)
-    return err
-  }
-}
+export const getSeries = async (seriesId) => axios.get(`${process.env.REACT_APP_API}/series/${seriesId}`)
+
+export const getSeriesList = async () => await axios.get(`${process.env.REACT_APP_API}/series/list`)
 
 export const getSeriesListWithThumbnails = async () => {
   try {
