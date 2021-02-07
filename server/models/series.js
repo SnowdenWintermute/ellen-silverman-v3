@@ -9,6 +9,7 @@ const seriesSchema = new mongoose.Schema(
       trim: true,
       required: "Series must have a title",
       index: true,
+      maxlength: 200
     },
     slug: {
       type: String,

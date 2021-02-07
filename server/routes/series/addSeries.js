@@ -5,5 +5,8 @@ exports.create = (req, res) => {
   new Series({ name: req.body.name, slug: slugify(req.body.name) })
     .save()
     .then(newSeries => res.json(newSeries))
-    .catch(err => res.status(400).json(err))
+    .catch(error => {
+      if (error.code === 11000) return res.status(400).json({ message: "Duplicate entry" })
+      return res.status(400).json(error)
+    })
 };

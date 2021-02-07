@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify';
-// api
-import { addSeries, getSeriesList, removeSeries, editSeries, fetchOneSeriesPaintingsNames } from '../../../apiCalls/series'
+import { getSeriesList, removeSeries, editSeries, fetchOneSeriesPaintingsNames } from '../../../apiCalls/series'
 import { removePainting } from '../../../apiCalls/paintings'
-// components
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
+import { toast } from 'react-toastify';
 import MaterialPaperNarrow from '../../layout/MaterialPaperNarrow'
 import AddSeriesInput from './AddSeriesInput'
-import SeriesAndPaintingList from './SeriesAndPaintingList'
+import SeriesAndPaintingList from './seriesAndPaintingList/SeriesAndPaintingList'
 import DeleteSeriesModal from './DeleteSeriesModal'
 import EditSeriesModal from './EditSeriesModal'
 import DeletePaintingModal from './DeletePaintingModal'
@@ -21,33 +19,13 @@ const useStyles = makeStyles((theme) => ({
     color: "black",
     marginBottom: "10px"
   },
-  input: {
-    width: "100%",
-    marginBottom: "10px"
-  },
-  fullWidth: {
-    width: "100%"
-  },
-  addButton: {
-    marginBottom: "10px"
-  },
-  deleteButton: {
-    background: 'red',
-    color: "white",
-    "&:hover": {
-      background: 'red',
-      filter: "brightness(85%)"
-    }
-  },
 }));
 
 const ManageSeries = () => {
   const classes = useStyles()
-  const [loading, setLoading] = useState(false)
   const [seriesListLoading, setSeriesListLoading] = useState(false)
   const [seriesList, setSeriesList] = useState([])
   const [paintingLists, setPaintingLists] = useState({})
-  const [seriesName, setSeriesName] = useState("")
   const [expanded, setExpanded] = useState('')
   const [confirmDeleteModalOpen, setConfirmDeleteModalOpen] = useState(false)
   const [editSeriesModalOpen, setEditSeriesModalOpen] = useState(false)
@@ -74,32 +52,7 @@ const ManageSeries = () => {
     loadSeries();
   }, [loadSeries]);
 
-  const handleNewSeriesInputChange = e => {
-    setSeriesName(e.target.value)
-  };
-  const handleEditSeriesInputChange = e => {
-    setSeriesToBeEdited({ ...seriesToBeEdited, newName: e.target.value })
-  };
-
-  const handleSubmitNewSeries = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true)
-      const res = await addSeries({ name: seriesName }, user.token)
-      if (res.data.response && res.data.response.data.errors) Object.keys(res.data.response.data.errors).forEach(key => toast.error(res.data.response.data.errors[key].message))
-      else if (res.data.response && res.data.response.data.name === "MongoError") toast.error("Database error (duplicate name?)")
-      else if (res.data.response && res.data.response.data.err) toast.error(res.data.response.data.err)
-      else toast.success(`${res.data.name} added`)
-      loadSeries()
-      setLoading(false)
-      setExpanded("")
-      setSeriesName("")
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-      toast.error(error.message)
-    }
-  };
+  const handleEditSeriesInputChange = e => setSeriesToBeEdited({ ...seriesToBeEdited, newName: e.target.value })
 
   const confirmEditSeries = async (e, seriesId, newSeriesName) => {
     e.preventDefault()
@@ -182,30 +135,40 @@ const ManageSeries = () => {
 
   return (
     <div className="page-frame">
-      <form onSubmit={handleSubmitNewSeries}>
-        <MaterialPaperNarrow>
-          <Grid container item xs={12}>
-            <AdminFeatureHeader headerText="Add New Series" />
-            <AddSeriesInput handleNewSeriesInputChange={handleNewSeriesInputChange} seriesName={seriesName} loading={loading} classes={classes} />
-            <Grid item xs={12}>
-              <Typography variant="h5" className={classes.header}>Edit Series and Paintings</Typography>
-              <SeriesAndPaintingList
-                seriesListLoading={seriesListLoading}
-                seriesList={seriesList}
-                expanded={expanded}
-                handlePanelChange={handlePanelChange}
-                paintingLists={paintingLists}
-                classes={classes}
-                openSeriesEditModal={openSeriesEditModal}
-                confirmSeriesDelete={confirmSeriesDelete}
-                openDeletePaintingModal={openDeletePaintingModal} />
-            </Grid>
+      <MaterialPaperNarrow>
+        <Grid container item xs={12}>
+          <AdminFeatureHeader headerText="Add New Series" />
+          <AddSeriesInput loadSeries={loadSeries} setExpanded={setExpanded} />
+          <Grid item xs={12}>
+            <Typography variant="h5" className={classes.header}>Edit Series and Paintings</Typography>
+            <SeriesAndPaintingList
+              seriesListLoading={seriesListLoading}
+              seriesList={seriesList}
+              expanded={expanded}
+              handlePanelChange={handlePanelChange}
+              paintingLists={paintingLists}
+              openSeriesEditModal={openSeriesEditModal}
+              confirmSeriesDelete={confirmSeriesDelete}
+              openDeletePaintingModal={openDeletePaintingModal} />
           </Grid>
-        </MaterialPaperNarrow>
-      </form>
-      <DeleteSeriesModal confirmDeleteModalOpen={confirmDeleteModalOpen} setConfirmDeleteModalOpen={setConfirmDeleteModalOpen} seriesToBeDeleted={seriesToBeDeleted} classes={classes} deleteSeries={deleteSeries} />
-      <EditSeriesModal editSeriesModalOpen={editSeriesModalOpen} setEditSeriesModalOpen={setEditSeriesModalOpen} confirmEditSeries={confirmEditSeries} seriesToBeEdited={seriesToBeEdited} classes={classes} handleEditSeriesInputChange={handleEditSeriesInputChange} />
-      <DeletePaintingModal confirmDeletePaintingModalOpen={confirmDeletePaintingModalOpen} setConfirmDeletePaintingModalOpen={setConfirmDeletePaintingModalOpen} paintingToBeDeleted={paintingToBeDeleted} classes={classes} deletePainting={deletePainting} />
+        </Grid>
+      </MaterialPaperNarrow>
+      <DeleteSeriesModal
+        confirmDeleteModalOpen={confirmDeleteModalOpen}
+        setConfirmDeleteModalOpen={setConfirmDeleteModalOpen}
+        seriesToBeDeleted={seriesToBeDeleted}
+        deleteSeries={deleteSeries} />
+      <EditSeriesModal
+        editSeriesModalOpen={editSeriesModalOpen}
+        setEditSeriesModalOpen={setEditSeriesModalOpen}
+        confirmEditSeries={confirmEditSeries}
+        seriesToBeEdited={seriesToBeEdited}
+        handleEditSeriesInputChange={handleEditSeriesInputChange} />
+      <DeletePaintingModal
+        confirmDeletePaintingModalOpen={confirmDeletePaintingModalOpen}
+        setConfirmDeletePaintingModalOpen={setConfirmDeletePaintingModalOpen}
+        paintingToBeDeleted={paintingToBeDeleted}
+        deletePainting={deletePainting} />
     </div>
   )
 }

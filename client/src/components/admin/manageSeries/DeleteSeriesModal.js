@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import StandardModal from '../../common/modal/StandardModal'
-import classnames from 'classnames'
+import RedButton from '../../common/button/RedButton'
 
-const DeleteSeriesModal = ({ confirmDeleteModalOpen, setConfirmDeleteModalOpen, seriesToBeDeleted, classes, deleteSeries }) => {
+const DeleteSeriesModal = ({ confirmDeleteModalOpen, setConfirmDeleteModalOpen, seriesToBeDeleted, deleteSeries }) => {
   return (
     <StandardModal open={confirmDeleteModalOpen} handleClose={() => { setConfirmDeleteModalOpen(false) }}>
       <Typography variant="h4">
@@ -15,7 +15,7 @@ const DeleteSeriesModal = ({ confirmDeleteModalOpen, setConfirmDeleteModalOpen, 
       <Typography variant="body1">
         Really delete {seriesToBeDeleted && seriesToBeDeleted.name}?
       </Typography>
-      <Button variant="contained" className={classnames(classes.deleteButton, classes.fullWidth)} onClick={() => deleteSeries(seriesToBeDeleted.name)}>CONFIRM DELETE</Button>
+      <RedButton fullWidth title="CONFIRM DELETE" onClick={() => deleteSeries(seriesToBeDeleted.name)} />
     </StandardModal>
   )
 }
