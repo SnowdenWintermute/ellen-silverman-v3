@@ -38,14 +38,14 @@ const SeriesPage = (params) => {
   }, []);
 
   useEffect(() => {
-    try {
-      const asyncFunc = async () => {
+    const asyncFunc = async () => {
+      try {
         const newCards = [];
         const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(params.category);
-        const series = await getSeries(paintingsInSeries[0].series._id)
+        const series = await getSeries(paintingsInSeries.data[0].series._id)
         setSeries(series.data)
-        if (series) setSeriesName(paintingsInSeries[0].series.name)
-        paintingsInSeries.forEach((painting, i) => {
+        if (series) setSeriesName(paintingsInSeries.data[0].series.name)
+        paintingsInSeries.data.forEach((painting, i) => {
           if (painting.thumbnail) {
             newCards.push({
               painting,
@@ -62,14 +62,13 @@ const SeriesPage = (params) => {
         });
         setCards(newCards);
         setLoading(false)
-
-      };
-      asyncFunc();
-    } catch (error) {
-      console.log(error)
-      toast.error(JSON.stringify(error))
-      setLoading(false)
-    }
+      } catch (error) {
+        console.log(error)
+        toast.error(JSON.stringify(error))
+        setLoading(false)
+      }
+    };
+    asyncFunc();
 
   }, [params.category]);
 

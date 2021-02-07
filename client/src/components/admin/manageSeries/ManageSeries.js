@@ -86,17 +86,18 @@ const ManageSeries = () => {
     try {
       setLoading(true)
       const res = await addSeries({ name: seriesName }, user.token)
-      if (res.response && res.response.data.errors) Object.keys(res.response.data.errors).forEach(key => toast.error(res.response.data.errors[key].message))
-      else if (res.response && res.response.data.name === "MongoError") toast.error("Database error (duplicate name?)")
-      else if (res.response && res.response.data.err) toast.error(res.response.data.err)
-      else toast.success(`${res.name} added`)
+      if (res.data.response && res.data.response.data.errors) Object.keys(res.data.response.data.errors).forEach(key => toast.error(res.data.response.data.errors[key].message))
+      else if (res.data.response && res.data.response.data.name === "MongoError") toast.error("Database error (duplicate name?)")
+      else if (res.data.response && res.data.response.data.err) toast.error(res.data.response.data.err)
+      else toast.success(`${res.data.name} added`)
       loadSeries()
       setLoading(false)
       setExpanded("")
       setSeriesName("")
-    } catch (err) {
+    } catch (error) {
       setLoading(false)
-      toast.error(err.message)
+      console.log(error)
+      toast.error(error.message)
     }
   };
 
@@ -104,12 +105,12 @@ const ManageSeries = () => {
     e.preventDefault()
     try {
       const res = await editSeries(seriesId, newSeriesName, user.token)
-      console.log({ ...res })
       if (res.response && res.response.data && res.response.data.error) toast.error(res.response.data.error)
       else toast.success("Series name changed to " + newSeriesName)
       loadSeries()
     } catch (error) {
-      toast.error(error)
+      console.log(error)
+      toast.error(JSON.stringify(error))
       loadSeries()
     }
     setEditSeriesModalOpen(false)
@@ -130,7 +131,7 @@ const ManageSeries = () => {
         setSeriesList(newSeriesList)
       }
     } catch (error) {
-      toast.error(error)
+      toast.error(JSON.stringify(error))
       loadSeries()
     }
   }
@@ -138,10 +139,10 @@ const ManageSeries = () => {
   const loadOneSeriesPaintings = async (seriesId) => {
     try {
       const res = await fetchOneSeriesPaintingsNames(seriesId)
-      console.log(res)
-      setPaintingLists({ ...paintingLists, [seriesId]: [...res] })
+      setPaintingLists({ ...paintingLists, [seriesId]: [...res.data] })
     } catch (error) {
-      toast.error(error)
+      console.log(error)
+      toast.error(JSON.stringify(error))
     }
   }
 

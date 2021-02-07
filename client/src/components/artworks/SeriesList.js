@@ -3,6 +3,7 @@ import SeriesCard from "../series/SeriesCard";
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
 import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
+import { toast } from 'react-toastify'
 
 const useStyles = makeStyles({
   topBar: {
@@ -28,9 +29,7 @@ const SeriesList = () => {
       setLoading(true)
       try {
         const seriesListWithThumbnails = await getSeriesListWithThumbnails()
-        console.log(seriesListWithThumbnails)
-        seriesListWithThumbnails.forEach((series, i) => {
-          console.log(series)
+        seriesListWithThumbnails.data.forEach((series, i) => {
           newCards.push({
             series,
             cardElement: (<SeriesCard
@@ -43,6 +42,7 @@ const SeriesList = () => {
         setCards(newCards)
       } catch (error) {
         console.log(error)
+        toast.error(error)
       }
       setLoading(false)
     }
