@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -34,7 +34,7 @@ import Payment from "./components/user/cart/Payment";
 import AdminRoute from "./components/routes/AdminRoute";
 import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
-import AddMultiplePaintingPhotos from "./components/admin/AddMultiplePaintingPhotos";
+import AddMultiplePaintingPhotos from "./components/admin/addMultiplePaintingPhotos/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ManageOrders from "./components/admin/ManageOrders";
 import AddPage from "./components/admin/AddPage";

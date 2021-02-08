@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Typography, Grid, IconButton, Icon } from '@material-ui/core'
-import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import { makeStyles } from '@material-ui/core/styles'
+import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   header: {
     color: "black",
   },

@@ -14,7 +14,7 @@ import DeletePaintingModal from './DeletePaintingModal'
 import AdminFeatureHeader from '../subComponents/AdminFeatureHeader';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   header: {
     color: "black",
     marginBottom: "10px"
@@ -52,7 +52,27 @@ const ManageSeries = () => {
     loadSeries();
   }, [loadSeries]);
 
+  const loadOneSeriesPaintings = async (seriesId) => {
+    try {
+      const res = await fetchOneSeriesPaintingsNames(seriesId)
+      setPaintingLists({ ...paintingLists, [seriesId]: [...res.data] })
+    } catch (error) {
+      console.log(error)
+      toast.error(JSON.stringify(error))
+    }
+  }
+
+  const handlePanelChange = (panel) => (e, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+    if (!paintingLists[seriesList[panel]._id]) loadOneSeriesPaintings(seriesList[panel]._id)
+  }
+
   const handleEditSeriesInputChange = e => setSeriesToBeEdited({ ...seriesToBeEdited, newName: e.target.value })
+
+  const openSeriesEditModal = (seriesName, seriesId) => {
+    setSeriesToBeEdited({ currentName: seriesName, newName: seriesName, _id: seriesId })
+    setEditSeriesModalOpen(true)
+  }
 
   const confirmEditSeries = async (e, seriesId, newSeriesName) => {
     e.preventDefault()
@@ -67,6 +87,11 @@ const ManageSeries = () => {
       loadSeries()
     }
     setEditSeriesModalOpen(false)
+  }
+
+  const openDeleteSeriesModal = (seriesName, seriesId) => {
+    setSeriesToBeDeleted({ name: seriesName, _id: seriesId })
+    setConfirmDeleteModalOpen(true)
   }
 
   const deleteSeries = async (seriesName) => {
@@ -89,39 +114,12 @@ const ManageSeries = () => {
     }
   }
 
-  const loadOneSeriesPaintings = async (seriesId) => {
-    try {
-      const res = await fetchOneSeriesPaintingsNames(seriesId)
-      setPaintingLists({ ...paintingLists, [seriesId]: [...res.data] })
-    } catch (error) {
-      console.log(error)
-      toast.error(JSON.stringify(error))
-    }
-  }
-
-  const handlePanelChange = (panel) => (e, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-    if (!paintingLists[seriesList[panel]._id]) loadOneSeriesPaintings(seriesList[panel]._id)
-  }
-
-  const confirmSeriesDelete = (seriesName, seriesId) => {
-    console.log("delete modal opened for " + seriesName)
-    setSeriesToBeDeleted({ name: seriesName, _id: seriesId })
-    setConfirmDeleteModalOpen(true)
-  }
-
-  const openSeriesEditModal = (seriesName, seriesId) => {
-    setSeriesToBeEdited({ currentName: seriesName, newName: seriesName, _id: seriesId })
-    setEditSeriesModalOpen(true)
-  }
-
   const openDeletePaintingModal = (painting) => {
     setPaintingToBeDeleted(painting)
     setConfirmDeletePaintingModalOpen(true)
   }
 
   const deletePainting = async (painting) => {
-    console.log("delete painting: ", painting)
     try {
       const deletedPainting = await removePainting(painting._id, user.token)
       toast.success(deletedPainting.data.title + " removed from database")
@@ -148,7 +146,7 @@ const ManageSeries = () => {
               handlePanelChange={handlePanelChange}
               paintingLists={paintingLists}
               openSeriesEditModal={openSeriesEditModal}
-              confirmSeriesDelete={confirmSeriesDelete}
+              openDeleteSeriesModal={openDeleteSeriesModal}
               openDeletePaintingModal={openDeletePaintingModal} />
           </Grid>
         </Grid>

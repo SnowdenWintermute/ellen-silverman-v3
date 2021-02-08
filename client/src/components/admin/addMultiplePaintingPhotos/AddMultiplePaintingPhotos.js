@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
-import { uploadMultiplePaintingImages } from '../../apiCalls/paintings'
+import { uploadMultiplePaintingImages } from '../../../apiCalls/paintings'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, LinearProgress, Grid, Card, CardMedia, Dialog } from '@material-ui/core'
-import AdminFeatureHeader from './subComponents/AdminFeatureHeader'
+import AdminFeatureHeader from '../subComponents/AdminFeatureHeader'
 import AddedPaintingImagesResultsAccordion from './AddedPaintingImagesResultsAccordion';
-import StandardModal from '../common/modal/StandardModal'
-import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
-import MultipleImageInput from '../forms/MultipleImageInput'
+import MaterialPaperNarrow from '../../layout/MaterialPaperNarrow'
+import MultipleImageInput from '../../forms/MultipleImageInput'
 import { toast } from 'react-toastify'
 
 const useStyles = makeStyles((theme) => ({
@@ -40,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
 
 const AddMultiplePaintingPhotos = () => {
   const classes = useStyles();
+  const formData = useRef(new FormData())
   const [inputKey, setInputKey] = useState(0)
   const [photos, setPhotos] = useState([])
-  const formData = useRef(new FormData())
   const [imagesTotalSize, setImagesTotalSize] = useState(0)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -105,7 +104,6 @@ const AddMultiplePaintingPhotos = () => {
             </form>
           </Grid>
           <Grid item container spacing={1} xs={12}>
-
             {
               photos.map((photo, i) => (
                 <Grid item xs={2} key={i}>

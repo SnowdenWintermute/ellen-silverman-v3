@@ -16,7 +16,7 @@ const SeriesAndPaintingList = ({
   handlePanelChange,
   paintingLists,
   openSeriesEditModal,
-  confirmSeriesDelete,
+  openDeleteSeriesModal,
   openDeletePaintingModal
 }) => {
   return (
@@ -40,7 +40,7 @@ const SeriesAndPaintingList = ({
                       <PrimaryButton title="EDIT SERIES" onClick={() => openSeriesEditModal(series.name, series._id)} />
                     </TableCell>
                     <TableCell align="right">
-                      <RedButton title="DELETE SERIES" onClick={() => confirmSeriesDelete(series.name, series._id)} />
+                      <RedButton title="DELETE SERIES" onClick={() => openDeleteSeriesModal(series.name, series._id)} />
                     </TableCell>
                   </TableRow>
                 </TableBody>
