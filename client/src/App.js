@@ -30,9 +30,8 @@ import Cart from "./components/user/cart/Cart";
 import Checkout from "./components/user/cart/Checkout";
 import Payment from "./components/user/cart/Payment";
 
-
 import AdminRoute from "./components/routes/AdminRoute";
-import AddPaintingsFromCSV from "./components/admin/AddPaintingsFromCSV";
+import AddPaintingsFromCSV from "./components/admin/addPaintingsFromCSV/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/addMultiplePaintingPhotos/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/AdminDashboard";

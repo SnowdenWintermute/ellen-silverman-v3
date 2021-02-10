@@ -5,7 +5,7 @@ import Accordion from './Accordion'
 import AccordionSummary from './AccordionSummary'
 import AccordionDetails from './AccordionDetails'
 
-export const AccordionTablePanel = ({ expanded, handleChange, panelNumber, panelContent, title, children }) => {
+const AccordionTablePanel = ({ expanded, handleChange, panelNumber, panelContent, title, children }) => {
   return (
     <Accordion square expanded={expanded === `panel${panelNumber}`} onChange={handleChange(`panel${panelNumber}`)}>
       <AccordionSummary aria-controls={`panel${panelNumber}d-content`} id={`panel${panelNumber}d-header`} expandIcon={<ExpandMoreIcon />}>
@@ -21,3 +21,4 @@ export const AccordionTablePanel = ({ expanded, handleChange, panelNumber, panel
     </Accordion>
   )
 }
+export default AccordionTablePanel

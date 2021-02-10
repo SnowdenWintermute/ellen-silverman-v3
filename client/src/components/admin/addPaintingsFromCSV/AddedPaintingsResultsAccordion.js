@@ -1,8 +1,8 @@
 import React from 'react';
-import { TableCell, TableRow } from '@material-ui/core';
+import { TableRow, TableCell } from '@material-ui/core';
 import AccordionTablePanel from '../../common/accordion/AccordionTablePanel';
 
-const AddedPaintingImagesResultsAccordion = ({ paintingImagesAdded, paintingImagesUpdated, errors }) => {
+const AddedPaintingsResultsAccordion = ({ paintingsAdded, paintingsUpdated, errors }) => {
   const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -22,50 +22,36 @@ const AddedPaintingImagesResultsAccordion = ({ paintingImagesAdded, paintingImag
           {errors.map((error, i) => (
             <TableRow key={`error-${i}`}>
               <TableCell align="left" style={{ width: '200px' }}>{error.paintingTitle}</TableCell>
-              <TableCell align="left">{error.message}</TableCell>
+              <TableCell align="left">{error.error.message}</TableCell>
             </TableRow>
           ))}
         </AccordionTablePanel>
       }
-      {paintingImagesAdded.length > 0 &&
+      {paintingsAdded.length > 0 &&
         <AccordionTablePanel
           expanded={expanded}
           handleChange={handleChange}
           panelNumber={"2"}
-          panelContent={paintingImagesAdded}
-          title="Added Images"
+          panelContent={paintingsAdded}
+          title="Paintings Added"
         >
-          {paintingImagesAdded.map((painting, i) => (
+          {paintingsAdded.map((painting, i) => (
             <TableRow key={`painting-added-${i}`}>
-              <TableCell align="left">
-                <img
-                  className="accordion-image"
-                  src={`data:${painting.thumbnail.contentType};base64,${Buffer.from(painting.thumbnail.data).toString('base64')}`}
-                  alt={painting.title}
-                />
-              </TableCell>
               <TableCell align="left">{painting.title}</TableCell>
             </TableRow>
           ))}
         </AccordionTablePanel>
       }
-      {paintingImagesUpdated.length > 0 &&
+      {paintingsUpdated.length > 0 &&
         <AccordionTablePanel
           expanded={expanded}
           handleChange={handleChange}
           panelNumber={"3"}
-          panelContent={paintingImagesUpdated}
-          title="Updated Images"
+          panelContent={paintingsUpdated}
+          title="Paintings Updated"
         >
-          {paintingImagesUpdated.map((painting, i) => (
+          {paintingsUpdated.map((painting, i) => (
             <TableRow key={`painting-updated-${i}`}>
-              <TableCell align="left">
-                <img
-                  className="accordion-image"
-                  src={`data:${painting.thumbnail.contentType};base64,${Buffer.from(painting.thumbnail.data).toString('base64')}`}
-                  alt={painting.title}
-                />
-              </TableCell>
               <TableCell align="left">{painting.title}</TableCell>
             </TableRow>
           ))}
@@ -75,4 +61,4 @@ const AddedPaintingImagesResultsAccordion = ({ paintingImagesAdded, paintingImag
   );
 }
 
-export default AddedPaintingImagesResultsAccordion
+export default AddedPaintingsResultsAccordion
