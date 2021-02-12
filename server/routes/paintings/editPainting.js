@@ -5,16 +5,15 @@ const fs = require('fs')
 const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.edit = async (req, res) => {
-  console.log("editing painting")
   const parsedForm = await parseFormFieldsAndFiles(req)
-  console.log("parsed form: ", parsedForm)
+  console.log(parsedForm.fields)
   try {
     const paintingToBeEdited = await Painting.findOne({ title: parsedForm.fields.title })
     if (!paintingToBeEdited) return res.status(400).json({ error: { message: "No painting found by that name" } })
-    Object.keys(paintingToBeEdited).forEach(key => {
-      if (parsedForm.fields[key]) paintingToBeEdited[key] = parsedForm.fields[key]
+    Object.keys(parsedForm.fields).forEach(key => {
+      if (key !== "thumbnail" && key !== "image") paintingToBeEdited[key] = parsedForm.fields[key]
     })
-    const { image } = parsedForm.files
+    const image = parsedForm.files.image
     if (image) {
       paintingToBeEdited.image.data = fs.readFileSync(image.path);
       paintingToBeEdited.image.contentType = image.type;

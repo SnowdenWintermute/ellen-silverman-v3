@@ -74,7 +74,7 @@ const ImageInput = ({ handleChange, selectedImage }) => {
           </Button>
         </Grid>
         <Grid item xs={12}>
-          {selectedImage
+          {selectedImage && selectedImage.name
             ? "Selected image: " + selectedImage.name
             : "Please choose an image to upload"}
         </Grid>
@@ -88,9 +88,9 @@ const ImageInput = ({ handleChange, selectedImage }) => {
                 selectedImage
                   ? selectedImage.contentType
                     ? createImgSrcStringFromBinary(
-                        selectedImage.contentType,
-                        selectedImage.data
-                      )
+                      selectedImage.contentType,
+                      selectedImage.data
+                    )
                     : URL.createObjectURL(selectedImage)
                   : ""
               }
@@ -98,10 +98,10 @@ const ImageInput = ({ handleChange, selectedImage }) => {
               alt={selectedImage.name}
             />
           ) : (
-            <Icon className={classes.icon}>
-              <InsertPhotoIcon />
-            </Icon>
-          )}
+              <Icon className={classes.icon}>
+                <InsertPhotoIcon />
+              </Icon>
+            )}
         </Paper>
       </Grid>
       <input

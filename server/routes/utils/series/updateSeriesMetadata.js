@@ -6,14 +6,8 @@ module.exports = async (seriesId) => {
     const series = await Series.findById(seriesId)
     const paintings = await Painting.find({ series: seriesId })
     const paintingsWithImages = paintings.filter(painting => {
-      if (painting.thumbnail.contentType) {
-        // console.log(painting.thumbnail)
-        return painting
-      }
+      if (painting.thumbnail.contentType) return painting
     })
-    console.log("paintings with images")
-    console.log(paintingsWithImages.length)
-    console.log(paintingsWithImages)
     series.numberOfPaintings = paintingsWithImages.length
     series.years.earliest = paintings.reduce((acc, painting) => {
       if (!acc) return painting.year
@@ -30,10 +24,6 @@ module.exports = async (seriesId) => {
       if (painting.sold) return acc + 1
       else return acc
     }, 0)
-    console.log("earliest date: " + series.years.earliest)
-    console.log("latest date: " + series.years.latest)
-    console.log("number of paintings: " + series.numberOfPaintings)
-    console.log("number sold: " + series.numberSold)
     await series.save()
   } catch (error) {
     return console.log(error)

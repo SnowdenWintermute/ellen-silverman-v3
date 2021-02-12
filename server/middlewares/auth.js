@@ -9,10 +9,8 @@ exports.authCheck = async (req, res, next) => {
     req.user = firebaseUser;
     console.log("passed user check")
     next();
-  } catch (err) {
-    res.status(401).json({
-      err: "Invalid or expired token",
-    });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
@@ -21,7 +19,7 @@ exports.adminCheck = async (req, res, next) => {
   const adminUser = await User.findOne({ email }).exec();
   if (adminUser.role !== "admin") {
     res.status(403).json({
-      err: "Admin resource. Access denied.",
+      error: "Admin resource. Access denied.",
     });
   } else {
     console.log("passed admin check")

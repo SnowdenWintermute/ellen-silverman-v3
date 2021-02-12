@@ -12,7 +12,6 @@ exports.create = async (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     const parsedForm = await parseFormFieldsAndFiles(req)
-    console.log(parsedForm)
     let painting = new Painting(parsedForm.fields);
     if (parsedForm.files.image) {
       painting.image.data = fs.readFileSync(parsedForm.files.image.path);

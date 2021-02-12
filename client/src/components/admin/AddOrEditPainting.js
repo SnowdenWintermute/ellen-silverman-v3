@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// api
 import { getSeriesList } from "../../apiCalls/series";
-import {
-  addPainting,
-  editPainting,
-  getPainting,
-} from "../../apiCalls/paintings";
-// components
+import { addPainting, editPainting, getPainting } from "../../apiCalls/paintings";
 import PaintingForm from "../forms/PaintingForm";
 
 const AddOrEditPainting = (props) => {
+  const user = useSelector((state) => state.user);
+  const formData = useRef(new FormData());
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [seriesList, setSeriesList] = useState([]);
-  const formData = useRef(new FormData());
   const [formFieldErrors, setFormFieldErrors] = useState({});
   const initialValues = {
     title: "",
@@ -30,12 +25,9 @@ const AddOrEditPainting = (props) => {
     series: "",
     description: "",
   };
-  const [values, setValues] = useState({
-    ...initialValues,
-  });
-  const user = useSelector((state) => state.user);
+  const [values, setValues] = useState({ ...initialValues });
 
-  const initFormDataAndLoadSeriesList = useCallback(async () => {
+  const loadSeriesList = useCallback(async () => {
     try {
       const fetchedSeriesList = await getSeriesList();
       setSeriesList(fetchedSeriesList.data);
@@ -45,31 +37,31 @@ const AddOrEditPainting = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    initFormDataAndLoadSeriesList();
-  }, [initFormDataAndLoadSeriesList]);
+  useEffect(() => { loadSeriesList() }, [loadSeriesList]);
 
   useEffect(() => {
     const { paintingSlug } = props.match.params;
     const getPaintingAndSetInitialValues = async () => {
-      if (paintingSlug) {
-        try {
-          const paintingToEdit = await getPainting(paintingSlug);
-          setEditMode(true);
-          const newValues = { ...initialValues };
-          Object.keys(newValues).forEach((valueKey) => {
-            newValues[valueKey] = paintingToEdit.data[valueKey] || "";
-            if (formData)
-              formData.current.set(valueKey, paintingToEdit.data[valueKey]);
-          });
-          setValues({ ...newValues });
-        } catch (error) {
-          toast.error(error);
-        }
+      try {
+        setEditMode(true);
+        setLoading(true);
+        const paintingToEdit = await getPainting(paintingSlug);
+        const newValues = { ...initialValues };
+        Object.keys(newValues).forEach((valueKey) => {
+          newValues[valueKey] = paintingToEdit.data[valueKey] || "";
+          formData.current.set(valueKey, paintingToEdit.data[valueKey]);
+        });
+        setValues({ ...newValues });
+      } catch (error) {
+        console.log(error)
+        toast.error(error);
       }
+      setLoading(false);
     };
-    getPaintingAndSetInitialValues();
-  }, [formData]);
+    if (paintingSlug) {
+      getPaintingAndSetInitialValues();
+    }
+  }, []);
 
   const handleChange = (name) => (event) => {
     const value = name === "image" ? event.target.files[0] : event.target.value;
@@ -99,29 +91,17 @@ const AddOrEditPainting = (props) => {
       let res;
       if (editMode) res = await editPainting(formData.current, user.token);
       else res = await addPainting(formData.current, user.token);
-      if (res.response) {
-        if (res.response.data.err) toast.error(res.response.data.err);
-        if (res.response.data.error) {
-          if (
-            res.response.data.error.errors &&
-            Object.keys(res.response.data.error.errors).length
-          ) {
-            setFormFieldErrors({ ...res.response.data.error.errors });
-          } else toast.error(res.response.data.error.message);
-        }
-      } else if (res.data) {
-        if (editMode) {
-          toast.success(`Edited ${res.data.title}.`);
-        } else {
-          toast.success(`Added ${res.data.title}.`);
-          setValues({ ...initialValues });
-        }
+      if (editMode) toast.success(`Edited ${res.data.title}.`);
+      else {
+        toast.success(`Added ${res.data.title}.`);
+        setValues({ ...initialValues });
       }
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      toast.error(err.message);
+    } catch (error) {
+      console.log({ ...error })
+      if (error.response.data) toast.error(error.response.data.message);
+      else toast.error(error.message);
     }
+    setLoading(false);
   };
 
   return (

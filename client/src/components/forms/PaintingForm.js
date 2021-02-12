@@ -43,7 +43,7 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
           <AdminFeatureHeader headerText={`${editMode ? "Edit" : "Add New"} Painting`} />
           <Grid item xs={12}>
             <FormControl variant="filled" className={classes.input}>
-              <ImageInput handleChange={handleChange} selectedImage={image ? image : (thumbnail && thumbnail.contentType !== undefined) ? thumbnail : ""} />
+              <ImageInput handleChange={handleChange} selectedImage={image ? image : (thumbnail && typeof thumbnail.contentType !== undefined) ? thumbnail : ""} />
             </FormControl>
           </Grid>
           <Grid item xs={12}>
