@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SeriesPage = (params) => {
+const SeriesPage = ({ match }) => {
   const classes = useStyles()
   const [cards, setCards] = useState([]);
   const [seriesName, setSeriesName] = useState([])
@@ -41,7 +41,7 @@ const SeriesPage = (params) => {
     const asyncFunc = async () => {
       try {
         const newCards = [];
-        const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(params.category);
+        const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(match.params.series);
         const series = await getSeries(paintingsInSeries.data[0].series._id)
         setSeries(series.data)
         if (series) setSeriesName(paintingsInSeries.data[0].series.name)
@@ -70,7 +70,7 @@ const SeriesPage = (params) => {
     };
     asyncFunc();
 
-  }, [params.category]);
+  }, []);
 
   const onSelectSortParameter = (e) => {
     setSortParameter(e.target.value)

@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 
 const ForgotPassword = ({ history }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const user = useSelector(state => state.user);
 
-  const { user } = useSelector((state) => ({ ...state }));
-
-  useEffect(() => {
-    if (user && user.token) history.push("/");
-  }, [user, history]);
+  useEffect(() => { if (user && user.token) history.push("/"); }, [user, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +23,6 @@ const ForgotPassword = ({ history }) => {
     await auth
       .sendPasswordResetEmail(email, config)
       .then((res) => {
-        console.log(res)
         setEmail("");
         setLoading(false);
         toast.success("Check your email for password reset link");
@@ -60,7 +56,7 @@ const ForgotPassword = ({ history }) => {
             <Link className="auth-link" to="/login">Back to Login</Link>
             <button className="button button-standard-size button-basic" disabled={!email}>
               Submit
-        </button>
+            </button>
           </div>
         </form>
       </div>

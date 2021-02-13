@@ -3,7 +3,7 @@ import { makeStyles, TextField, Button, Icon, MenuItem, FormControl, InputLabel,
 import classnames from 'classnames'
 import SearchIcon from '@material-ui/icons/Search';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   squareElement: {
     borderRadius: 0
   },
@@ -27,13 +27,29 @@ const OrderFilterBar = ({ onSearchOrderById, orderIdSearching, onSelectFilter, s
     <form className={classes.searchForm} onSubmit={onSearchOrderById}>
       <Grid container justify="space-between">
         <Grid item className="TextField-without-border-radius">
-          <TextField className={classnames(classes.orderSearchInput, classes.textField)} variant="filled" value={orderIdSearching} onChange={e => setOrderIdSearching(e.target.value)} placeholder="Search orders by id" />
-          <Button type="submit" variant="outlined" className={classnames(classes.searchButton, classes.squareElement)}><Icon><SearchIcon /></Icon></Button>
+          <TextField
+            className={classnames(classes.orderSearchInput, classes.textField)}
+            variant="filled"
+            value={orderIdSearching}
+            onChange={e => setOrderIdSearching(e.target.value)}
+            placeholder="Search orders by id" />
+          <Button
+            type="submit"
+            variant="outlined"
+            className={classnames(classes.searchButton, classes.squareElement)}>
+            <Icon>
+              <SearchIcon />
+            </Icon>
+          </Button>
         </Grid>
         <Grid item>
           <FormControl variant="filled">
             <InputLabel>Filter by Status</InputLabel>
-            <Select className={classnames(classes.squareElement, classes.selectElement)} labelId="select-series" onChange={(e) => onSelectFilter(e)} value={orderStatusFilter}>
+            <Select
+              className={classnames(classes.squareElement, classes.selectElement)}
+              labelId="select-series"
+              onChange={(e) => onSelectFilter(e)}
+              value={orderStatusFilter}>
               <MenuItem value={"all"}>All</MenuItem>
               <MenuItem value={"processing"}>Processing</MenuItem>
               <MenuItem value={"shipped"}>Shipped</MenuItem>
@@ -45,7 +61,7 @@ const OrderFilterBar = ({ onSearchOrderById, orderIdSearching, onSelectFilter, s
           </FormControl>
         </Grid>
       </Grid>
-    </form >
+    </form>
   )
 }
 export default OrderFilterBar

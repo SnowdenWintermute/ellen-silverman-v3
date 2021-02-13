@@ -17,7 +17,6 @@ import "./css/buttons.css";
 import "./css/tables.css";
 import "./css/toastify.css";
 import "./css/stripe.css";
-import "./css/orders.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

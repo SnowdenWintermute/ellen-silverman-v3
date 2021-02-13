@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { auth, googleAuthProvider } from "../../firebase";
 import { createOrUpdateUser } from "../../apiCalls/auth";
-import { toast } from "react-toastify";
 import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
 
 const Login = ({ history }) => {
@@ -15,33 +15,22 @@ const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [intendedRedirect, setIntendedRedirect] = useState()
   const { email, password } = formData;
-  const { user } = useSelector((state) => ({ ...state }));
+  const user = useSelector(state => state.user);
 
   const roleBasedRedirect = useCallback((role) => {
-    // check if intended
-    if (intendedRedirect) {
-      history.push(intendedRedirect);
-    } else {
-      if (role === "admin") {
-        history.push("/admin/");
-      } else {
-        history.push("/user/history");
-      }
-    }
+    if (intendedRedirect) history.push(intendedRedirect);
+    else if (role === "admin") history.push("/admin/");
+    else history.push("/user/history");
   }, [history, intendedRedirect]);
 
   useEffect(() => {
     let intended = history.location.state;
     if (intended) setIntendedRedirect(intended.from)
-    if (intended) {
-      return;
-    } else {
-      if (user && user.token) roleBasedRedirect(user.role);
-    }
+    if (intended) return;
+    else if (user && user.token) roleBasedRedirect(user.role);
   }, [user, history, roleBasedRedirect]);
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -50,22 +39,18 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-
-      createOrUpdateUser(idTokenResult.token)
-        .then((res) => {
-          dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-              name: res.data.name,
-              email: res.data.email,
-              token: idTokenResult.token,
-              role: res.data.role,
-              _id: res.data._id,
-            },
-          });
-          roleBasedRedirect(res.data.role);
-        })
-        .catch((err) => console.log(err));
+      const res = await createOrUpdateUser(idTokenResult.token)
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          name: res.data.name,
+          email: res.data.email,
+          token: idTokenResult.token,
+          role: res.data.role,
+          _id: res.data._id,
+        },
+      });
+      roleBasedRedirect(res.data.role);
     } catch (error) {
       console.log(error);
       toast.error(error.message);

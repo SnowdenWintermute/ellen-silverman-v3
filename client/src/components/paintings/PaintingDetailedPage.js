@@ -19,11 +19,12 @@ import { toast } from "react-toastify";
 import { updateCart } from "../../store/actions/cart-actions";
 import "./paintingDetailsPage.css"
 
-const PaintingDetailedPage = ({ paintingSlug }, props) => {
+const PaintingDetailedPage = (props) => {
   const [painting, setPainting] = useState({});
   const [paintingIsInCart, setPaintingIsInCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showZoomFrame, setShowZoomFrame] = useState(false)
+  const { paintingSlug } = props.match.params
 
   // redux
   const { user, cart } = useSelector(state => ({ ...state }))

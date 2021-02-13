@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./components/layout/Navbar";
 import LocationBar from "./components/layout/LocationBar/LocationBar";
 import Footer from "./components/layout/Footer";
-import Artworks from "./components/artworks/Artworks";
+import SeriesList from "./components/series/SeriesList";
+import SeriesPage from "./components/series/SeriesPage";
+import PaintingDetailedPage from './components/paintings/PaintingDetailedPage'
 import LandingPage from "./components/landing/LandingPage";
 import FullResolutionImage from "./components/paintings/FullResolutionImage";
 import Cv from "./components/cv/Cv";
@@ -35,7 +37,7 @@ import AddPaintingsFromCSV from "./components/admin/addPaintingsFromCSV/AddPaint
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/addMultiplePaintingPhotos/AddMultiplePaintingPhotos";
 import AdminDashboard from "./components/admin/adminDashboard/AdminDashboard";
-import ManageOrders from "./components/admin/ManageOrders";
+import ManageOrders from "./components/admin/manageOrders/ManageOrders";
 import AddPage from "./components/admin/AddPage";
 
 const App = () => {
@@ -99,11 +101,9 @@ const App = () => {
           <Route exact path="/exhibitions" component={Exhibitions}></Route>
           <Route exact path="/contact" component={Contact}></Route>
           <Route exact path="/the-professor" component={BunStory}></Route>
-          <Route
-            exact
-            path="/artworks/:category?/:paintingSlug?"
-            component={Artworks}
-          />
+          <Route exact path="/artworks/" component={SeriesList} />
+          <Route exact path="/artworks/:series?" component={SeriesPage} />
+          <Route exact path="/artworks/:series?/:paintingSlug?" component={PaintingDetailedPage} />
           <Route exact path="/register" component={Register} />
           <Route
             exact

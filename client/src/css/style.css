@@ -157,3 +157,8 @@ a:hover {
   /* display: inline-block; */
   /* border: 1px solid blue; */
 }
+
+/* general */
+.mb-10 {
+  margin-bottom: 10px;
+}

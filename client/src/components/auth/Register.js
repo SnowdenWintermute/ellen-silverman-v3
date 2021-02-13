@@ -1,34 +1,24 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { Link } from 'react-router-dom'
-import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
-import { createOrUpdateUser } from "../../apiCalls/auth";
 import { auth, googleAuthProvider } from "../../firebase";
+import { createOrUpdateUser } from "../../apiCalls/auth";
+import { toast } from "react-toastify";
+import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
 
 const Register = ({ history }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("michael.p.silverman@gmail.com");
   const [loading, setLoading] = useState(false)
+  const user = useSelector(state => state.user)
 
-  const { user } = useSelector((state) => ({ ...state }));
-
-  useEffect(() => {
-    if (user && user.token) history.push("/");
-  }, [user, history]);
+  useEffect(() => { if (user && user.token) history.push("/") }, [user, history]);
 
   const roleBasedRedirect = useCallback((role) => {
-    // check if intended
     let intended = history.location.state;
-    if (intended) {
-      history.push(intended.from);
-    } else {
-      if (role === "admin") {
-        history.push("/admin/dashboard");
-      } else {
-        history.push("/user/history");
-      }
-    }
+    if (intended) history.push(intended.from)
+    else if (role === "admin") history.push("/admin/dashboard");
+    else history.push("/user/history");
   }, [history]);
 
   const handleSubmit = async (e) => {
@@ -38,16 +28,10 @@ const Register = ({ history }) => {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
-
-
     await auth.sendSignInLinkToEmail(email, config);
-    toast.success(
-      `Email is sent to ${email}. Click the link to complete your registration.`
-    );
+    toast.success(`Email is sent to ${email}. Click the link to complete your registration.`);
     setLoading(false)
-    // save user email in local storage
     window.localStorage.setItem("emailForRegistration", email);
-    // clear state
     setEmail("");
   };
 
@@ -102,10 +86,8 @@ const Register = ({ history }) => {
         placeholder="Your email"
         autoFocus
       />
-
       <div className="auth-bottom-links">
         <Link className="auth-link" to="/login">Have account? Log in here</Link>
-
         <button type="submit" className="button button-standard-size button-basic" disabled={loading || !email}>
           Register
       </button>
