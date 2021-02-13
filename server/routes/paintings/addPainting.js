@@ -26,21 +26,14 @@ exports.create = async (req, res) => {
       painting.slug = slugify(painting.title)
       painting.title_lower = painting.title.toLowerCase()
     }
-    painting.save().then((result) => {
-      console.log("Painting added")
-      updateSeriesMetadata(painting.series)
-      res.json(result);
-    }).catch(err => {
-      console.log(err)
-      if (err.code) {
-        if (err.code === 11000) return res.status(400).json({ error: { message: "Duplicate named entry found in database." } })
-      }
-      return res.status(400).json({
-        error: err
-      });
-    })
+    const newPainting = await painting.save()
+    console.log("Painting added")
+    updateSeriesMetadata(newPainting.series)
+    res.json(newPainting);
 
-  } catch (err) {
-    return res.status(400).json({ error: err })
+  } catch (error) {
+    console.log(error)
+    if (error.code === 11000) return res.status(400).json({ message: "Duplicate named entry found in database." })
+    return res.status(400).json(error)
   }
 };

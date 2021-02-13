@@ -1,11 +1,11 @@
-import { TextField, Typography, Button } from '@material-ui/core'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { TextField, Typography, Button } from '@material-ui/core'
+import { toast } from 'react-toastify'
 import { createPage } from '../../apiCalls/page'
 import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
-import { toast } from 'react-toastify'
 import AdminFeatureHeader from './subComponents/AdminFeatureHeader'
-
+import PrimaryButton from '../common/button/PrimaryButton'
 
 const AddPage = () => {
   const user = useSelector(state => state.user)
@@ -33,7 +33,10 @@ const AddPage = () => {
           <TextField value={pageTitle} onChange={(e) => setPageTitle(e.target.value)} />
           <br></br>
           <br></br>
-          <Button type="submit" variant="contained" color="primary">ADD PAGE</Button>
+          <PrimaryButton
+            title="ADD PAGE"
+            isSubmit
+          />
         </form>
       </MaterialPaperNarrow>
     </div>

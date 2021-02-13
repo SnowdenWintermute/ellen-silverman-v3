@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { makeStyles, CircularProgress, Typography, TextField, Button, Icon, MenuItem, FormControl, InputLabel, Select, Grid, Card } from '@material-ui/core'
 import { useSelector } from 'react-redux'
+import { makeStyles, CircularProgress, Typography, Card } from '@material-ui/core'
+import { toast } from 'react-toastify';
 import { getOrdersByStatus, getOrderById } from '../../apiCalls/admin'
 import { getOwnOrdersByStatus, getOwnOrderById } from '../../apiCalls/user'
 import BasicPaper from '../common/paper/BasicPaper'
 import OrderCard from '../user/history/OrderCard'
-import { toast } from 'react-toastify';
 import OrderFilterBar from './OrderFilterBar'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   pageHeader: {
     marginBottom: 20,
     maxWidth: 1000,

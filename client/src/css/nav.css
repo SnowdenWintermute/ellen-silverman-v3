@@ -55,7 +55,7 @@
 
 .home-button-icon {
   height: 45px;
-  transition: 0.3s;
+  transition: 0.2s;
   border-radius: 50%;
   border: 2px solid white;
   /* opacity: 0.8; */
@@ -65,7 +65,7 @@
 }
 .home-button-icon:hover {
   /* opacity: 1; */
-  /* transform: scale(2) skewY(25%, 25%); */
+  transform: scale(1.2);
   border: 2px solid blue;
 }
 #home-button-link {

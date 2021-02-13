@@ -16,8 +16,10 @@ const LoadingToRedirect = () => {
   }, [count, history]);
 
   return (
-    <div className="container p-5 text-center">
-      <p>Redirecting you in {count} seconds</p>
+    <div className="page-frame">
+      <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <p>Redirecting you in {count} seconds</p>
+      </div>
     </div>
   );
 };

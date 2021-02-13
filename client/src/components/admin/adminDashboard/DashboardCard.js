@@ -8,8 +8,9 @@ const useStyles = makeStyles({
     maxWidth: 345,
     background: "#e9e7e2",
     boxSizing: "border-box",
+    transition: ".3s",
     '&:hover': {
-      boxShadow: '1px 1px 5px blue'
+      boxShadow: "0px 5px 5px grey"
     },
     margin: '0 auto',
     height: "100%"
@@ -18,12 +19,12 @@ const useStyles = makeStyles({
     textAlign: 'center'
   },
   icon: {
-    height: 140,
+    height: 100,
     textAlign: "center",
     width: "100%",
     display: "block",
     '& svg': {
-      fontSize: 140
+      fontSize: 100
     }
   },
 });

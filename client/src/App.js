@@ -34,7 +34,7 @@ import AdminRoute from "./components/routes/AdminRoute";
 import AddPaintingsFromCSV from "./components/admin/addPaintingsFromCSV/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/addMultiplePaintingPhotos/AddMultiplePaintingPhotos";
-import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminDashboard from "./components/admin/adminDashboard/AdminDashboard";
 import ManageOrders from "./components/admin/ManageOrders";
 import AddPage from "./components/admin/AddPage";
 

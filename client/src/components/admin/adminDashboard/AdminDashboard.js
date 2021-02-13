@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import PermMediaIcon from '@material-ui/icons/PermMedia';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import PanoramaIcon from '@material-ui/icons/Panorama';
@@ -8,19 +8,9 @@ import ListIcon from '@material-ui/icons/List';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DashboardCard from './DashboardCard'
-import MaterialPaperBasic from '../layout/MaterialPaperBasic';
+import MaterialPaperBasic from '../../layout/MaterialPaperBasic';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    // flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    width: "100%",
-    height: "100%"
-  },
+const useStyles = makeStyles(() => ({
   header: {
     textAlign: "center",
     color: "black"
@@ -29,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100%"
   },
   innerGrid: {
-    margin: "0 auto"
+    margin: "0 auto",
+    paddingBottom: 10
   }
 }));
 

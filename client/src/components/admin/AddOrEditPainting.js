@@ -66,39 +66,48 @@ const AddOrEditPainting = (props) => {
   const handleChange = (name) => (event) => {
     const value = name === "image" ? event.target.files[0] : event.target.value;
     formData.current.set(name, value);
+    if (name !== "image") setValues({ ...values, [name]: value });
     if (name === "image") {
-      if (event.target.files[0]) {
-        if (!editMode) {
-          const titleFromImageName = event.target.files[0].name.split(".")[0];
-          setValues({
-            ...values,
-            image: event.target.files[0],
-            title: titleFromImageName,
-          });
-          formData.current.set("title", titleFromImageName);
-        } else setValues({ ...values, image: event.target.files[0] });
-      } else setValues({ ...values, image: null, title: "" });
-    } else setValues({ ...values, [name]: value });
+      if (!value) setValues({ ...values, image: null, title: "" });
+      if (editMode) setValues({ ...values, image: event.target.files[0] });
+      else {
+        const titleFromImageName = event.target.files[0].name.split(".")[0];
+        setValues({
+          ...values,
+          image: event.target.files[0],
+          title: titleFromImageName,
+        });
+        formData.current.set("title", titleFromImageName);
+      }
+    }
     const newFormFieldErrors = { ...formFieldErrors };
     delete newFormFieldErrors[name];
     setFormFieldErrors(newFormFieldErrors);
   };
 
+  const handleSubmitEdit = async () => {
+    const res = await editPainting(formData.current, user.token);
+    toast.success(`Edited ${res.data.title}.`);
+  }
+
+  const handleSubmitNew = async () => {
+    const res = await addPainting(formData.current, user.token);
+    toast.success(`Added ${res.data.title}.`);
+    setValues({ ...initialValues });
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      let res;
-      if (editMode) res = await editPainting(formData.current, user.token);
-      else res = await addPainting(formData.current, user.token);
-      if (editMode) toast.success(`Edited ${res.data.title}.`);
-      else {
-        toast.success(`Added ${res.data.title}.`);
-        setValues({ ...initialValues });
-      }
+      if (editMode) await handleSubmitEdit()
+      else await handleSubmitNew()
     } catch (error) {
       console.log({ ...error })
-      if (error.response.data) toast.error(error.response.data.message);
+      if (error.response.data) {
+        if (error.response.data.errors) setFormFieldErrors({ ...error.response.data.errors })
+        else if (error.response.data.message) toast.error(error.response.data.message);
+      }
       else toast.error(error.message);
     }
     setLoading(false);
