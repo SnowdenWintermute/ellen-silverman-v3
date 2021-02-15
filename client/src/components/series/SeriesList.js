@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SeriesCard from "./SeriesCard";
+import { Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
+import { toast } from 'react-toastify'
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
-import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
-import { toast } from 'react-toastify'
+import ProgressIndicator from '../common/progressIndicator/ProgressIndicator'
+import SeriesCard from "./SeriesCard";
 
 const useStyles = makeStyles({
-  topBar: {
+  sortBar: {
     width: "100%",
     marginLeft: 10,
     marginRight: 10
@@ -60,9 +61,9 @@ const SeriesList = () => {
   }
 
   return <div className="page-frame">
-    <div className="galleryHolder">
+    <div className="gallery-holder">
       {!loading && (
-        <Card className={classes.topBar}>
+        <Card className={classes.sortBar}>
           <Grid container justify="space-between" alignItems="center">
             <Grid item>
               <Typography variant="h5" style={{ marginLeft: "20px" }}>Select a Series</Typography>
@@ -81,7 +82,7 @@ const SeriesList = () => {
           </Grid>
         </Card>
       )}
-      {loading ? <div className="flex-center"><CircularProgress /></div> : cards.map(card => card.cardElement)}
+      {loading ? <div className="flex-center"><ProgressIndicator /></div> : cards.map(card => card.cardElement)}
     </div>
   </div>
 

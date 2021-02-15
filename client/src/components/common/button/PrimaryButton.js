@@ -8,12 +8,12 @@ const useStyles = makeStyles({
   },
 })
 
-const PrimaryButton = ({ onClick, title, fullWidth, isSubmit, disabled, customClasses, outlined }) => {
+const PrimaryButton = ({ onClick, title, fullWidth, isSubmit, disabled, customClasses, outlined, isGrey }) => {
   const classes = useStyles()
   return (
     <Button
       variant={outlined ? "outlined" : "contained"}
-      color="primary"
+      color={isGrey ? "default" : "primary"}
       className={classnames(customClasses, fullWidth && classes.fullWidth)}
       type={isSubmit && "submit"}
       onClick={onClick}

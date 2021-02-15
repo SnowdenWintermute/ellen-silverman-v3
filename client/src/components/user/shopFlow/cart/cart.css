@@ -1,6 +1,10 @@
 .cart-item-link {
   font-weight: bold;
 }
+.cart-item-thumbnail {
+  height: 100px;
+  border: 1px solid black;
+}
 .checkout-main-buttons-holder {
   width: 100%;
   display: flex;

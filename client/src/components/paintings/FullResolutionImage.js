@@ -5,6 +5,7 @@ import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary"
 const FullResolutionImage = ({ match }) => {
   const [imgUrl, setImgUrl] = useState("")
   const [error, setError] = useState("")
+
   useEffect(() => {
     const asyncFunc = async () => {
       try {
@@ -17,6 +18,7 @@ const FullResolutionImage = ({ match }) => {
     }
     asyncFunc()
   }, [])
+
   return (
     <React.Fragment>
       {error && error}
@@ -26,7 +28,6 @@ const FullResolutionImage = ({ match }) => {
       />}
     </React.Fragment>
   );
-
 }
 
 export default FullResolutionImage;

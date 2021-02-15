@@ -2,10 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./paintingCard.css"
 
-export default function PaintingCard({
-  img,
-  painting
-}) {
+export default function PaintingCard({ img, painting }) {
   const { series, slug, title, price, sold } = painting
   return (
     <div className="painting-card-body">

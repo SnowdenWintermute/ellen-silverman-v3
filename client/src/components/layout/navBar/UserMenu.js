@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import firebase from "firebase";
-import { ReactComponent as UserIcon } from "../../icons/userIcon.svg";
 import { Badge, Icon, ClickAwayListener } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import firebase from "firebase";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import './userMenu.css'
 
 const useStyles = makeStyles({
   icon: {
@@ -26,55 +26,46 @@ const useStyles = makeStyles({
     right: -20,
     top: -24,
     pointerEvents: "none",
-    // border: `2px solid black`,
     padding: '0 4px',
   },
 })
 
-const UserMenu = ({ hideMenu }) => {
+const UserMenu = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
   const cart = useSelector((state) => state.cart)
   const [showMenu, setShowMenu] = useState(false)
   const classes = useStyles()
 
-  // useEffect(() => {
-  //   const clearUserDropdown = (e) => {
-  //     if (e.target.getAttribute("name") !== "user-menu")
-  //       setShowMenu(false);
-  //   };
-  //   window.addEventListener("click", (e) => clearUserDropdown(e));
-  //   return () => window.removeEventListener("click", clearUserDropdown);
-  // }, [setShowMenu]);
-
   useEffect(() => {
-    window.addEventListener('keydown', e => {
+    const escapeOutOfMenu = e => {
       const { code } = e;
       if (code === "Escape") {
         setShowMenu(false);
       }
-    })
+    }
+    window.addEventListener('keydown', escapeOutOfMenu)
+    return () => window.removeEventListener('keydown', escapeOutOfMenu)
   }, [showMenu])
 
   const menuLinks = (<ul className={`user-menu-links-holder`}>
-    {user && user.role === "admin" && <Link to="/admin" onClick={() => setShowMenu(false)}>Admin Dashboard</Link>}
-    {user && <Link to="/user/history" onClick={() => setShowMenu(false)}>Order History</Link>}
-    {!user && <Link to="/register" onClick={() => setShowMenu(false)}>
-      Register
-            </Link>}
-    {!user && <Link to="/login" onClick={() => setShowMenu(false)}>
-      Login
-            </Link>}
-    {user && <Link to="/login" onClick={() => {
-      setShowMenu(false)
-      firebase.auth().signOut();
-      dispatch({
-        type: "LOGOUT",
-        payload: null,
-      });
-    }}>
-      Logout
-            </Link>}
+    {user && user.role === "admin" &&
+      <Link to="/admin" onClick={() => setShowMenu(false)}>Admin Dashboard</Link>}
+    {user &&
+      <Link to="/user/history" onClick={() => setShowMenu(false)}>Order History</Link>}
+    {!user &&
+      <Link to="/register" onClick={() => setShowMenu(false)}>Register</Link>}
+    {!user &&
+      <Link to="/login" onClick={() => setShowMenu(false)}>Login</Link>}
+    {user &&
+      <Link to="/login" onClick={() => {
+        setShowMenu(false)
+        firebase.auth().signOut();
+        dispatch({
+          type: "LOGOUT",
+          payload: null,
+        });
+      }}>Logout</Link>}
   </ul>)
 
   return (

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import HamburgerMenu from "react-hamburger-menu";
 import Swipe from "react-easy-swipe";
 import UserMenu from './UserMenu'
+import './nav.css'
 
 const Navbar = () => {
   const [hamburgerMenuShowing, setHamburgerMenuShowing] = useState(false);
@@ -34,7 +35,6 @@ const Navbar = () => {
   return (
     <div>
       <Swipe onSwipeUp={hideMenu} onSwipeDown={showOrHideMenu}>
-        <div id="nav-spacer"></div>
         <div className="nav" id="topMenu">
           <div id="top-bar"></div>
           <div id="hamburger">

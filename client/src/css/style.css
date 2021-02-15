@@ -62,24 +62,6 @@ a {
   color: rgb(0, 0, 0);
   outline: none;
 }
-a:hover {
-  /* color: blue; */
-}
-
-#middleText {
-  position: absolute;
-  top: 0%;
-  left: 50%;
-  transform: translate(-50%, -0%);
-  white-space: nowrap;
-  font-size: 3em;
-  /* pointer-events: none; */
-  background: rgba(255, 255, 255, 0.5);
-  width: 100%;
-  text-align: center;
-  margin-top: 90px;
-  z-index: 0;
-}
 .pageLabel p {
   padding: 10px 10px 5px 10px;
 }

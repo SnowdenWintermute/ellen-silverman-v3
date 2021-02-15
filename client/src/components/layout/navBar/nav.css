@@ -7,10 +7,6 @@
   font-size: 1.9em;
   background: #e9e7e2;
 }
-#nav-spacer {
-  height: 70px;
-  display: none;
-}
 #hamburger {
   position: absolute;
   left: 15px;
@@ -38,33 +34,16 @@
 .menu-show a:hover {
   color: blue;
 }
-
-.menu label {
-  margin: 0px 10px 0 0;
-  font-size: 2.6em;
-  line-height: 70px;
-  display: none;
-  float: right;
-}
-#toggle {
-  display: none;
-}
-#toggle:checked + .menu {
-  display: block;
-}
-
 .home-button-icon {
   height: 45px;
   transition: 0.2s;
   border-radius: 50%;
   border: 2px solid white;
-  /* opacity: 0.8; */
 }
 .home-button-text {
   display: none;
 }
 .home-button-icon:hover {
-  /* opacity: 1; */
   transform: scale(1.2);
   border: 2px solid blue;
 }
@@ -73,8 +52,6 @@
   width: 45px;
   margin: 10px 10px 10px 10px;
   border-radius: 50%;
-  /* background-color: blue; */
-  /* border: 1px solid white; */
 }
 #top-bar {
   position: absolute;
@@ -97,10 +74,6 @@
   #top-bar {
     width: 0px;
     transition: 0.3s;
-  }
-  label {
-    display: block;
-    cursor: pointer;
   }
   .menu {
     text-align: center;
@@ -126,17 +99,6 @@
     width: 100%;
     background: #e7e7e3;
     border-bottom: 2px solid black;
-  }
-  .contactInput {
-    width: 80%;
-  }
-  #caption,
-  .caption {
-    width: 95%;
-  }
-  #middleText {
-    font-size: 1em;
-    top: 60%;
   }
   .home-button-icon {
     display: none;

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./css/style.css";
-import "./css/nav.css";
 import "./css/elementSlider.css";
 import "./css/cv.css";
 import "./css/exhibitions.css";
@@ -9,8 +8,6 @@ import "./css/contact.css";
 import "./css/storyCarousel.css";
 import "./css/bunStory.css";
 import "./css/bunStoryText.css";
-import "./css/footer.css";
-import "./css/userMenu.css";
 import "./css/auth.css";
 import "./css/forms.css";
 import "./css/buttons.css";

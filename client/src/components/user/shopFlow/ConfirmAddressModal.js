@@ -1,6 +1,6 @@
 import React from 'react'
 import StandardModal from '../../common/modal/StandardModal'
-import { Grid, Typography, Button, Table, TableBody } from '@material-ui/core'
+import { Grid, Typography, Button } from '@material-ui/core'
 
 const ConfirmAddressModal = ({ open, handleClose, addressToConfirm, handleConfirmAddress, handleRejectAddress, classes }) => {
   const { fullName, firstLine, secondLine, deliveryLastLine, phone, country } = addressToConfirm

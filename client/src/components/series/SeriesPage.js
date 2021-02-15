@@ -6,7 +6,7 @@ import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem
 import { getSeries } from '../../apiCalls/series'
 import { toast } from "react-toastify";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   topBar: {
     width: "100%",
     padding: 10,
@@ -17,12 +17,7 @@ const useStyles = makeStyles(theme => ({
   sortFilter: {
     width: 200,
     maxWidth: "100%",
-    [theme.breakpoints.down("xs")]: {
-      // width: "100%"
-    }
   },
-  infoGrid: {
-  }
 }))
 
 const SeriesPage = ({ match }) => {
@@ -69,8 +64,7 @@ const SeriesPage = ({ match }) => {
       }
     };
     asyncFunc();
-
-  }, []);
+  }, [match.params.series]);
 
   const onSelectSortParameter = (e) => {
     setSortParameter(e.target.value)
@@ -84,7 +78,7 @@ const SeriesPage = ({ match }) => {
 
   return (
     <div className="page-frame">
-      <div className="galleryHolder">
+      <div className="gallery-holder">
         {!loading && series &&
           <Card className={classes.topBar}>
             <Grid container>
@@ -107,7 +101,6 @@ const SeriesPage = ({ match }) => {
               <Grid container item xs={12} className={classes.infoGrid}>
                 <Grid item sm={6} xs={12}>
                   <Typography variant="body2">
-
                     {series.numberSold}/{series.numberOfPaintings} paintings sold
                   </Typography>
                   <Typography variant="body2">
@@ -124,8 +117,10 @@ const SeriesPage = ({ match }) => {
             </Grid>
           </Card>
         }
-
-        {loading ? <div className="flex-center"><CircularProgress /></div> : cards.length > 0 ? cards.map(card => card.element) : "No paintings found in this series, or no such series exists."}
+        {loading ?
+          <div className="flex-center"><CircularProgress /></div> :
+          cards.length > 0 ? cards.map(card => card.element) :
+            "No paintings found in this series, or no such series exists."}
       </div>
     </div>
   );

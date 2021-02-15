@@ -41,7 +41,6 @@
   position: absolute;
   left: 597px;
   top: -1px;
-  /* z-index: 100; */
   border: 1px solid;
   width: 600px;
   height: calc(100% + 2px);
@@ -70,17 +69,11 @@
   }
 }
 @media only screen and (max-width: 500px) {
-  .painting-title {
-    /* font-size: 0.8em; */
-  }
   .painting-details-text-box {
     font-size: 1.1em;
   }
 }
 @media only screen and (max-width: 400px) {
-  .painting-title {
-    /* font-size: 0.8em; */
-  }
   .painting-details-text-box {
     font-size: 1em;
   }

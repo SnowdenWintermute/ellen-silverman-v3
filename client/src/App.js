@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./components/layout/navBar/Navbar";
 import LocationBar from "./components/layout/locationBar/LocationBar";
-import Footer from "./components/layout/Footer";
+import Footer from "./components/layout/footer/Footer";
 import SeriesList from "./components/series/SeriesList";
 import SeriesPage from "./components/series/SeriesPage";
-import PaintingDetailedPage from './components/paintings/PaintingDetailedPage'
+import PaintingDetailedPage from './components/paintings/paintingDetailedPage/PaintingDetailedPage'
 import LandingPage from "./components/landing/LandingPage";
 import FullResolutionImage from "./components/paintings/FullResolutionImage";
 import Cv from "./components/cv/Cv";
@@ -28,9 +28,9 @@ import { currentUser } from "./apiCalls/auth";
 import ForgotPassword from "./components/auth/ForgotPassword";
 
 import UserRoute from "./components/routes/UserRoute";
-import Cart from "./components/user/cart/Cart";
-import Checkout from "./components/user/cart/Checkout";
-import Payment from "./components/user/cart/Payment";
+import Cart from "./components/user/shopFlow/cart/Cart";
+import Checkout from "./components/user/shopFlow/Checkout";
+import Payment from "./components/user/shopFlow/Payment";
 
 import AdminRoute from "./components/routes/AdminRoute";
 import AddPaintingsFromCSV from "./components/admin/addPaintingsFromCSV/AddPaintingsFromCSV";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import { Typography, Button } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import BasicPaper from '../../common/paper/BasicPaper'
 import StripeWidget from './StripeWidget'
 import { getCart } from "../../../apiCalls/user";
