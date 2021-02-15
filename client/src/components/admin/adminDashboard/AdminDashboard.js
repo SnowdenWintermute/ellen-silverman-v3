@@ -8,7 +8,7 @@ import ListIcon from '@material-ui/icons/List';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DashboardCard from './DashboardCard'
-import MaterialPaperBasic from '../../layout/MaterialPaperBasic';
+import MaterialPaperBasic from '../../common/paper/MaterialPaperBasic';
 
 const useStyles = makeStyles(() => ({
   header: {

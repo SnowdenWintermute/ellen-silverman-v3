@@ -1,9 +1,10 @@
 import React from 'react'
-import { FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Button, Grid } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import countryList from '../../consts/countryList'
+import PrimaryButton from '../common/button/PrimaryButton'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   input: {
     width: "100%",
     maxWidth: 500,
@@ -11,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     textAlign: "left"
+  },
+  marginRight: {
+    marginRight: 10
   }
 }));
 
@@ -32,44 +36,112 @@ const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, confi
       <div style={{ marginRight: 10, padding: "10px 10px 10px 0px" }}>
         <Grid container item xs={12}>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Full Name" variant="filled" width="75px" onChange={handleChange('fullName')} value={fullName} error={formFieldErrors.fullName && true} helperText={formFieldErrors.fullName ? formFieldErrors.fullName.message : ""} />
+            <TextField className={classes.input}
+              label="Full Name"
+              variant="filled"
+              width="75px"
+              onChange={handleChange('fullName')}
+              value={fullName}
+              error={formFieldErrors.fullName && true}
+              helperText={formFieldErrors.fullName ? formFieldErrors.fullName.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Street" variant="filled" onChange={handleChange('firstLine')} value={firstLine} error={formFieldErrors.firstLine && true} helperText={formFieldErrors.firstLine ? formFieldErrors.firstLine.message : ""} />
+            <TextField
+              className={classes.input}
+              label="Street"
+              variant="filled"
+              onChange={handleChange('firstLine')}
+              value={firstLine}
+              error={formFieldErrors.firstLine && true}
+              helperText={formFieldErrors.firstLine ? formFieldErrors.firstLine.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Appartment / POB / Etc" variant="filled" onChange={handleChange('secondLine')} value={secondLine} error={formFieldErrors.secondLine && true} helperText={formFieldErrors.secondLine ? formFieldErrors.secondLine.message : ""} />
+            <TextField
+              className={classes.input}
+              label="Appartment / POB / Etc"
+              variant="filled"
+              onChange={handleChange('secondLine')}
+              value={secondLine}
+              error={formFieldErrors.secondLine && true}
+              helperText={formFieldErrors.secondLine ? formFieldErrors.secondLine.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
             <FormControl className={classes.input} variant="filled" error={formFieldErrors.country && true}>
               <InputLabel id="select-country">Country</InputLabel>
-              {Object.keys(countryList).length > 0 && <Select className={classes.select} labelId="select-country" onChange={handleChange('country')} value={country}>
-                {countryList.length &&
-                  countryList.map((country, i) => (
-                    <MenuItem key={i} value={country.name}>
-                      {country.name}
-                    </MenuItem>
-                  ))}
-              </Select>}
+              {Object.keys(countryList).length > 0 &&
+                <Select className={classes.select}
+                  labelId="select-country"
+                  onChange={handleChange('country')}
+                  value={country}>
+                  {countryList.length &&
+                    countryList.map((country, i) => (
+                      <MenuItem key={i} value={country.name}>
+                        {country.name}
+                      </MenuItem>
+                    ))}
+                </Select>}
               {formFieldErrors.country && <FormHelperText>{formFieldErrors.country.message}</FormHelperText>}
             </FormControl>
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="City" variant="filled" onChange={handleChange('city')} value={city} error={formFieldErrors.city && true} helperText={formFieldErrors.city ? formFieldErrors.city.message : ""} />
+            <TextField
+              className={classes.input}
+              label="City" variant="filled"
+              onChange={handleChange('city')}
+              value={city}
+              error={formFieldErrors.city && true}
+              helperText={formFieldErrors.city ? formFieldErrors.city.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="State" variant="filled" onChange={handleChange('state')} value={state} error={formFieldErrors.state && true} helperText={formFieldErrors.state ? formFieldErrors.state.message : ""} />
+            <TextField
+              className={classes.input}
+              label="State"
+              variant="filled"
+              onChange={handleChange('state')}
+              value={state}
+              error={formFieldErrors.state && true}
+              helperText={formFieldErrors.state ? formFieldErrors.state.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Zip Code" variant="filled" onChange={handleChange('zip')} value={zip} error={formFieldErrors.zip && true} helperText={formFieldErrors.zip ? formFieldErrors.state.message : ""} />
+            <TextField
+              className={classes.input}
+              label="Zip Code"
+              variant="filled"
+              onChange={handleChange('zip')}
+              value={zip}
+              error={formFieldErrors.zip && true}
+              helperText={formFieldErrors.zip ? formFieldErrors.state.message : ""}
+            />
           </Grid>
           <Grid item xs={12}>
-            <TextField className={classes.input} label="Phone Number" variant="filled" onChange={handleChange('phone')} value={phone} error={formFieldErrors.phone && true} helperText={formFieldErrors.phone ? formFieldErrors.state.message : ""} />
+            <TextField
+              className={classes.input}
+              label="Phone Number"
+              variant="filled"
+              onChange={handleChange('phone')}
+              value={phone}
+              error={formFieldErrors.phone && true}
+              helperText={formFieldErrors.phone ? formFieldErrors.state.message : ""}
+            />
           </Grid>
           <Grid item container xs={12}>
-            <Button style={{ marginRight: 10 }} disabled={addressLoading} variant="contained" color="primary" type="submit">ADD ADDRESS</Button>
-            {confirmedAddresses.length > 0 && <Button onClick={() => setAddingNewAddress(false)} variant={"outlined"} color="primary">USE A SAVED ADDRESS</Button>}
-
+            <PrimaryButton
+              title="ADD ADDRESS"
+              customClasses={classes.marginRight}
+              disabled={addressLoading}
+              isSubmit
+            />
+            {confirmedAddresses.length > 0 &&
+              <PrimaryButton
+                title="USE A SAVED ADDRESS"
+                onClick={() => setAddingNewAddress(false)}
+                outlined
+              />}
           </Grid>
         </Grid>
       </div>

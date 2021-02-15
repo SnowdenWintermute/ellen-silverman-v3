@@ -1,11 +1,10 @@
 import React, { useRef } from 'react'
 import { Button, Paper, Grid, Icon } from '@material-ui/core';
-import ListIcon from '@material-ui/icons/List';
 import { makeStyles } from '@material-ui/core/styles'
+import ListIcon from '@material-ui/icons/List';
 
 const useStyles = makeStyles(theme => ({
   root: {
-
     [theme.breakpoints.up("sm")]: {
       height: "220px",
     },
@@ -55,20 +54,17 @@ const FileInput = ({ handleChange, selectedFile }) => {
   const classes = useStyles()
   const hiddenFileInput = useRef(null)
 
-  const handleClick = event => {
-    console.log("ey")
-    hiddenFileInput.current.click();
-  };
+  const handleClick = () => hiddenFileInput.current.click();
 
   return (
     <Grid container justify="space-between" alignItems="center" onClick={handleClick} className={classes.root}>
-      <Grid container item xs={12} sm={6} >
-        <Grid item xs={12} >
+      <Grid container item xs={12} sm={6}>
+        <Grid container item xs={12} justify="center" >
           <Button variant="contained" className={classes.button}>
             Select File
         </Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid container item xs={12} justify="center">
           {selectedFile ? "Selected file: " + selectedFile.name : "Please choose a .csv file to upload"}
         </Grid>
       </Grid>

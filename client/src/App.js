@@ -6,7 +6,7 @@ import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "./components/layout/Navbar";
-import LocationBar from "./components/layout/LocationBar/LocationBar";
+import LocationBar from "./components/layout/locationBar/LocationBar";
 import Footer from "./components/layout/Footer";
 import SeriesList from "./components/series/SeriesList";
 import SeriesPage from "./components/series/SeriesPage";
@@ -78,85 +78,45 @@ const App = () => {
       </Helmet>
       <div className="App">
         <Switch>
-          <Route
-            exact
-            path="/full-res/:category/:painting"
-            component={FullResolutionImage}
-          ></Route>
-          <Route exact path="/the-professor" component={""}></Route>
+          <Route exact path="/full-res/:category/:painting" component={FullResolutionImage} />
+          <Route exact path="/the-professor" component={""} />
           <Navbar />
         </Switch>
         <Route exact path="/" component={LandingPage} />
         <Switch>
-          <Route exact path="/full-res/:category/:painting" component={""}></Route>
-          <Route exact path="/the-professor" component={""}></Route>
-          <Route
-            exact
-            path="/:page/:category?/:painting?/"
-            component={LocationBar}
-          />
+          <Route exact path="/full-res/:category/:painting" component={""} />
+          <Route exact path="/the-professor" component={""} />
+          <Route exact path="/:page/:series?/:painting?/" component={LocationBar} />
         </Switch>
         <Switch>
-          <Route exact path="/about" component={Cv}></Route>
-          <Route exact path="/exhibitions" component={Exhibitions}></Route>
-          <Route exact path="/contact" component={Contact}></Route>
-          <Route exact path="/the-professor" component={BunStory}></Route>
+          <Route exact path="/about" component={Cv} />
+          <Route exact path="/exhibitions" component={Exhibitions} />
+          <Route exact path="/contact" component={Contact} />
+          <Route exact path="/the-professor" component={BunStory} />
           <Route exact path="/artworks/" component={SeriesList} />
           <Route exact path="/artworks/:series?" component={SeriesPage} />
           <Route exact path="/artworks/:series?/:paintingSlug?" component={PaintingDetailedPage} />
           <Route exact path="/register" component={Register} />
-          <Route
-            exact
-            path="/complete-registration"
-            component={RegisterComplete}
-          />
+          <Route exact path="/complete-registration" component={RegisterComplete} />
           <Route exact path="/login" component={Login} />
-          <Route
-            exact
-            path="/request-password-reset"
-            component={ForgotPassword}
-          />
+          <Route exact path="/request-password-reset" component={ForgotPassword} />
           <Route exact path="/cart" component={Cart} />
           <UserRoute exact path="/checkout" component={Checkout} />
           <UserRoute exact path="/payment" component={Payment} />
           <UserRoute exact path="/user/history" component={UserHistory} />
-          <AdminRoute
-            exact
-            path="/admin/add-painting"
-            component={AddOrEditPainting}
-          />
-          <AdminRoute
-            exact
-            path="/admin/edit-painting/:paintingSlug"
-            component={AddOrEditPainting}
-          />
-          <AdminRoute
-            exact
-            path="/admin/add-paintings-from-csv"
-            component={AddPaintingsFromCSV}
-          />
-          <AdminRoute
-            exact
-            path="/admin/manage-series"
-            component={ManageSeries}
-          />
-          <AdminRoute
-            exact
-            path="/admin/add-multiple-painting-photos"
-            component={AddMultiplePaintingPhotos}
-          />
-          <AdminRoute
-            exact
-            path="/admin/add-page"
-            component={AddPage}
-          />
+          <AdminRoute exact path="/admin/add-painting" component={AddOrEditPainting} />
+          <AdminRoute exact path="/admin/edit-painting/:paintingSlug" component={AddOrEditPainting} />
+          <AdminRoute exact path="/admin/add-paintings-from-csv" component={AddPaintingsFromCSV} />
+          <AdminRoute exact path="/admin/manage-series" component={ManageSeries} />
+          <AdminRoute exact path="/admin/add-multiple-painting-photos" component={AddMultiplePaintingPhotos} />
+          <AdminRoute exact path="/admin/add-page" component={AddPage} />
           <AdminRoute exact path="/admin/orders" render={() => <ManageOrders isAdmin={true} />} />
           <AdminRoute exact path="/admin" component={AdminDashboard} />
         </Switch>
         <Switch>
-          <Route exact path="/full-res/:category/:painting" component={""}></Route>
-          <Route exact path="/the-professor" component={""}></Route>
-          <Route path="/:page" component={Footer}></Route>
+          <Route exact path="/full-res/:category/:painting" component={""} />
+          <Route exact path="/the-professor" component={""} />
+          <Route path="/:page" component={Footer} />
         </Switch>
       </div>
     </Router>

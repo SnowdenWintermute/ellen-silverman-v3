@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Button, Paper, Grid, Icon } from '@material-ui/core';
-import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import { makeStyles } from '@material-ui/core/styles'
+import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import classnames from 'classnames'
 
 const useStyles = makeStyles(theme => ({

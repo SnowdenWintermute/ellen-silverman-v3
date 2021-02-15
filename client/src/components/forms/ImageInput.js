@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Button, Paper, Grid, Icon } from "@material-ui/core";
-import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 import { makeStyles } from "@material-ui/core/styles";
+import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +55,7 @@ const ImageInput = ({ handleChange, selectedImage }) => {
   const classes = useStyles();
   const hiddenFileInput = useRef(null);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     hiddenFileInput.current.click();
   };
 

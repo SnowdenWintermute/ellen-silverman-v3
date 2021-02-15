@@ -59,9 +59,7 @@ const BunStoryImages = (props) => {
   const updateImages = useCallback(() => {
     if (animating) return;
     setAnimating(true);
-    setTimeout(() => {
-      setAnimating(false);
-    }, 1000);
+    setTimeout(() => { setAnimating(false) }, 1000);
     if (!textRefs || !textRefs.current) return;
 
     if (getTextTop("text2") > appearZone) {

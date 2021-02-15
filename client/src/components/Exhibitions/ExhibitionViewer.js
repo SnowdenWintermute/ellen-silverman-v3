@@ -15,7 +15,6 @@ const ExhibitionViewer = ({
 
   return (
     <div className={"exhibition-viewer"}>
-      {/* <img src={background} className="exhibition-background" /> */}
       <div className={"exhibition-description-frame"}>
         <h1 className="exhibition-title">{title}</h1>
         <p className="exhibition-copy exhibition-subtitle">{subtitle}</p>

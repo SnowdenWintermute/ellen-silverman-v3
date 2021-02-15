@@ -24,13 +24,11 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import navReducer from "./store/reducers/nav-reducer";
 import storyReducer from "./store/reducers/story-reducer";
 import userReducer from "./store/reducers/user-reducer";
 import cartReducer from "./store/reducers/cart-reducer";
 
 const rootReducer = combineReducers({
-  nav: navReducer,
   story: storyReducer,
   user: userReducer,
   cart: cartReducer

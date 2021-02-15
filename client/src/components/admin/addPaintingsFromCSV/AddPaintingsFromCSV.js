@@ -4,7 +4,7 @@ import { Grid, LinearProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { toast } from "react-toastify"
 import { uploadPaintingCSVFormData } from '../../../apiCalls/paintings'
-import MaterialPaperNarrow from '../../layout/MaterialPaperNarrow'
+import MaterialPaperNarrow from '../../common/paper/MaterialPaperBasic'
 import PrimaryButton from '../../common/button/PrimaryButton'
 import StandardDialog from '../../common/dialog/StandardDialog'
 import AdminFeatureHeader from '../subComponents/AdminFeatureHeader'
@@ -70,10 +70,10 @@ const AddPaintingsFromCSV = () => {
         <Grid container item xs={12}>
           <AdminFeatureHeader headerText={"Add and Update Paintings from CSV"} subHeaderText={"NOTE: Any paintings in the selected .csv file will overwrite paintings in the database"} />
           <Grid item xs={12}>
+            {(loading && progress !== 100) ?
+              <LinearProgress variant="determinate" value={progress} /> :
+              loading && <LinearProgress />}
             <form onSubmit={handleSubmit}>
-              {(loading && progress !== 100) ?
-                <LinearProgress variant="determinate" value={progress} /> :
-                loading && <LinearProgress />}
               <FileInput handleChange={handleChange} selectedFile={selectedFile} />
               <PrimaryButton
                 title="SEND CSV"

@@ -1,20 +1,10 @@
 import React from "react";
-// import Carousel from "nuka-carousel";
-// import CarouselButton from "./CarouselButton";
 import ExhibitionViewer from "./ExhibitionViewer";
 
 export default function Exhibitions() {
   return (
     <div className="exhibitions-parent">
       <div className="exhibitions-container">
-        {/* <Carousel
-          className={"story-carousel"}
-          dragging={true}
-          // decorators={decorators}
-        >
-          ---content---
-        </Carousel> */}
-
         <ExhibitionViewer
           title="Fence Line Gallery"
           subtitle="Roosevelt, NJ 2020"

@@ -1,63 +1,31 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import * as navActions from "../../../store/actions/nav-actions";
+import toTitleCase from '../../utils/toTitleCase'
 import './locationBar.css'
 
-const PageLabel = (props) => {
-  const [pageLabelHeight, setPageLabelHeight] = useState();
-  const dispatch = useDispatch();
-  const pageLabelEl = useRef();
-
-  const handleResize = useCallback(() => {
-    setPageLabelHeight(pageLabelEl.current.clientHeight);
-    dispatch(navActions.setNavHeight(pageLabelHeight));
-  }, [pageLabelHeight, dispatch]);
-
-  useEffect(() => {
-    handleResize();
-  }, [handleResize]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
-  useEffect(() => {
-    window.addEventListener("onorientationchange", handleResize);
-    return () => {
-      window.removeEventListener("onorientationchange", handleResize);
-    };
-  });
-
-  let currentPage, category, paintingName;
-  let capitalizedCategory, capitalizedCurrentPage;
-  if (props.match.params) {
-    currentPage = props.match.params.page;
-    category = props.match.params.category;
-    paintingName = props.match.params.painting;
+const PageLabel = ({ match }) => {
+  let currentPage, series, paintingName;
+  let capitalizedSeries, capitalizedCurrentPage;
+  if (match.params) {
+    currentPage = match.params.page;
+    series = match.params.series;
+    paintingName = match.params.painting;
   }
-  if (currentPage) {
-    capitalizedCurrentPage =
-      currentPage.charAt(0).toUpperCase() + currentPage.slice(1);
-  }
-  if (category) {
-    capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
-  }
+  if (currentPage) capitalizedCurrentPage = currentPage.charAt(0).toUpperCase() + currentPage.slice(1);
+  if (series) capitalizedSeries = toTitleCase(series.split("-").join(" "))
   return (
-    <div className="location-bar" ref={pageLabelEl}>
+    <div className="location-bar">
       <span>
         <Link to={`/`}>Lucretia E. McGuff-Silverman</Link>
         {currentPage ? " - " : ""}
         <Link to={`/${currentPage}`}>{capitalizedCurrentPage}</Link>
-        {capitalizedCategory ? " - " : ""}
-        {capitalizedCategory && (
-          <Link to={`/${currentPage}/${category}`}>{capitalizedCategory}</Link>
+        {capitalizedSeries ? " - " : ""}
+        {capitalizedSeries && (
+          <Link to={`/${currentPage}/${series}`}>{capitalizedSeries}</Link>
         )}
         {paintingName && " - "}
         {paintingName && (
-          <Link to={`/${currentPage}/${category}/${paintingName}`}>
+          <Link to={`/${currentPage}/${series}/${paintingName}`}>
             {paintingName}
           </Link>
         )}

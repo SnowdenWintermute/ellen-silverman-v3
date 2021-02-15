@@ -31,7 +31,7 @@ const AdminFeatureHeader = ({ headerText, subHeaderText }) => {
       </Grid>
       <Grid item xs={1} />
       <Grid item xs={1} />
-      <Grid item xs={10}>
+      <Grid item xs={10} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Typography variant="body1" className={classes.subHeader}>{subHeaderText}</Typography>
       </Grid>
       <Grid item xs={1} />

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { TextField, Typography, Button } from '@material-ui/core'
+import { TextField, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import { createPage } from '../../apiCalls/page'
-import MaterialPaperNarrow from '../layout/MaterialPaperNarrow'
+import MaterialPaperNarrow from '../common/paper/MaterialPaperNarrow'
 import AdminFeatureHeader from './subComponents/AdminFeatureHeader'
 import PrimaryButton from '../common/button/PrimaryButton'
 

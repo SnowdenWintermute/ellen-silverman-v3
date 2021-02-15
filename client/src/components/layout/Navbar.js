@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { ReactComponent as HomeIcon } from "../../home.svg";
 import HamburgerMenu from "react-hamburger-menu";
 import Swipe from "react-easy-swipe";
 import UserMenu from './UserMenu'
-
 
 const Navbar = () => {
   const [hamburgerMenuShowing, setHamburgerMenuShowing] = useState(false);
@@ -24,13 +22,9 @@ const Navbar = () => {
     }
   }
 
-  function showOrHideMenu() {
-    setHamburgerMenuShowing(!hamburgerMenuShowing);
-  }
+  function showOrHideMenu() { setHamburgerMenuShowing(!hamburgerMenuShowing) }
 
-  function hideMenu() {
-    setHamburgerMenuShowing(false);
-  }
+  function hideMenu() { setHamburgerMenuShowing(false) }
 
   let navClass;
 

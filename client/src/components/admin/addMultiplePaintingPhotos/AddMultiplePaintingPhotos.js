@@ -5,7 +5,7 @@ import { LinearProgress, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import AdminFeatureHeader from '../subComponents/AdminFeatureHeader'
 import AddedImagesResultsDialog from './AddedImagesResultsDialog'
-import MaterialPaperNarrow from '../../layout/MaterialPaperNarrow'
+import MaterialPaperNarrow from '../../common/paper/MaterialPaperBasic'
 import MultipleImageInput from '../../forms/MultipleImageInput'
 import PrimaryButton from '../../common/button/PrimaryButton'
 import ImagePreviewCard from './ImagePreviewCard'
