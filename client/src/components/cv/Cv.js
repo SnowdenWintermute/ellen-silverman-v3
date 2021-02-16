@@ -1,8 +1,9 @@
 import React from "react";
+import './cv.css'
 
 export default function Cv() {
   return (
-    <div>
+    <div className="page-frame">
       <div className="cv-holder">
         <h2>Lucretia Ellen McGuff-Silverman</h2>
         <p>

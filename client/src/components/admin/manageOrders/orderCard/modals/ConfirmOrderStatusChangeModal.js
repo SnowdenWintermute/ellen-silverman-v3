@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
-import StandardModal from '../../common/modal/StandardModal'
+import { Grid, Typography } from '@material-ui/core'
+import StandardModal from '../../../../common/modal/StandardModal'
+import PrimaryButton from '../../../../common/button/PrimaryButton'
 
 const ConfirmOrderStatusChangeModal = ({ open, handleClose, order, orderStatus, onCancelStatusChange, onConfirmStatusChange }) => {
   return (
@@ -12,8 +13,15 @@ const ConfirmOrderStatusChangeModal = ({ open, handleClose, order, orderStatus, 
         </Typography>
         </Grid>
         <Grid item xs={12} container justify="space-between">
-          <Button variant="outlined" color="primary" onClick={onCancelStatusChange}>CANCEL</Button>
-          <Button variant="contained" color="primary" onClick={onConfirmStatusChange}>CONFIRM</Button>
+          <PrimaryButton
+            title="CANCEL"
+            onClick={onCancelStatusChange}
+            outlined
+          />
+          <PrimaryButton
+            title="CONFIRM"
+            onClick={onConfirmStatusChange}
+          />
         </Grid>
       </Grid>
     </StandardModal>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Grid, TextField, Typography, Button, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
-import StandardModal from '../../common/modal/StandardModal'
+import { Grid, TextField, Typography, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
+import StandardModal from '../../../../common/modal/StandardModal'
+import PrimaryButton from '../../../../common/button/PrimaryButton'
 
 const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) => {
   const [selectedPaintings, setSelectedPaintings] = useState({})
   const [returnNotes, setReturnNotes] = useState({})
+
   useEffect(() => {
     const newSelectedPaintings = {}
     const newReturnNotes = {}
@@ -32,8 +34,6 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
     return result
   }
 
-  console.log(order.paintings)
-
   return (
     <StandardModal open={open} handleClose={handleClose}>
       <Grid container spacing={1}>
@@ -45,33 +45,38 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
             <FormLabel component="legend">Choose an item to return</FormLabel>
             <FormGroup>
               {
-                order.paintings.map(painting => painting.painting && <Fragment key={painting.painting.title}>
-                  <FormControlLabel
+                order.paintings.map(painting => painting.painting &&
+                  <Fragment key={painting.painting.title}>
+                    <FormControlLabel
 
-                    control={<Checkbox color="primary" checked={selectedPaintings[painting.painting.title]} disabled={painting.returnRequested} onChange={handleChange} name={painting.painting.title} />}
-                    label={painting.painting.title}
-                  />
-                  {
-                    selectedPaintings[painting.painting.title] && <TextField variant="filled"
-                      fullWidth
-                      multiline
-                      label="Reason for return"
-                      value={returnNotes[painting.painting.title]}
-                      onChange={(e) => setReturnNotes({ ...returnNotes, [painting.painting.title]: e.target.value })} />
-                  }
-                </Fragment>
+                      control={<Checkbox color="primary" checked={selectedPaintings[painting.painting.title]} disabled={painting.returnRequested} onChange={handleChange} name={painting.painting.title} />}
+                      label={painting.painting.title}
+                    />
+                    {
+                      selectedPaintings[painting.painting.title] && <TextField variant="filled"
+                        fullWidth
+                        multiline
+                        label="Reason for return"
+                        value={returnNotes[painting.painting.title]}
+                        onChange={(e) => setReturnNotes({ ...returnNotes, [painting.painting.title]: e.target.value })} />
+                    }
+                  </Fragment>
                 )
               }
             </FormGroup>
           </FormControl>
         </Grid>
         <Grid item container justify={'space-between'} xs={12}>
-          <Button variant="outlined" color="primary" onClick={handleClose}>
-            CANCEL
-          </Button>
-          <Button disabled={!checkIfAnyPaintingIsSelected()} variant="contained" color="primary" onClick={() => handleReturnRequest({ orderId: order._id, selectedPaintings, returnNotes })}>
-            SEND REQUEST
-          </Button>
+          <PrimaryButton
+            title="CANCEL"
+            onClick={handleClose}
+            outlined
+          />
+          <PrimaryButton
+            title="SEND REQUEST"
+            onClick={() => handleReturnRequest({ orderId: order._id, selectedPaintings, returnNotes })}
+            disabled={!checkIfAnyPaintingIsSelected()}
+          />
         </Grid>
       </Grid>
     </StandardModal>

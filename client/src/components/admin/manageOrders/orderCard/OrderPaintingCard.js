@@ -1,7 +1,8 @@
-import { Button, makeStyles, Typography } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import createImgSrcStringFromBinary from "../../utils/createImgSrcStringFromBinary"
+import createImgSrcStringFromBinary from "../../../utils/createImgSrcStringFromBinary"
+import PrimaryButton from '../../../common/button/PrimaryButton'
 
 const useStyles = makeStyles({
   viewButton: {
@@ -15,8 +16,17 @@ const OrderPaintingCard = ({ paintingOrderObject }) => {
   return (
     <div className="order-painting-card">
       <div className="order-painting-image-holder">
-        <img className="order-painting-image" alt={painting.title} src={createImgSrcStringFromBinary(painting.thumbnail.contentType, painting.thumbnail.data)} />
-        {paintingOrderObject.returnRequested && <div className={"painting-return-request-stamp"}><Typography variant="h5"><strong>Return Requested</strong></Typography></div>}
+        <img
+          className="order-painting-image"
+          alt={painting.title}
+          src={createImgSrcStringFromBinary(painting.thumbnail.contentType, painting.thumbnail.data)}
+        />
+        {paintingOrderObject.returnRequested &&
+          <div className={"painting-return-request-stamp"}>
+            <Typography variant="h5">
+              <strong>Return Requested</strong>
+            </Typography>
+          </div>}
       </div>
       <ul style={{ listStyle: "none" }} className="order-painting-info-text-holder">
         <li>
@@ -43,7 +53,10 @@ const OrderPaintingCard = ({ paintingOrderObject }) => {
         </li>
         <li>
           <Link to={`/artworks/${painting.series.slug}/${painting.slug}`}>
-            <Button variant="contained" color="primary" className={classes.viewButton}>VIEW</Button>
+            <PrimaryButton
+              title="VIEW"
+              customClasses={classes.viewButton}
+            />
           </Link>
         </li>
       </ul>

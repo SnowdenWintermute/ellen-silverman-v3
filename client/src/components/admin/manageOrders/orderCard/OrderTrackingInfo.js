@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import { Typography, Button, Icon, TextField, makeStyles } from '@material-ui/core'
+import { toast } from 'react-toastify'
+import { updateOrderTracking } from '../../../../apiCalls/admin'
 import MaterialLink from '@material-ui/core/Link'
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
-import { updateOrderTracking } from '../../../apiCalls/admin'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   squareElement: {
     borderRadius: 0
   },
@@ -30,13 +30,10 @@ const OrderTrackingInfo = ({ order, isAdmin }) => {
     if (order.tracking) setNewTrackingLink(order.tracking)
   }, [setNewTrackingLink, order])
 
-  // https://tools.usps.com/go/TrackConfirmAction_input?strOrigTrackNum=
-
   const handleUpdateTracking = async (e) => {
     e.preventDefault()
     try {
       const newOrder = await updateOrderTracking(order._id, newTrackingLink, user.token)
-      console.log(newOrder)
       order.tracking = newOrder.tracking
       toast.success("Order tracking link updated")
       setEditingTracking(false)
@@ -63,16 +60,6 @@ const OrderTrackingInfo = ({ order, isAdmin }) => {
       </form>
     </li>
 
-  // const adminEditTracking = () =>
-  //   <li>
-  //     <TextField variant="outlined" disabled={!editingTracking} value={newTrackingLink} onChange={e => setNewTrackingLink(e.target.value)} placeholder="Enter tracking link" />
-  //     <Button variant="outlined" className={classes.button} onClick={() => setEditingTracking(true)}>
-  //       <Icon>
-  //         <EditIcon />
-  //       </Icon>
-  //     </Button>
-  //   </li>
-
   const userViewTracking = () =>
     <li>
       <span>
@@ -97,7 +84,6 @@ const OrderTrackingInfo = ({ order, isAdmin }) => {
   if (isAdmin) {
     if (typeof order.tracking === 'undefined') return adminNewTracking()
     else return adminNewTracking()
-    // else return adminEditTracking()
   }
   else if (order.tracking) return userViewTracking()
   return userNoTrackingYet()

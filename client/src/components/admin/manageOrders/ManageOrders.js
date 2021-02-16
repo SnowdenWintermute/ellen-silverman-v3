@@ -6,7 +6,7 @@ import { getOrdersByStatus, getOrderById } from '../../../apiCalls/admin'
 import { getOwnOrdersByStatus, getOwnOrderById } from '../../../apiCalls/user'
 import BasicPaper from '../../common/paper/BasicPaper'
 import ProgressIndicator from '../../common/progressIndicator/ProgressIndicator'
-import OrderCard from '../../user/history/OrderCard'
+import OrderCard from './orderCard/OrderCard'
 import OrderFilterBar from './OrderFilterBar'
 import './orders.css'
 

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid, Typography, Button } from '@material-ui/core'
-import StandardModal from '../../common/modal/StandardModal'
+import { Grid, Typography } from '@material-ui/core'
+import StandardModal from '../../../../common/modal/StandardModal'
+import PrimaryButton from '../../../../common/button/PrimaryButton'
 
 const CancelOrderModal = ({ open, handleClose, cancelOrder, order }) => {
   return (
@@ -10,12 +11,15 @@ const CancelOrderModal = ({ open, handleClose, cancelOrder, order }) => {
           <Typography variant="h5">Cancel order {order._id}?</Typography>
         </Grid>
         <Grid item container justify={'space-between'} xs={12}>
-          <Button variant="outlined" color="primary" onClick={handleClose}>
-            DO NOT CANCEL
-          </Button>
-          <Button variant="contained" color="primary" onClick={() => cancelOrder(order._id)}>
-            CONFIRM CANCEL ORDER
-          </Button>
+          <PrimaryButton
+            title="DO NOT CANCEL"
+            onClick={handleClose}
+            outlined
+          />
+          <PrimaryButton
+            title="CONFIRM CANCEL ORDER"
+            onClick={() => cancelOrder(order._id)}
+          />
         </Grid>
       </Grid>
     </StandardModal>

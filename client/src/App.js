@@ -4,10 +4,11 @@ import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+// layout
 import Navbar from "./components/layout/navBar/Navbar";
 import LocationBar from "./components/layout/locationBar/LocationBar";
 import Footer from "./components/layout/footer/Footer";
+// pages
 import SeriesList from "./components/series/SeriesList";
 import SeriesPage from "./components/series/SeriesPage";
 import PaintingDetailedPage from './components/paintings/paintingDetailedPage/PaintingDetailedPage'
@@ -17,8 +18,7 @@ import Cv from "./components/cv/Cv";
 import Exhibitions from "./components/Exhibitions/Exhibitions";
 import Contact from "./components/contact/Contact";
 import BunStory from "./components/bunStory/BunStory";
-import AddOrEditPainting from "./components/admin/AddOrEditPainting";
-
+// auth
 import Register from "./components/auth/Register";
 import RegisterComplete from "./components/auth/RegisterComplete";
 import Login from "./components/auth/Login";
@@ -26,13 +26,14 @@ import UserHistory from "./components/user/history/UserHistory";
 import { auth } from "./firebase";
 import { currentUser } from "./apiCalls/auth";
 import ForgotPassword from "./components/auth/ForgotPassword";
-
+// ecommerce user
 import UserRoute from "./components/routes/UserRoute";
 import Cart from "./components/user/shopFlow/cart/Cart";
 import Checkout from "./components/user/shopFlow/checkout/Checkout";
 import Payment from "./components/user/shopFlow/Payment";
-
+// site admin
 import AdminRoute from "./components/routes/AdminRoute";
+import AddOrEditPainting from "./components/admin/AddOrEditPainting";
 import AddPaintingsFromCSV from "./components/admin/addPaintingsFromCSV/AddPaintingsFromCSV";
 import ManageSeries from "./components/admin/manageSeries/ManageSeries";
 import AddMultiplePaintingPhotos from "./components/admin/addMultiplePaintingPhotos/AddMultiplePaintingPhotos";
@@ -64,7 +65,6 @@ const App = () => {
           .catch((err) => console.log(err));
       }
     });
-    // cleanup
     return () => unsubscribe();
   }, [dispatch]);
 
