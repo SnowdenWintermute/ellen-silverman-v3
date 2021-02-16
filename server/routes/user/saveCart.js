@@ -4,6 +4,7 @@ const User = require('../../models/user')
 
 exports.save = async (req, res) => {
   const { cartItemIdsAndQuantities } = req.body
+  console.log(cartItemIdsAndQuantities)
   const user = await User.findOne({ email: req.user.email })
   let oldCart = await Cart.findOne({ orderedBy: user._id })
   if (oldCart) oldCart.remove()

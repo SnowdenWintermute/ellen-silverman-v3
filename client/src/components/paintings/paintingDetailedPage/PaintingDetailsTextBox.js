@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { updateCart } from "../../../store/actions/cart-actions";
+import { updateCartItems } from "../../../store/actions/cart-actions";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import _ from 'lodash'
@@ -34,7 +34,7 @@ const PaintingDetailsTextBox = ({ painting }) => {
       localStorage.setItem('cart', JSON.stringify(unique))
       toast.success(`Added ${painting.title} to cart`)
       setPaintingIsInCart(true)
-      dispatch(updateCart(cart))
+      dispatch(updateCartItems(cart))
     }
   }
 
@@ -57,11 +57,9 @@ const PaintingDetailsTextBox = ({ painting }) => {
   }
 
   let paintingCost;
-  if (painting.price && !painting.sold) {
-    paintingCost = `Cost unframed: $${painting.price}`;
-  } else {
-    paintingCost = "Sold";
-  }
+  if (painting.price && !painting.sold) paintingCost = `Cost unframed: $${painting.price}`;
+  else if (painting.price && painting.sold) paintingCost = "Sold";
+  else if (!painting.price) paintingCost = "Price not listed"
 
   return (
     <div className="painting-details-text-box">

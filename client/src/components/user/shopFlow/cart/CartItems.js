@@ -1,34 +1,33 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { updateCart } from "../../../../store/actions/cart-actions";
+import { updateCartItems } from "../../../../store/actions/cart-actions";
 import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import createImgSrcStringFromBinary from '../../../utils/createImgSrcStringFromBinary'
 import ProgressIndicator from '../../../common/progressIndicator/ProgressIndicator'
 
-const CartItems = ({ cart, setCartItems }) => {
+const CartItems = ({ cartItemsWithThumbnails }) => {
   const dispatch = useDispatch()
 
   const removeItemFromCart = (id) => {
-    let newCart = []
+    let newCartItems = []
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('cart')) {
-        const cart = JSON.parse(localStorage.getItem('cart'))
-        cart.forEach(item => {
-          if (item._id !== id) newCart.push({ ...item })
+        const localStorageCart = JSON.parse(localStorage.getItem('cart'))
+        localStorageCart.forEach(item => {
+          if (item._id !== id) newCartItems.push({ ...item })
         })
-        localStorage.setItem('cart', JSON.stringify(newCart))
-        dispatch(updateCart(newCart))
-        setCartItems(newCart)
+        localStorage.setItem('cart', JSON.stringify(newCartItems))
+        dispatch(updateCartItems(newCartItems))
       }
     }
   }
   return (
     <Table>
       <TableBody>
-        {cart.length ?
-          cart.map(item => <TableRow key={item._id}>
+        {cartItemsWithThumbnails && cartItemsWithThumbnails.length ?
+          cartItemsWithThumbnails.map(item => <TableRow key={item._id}>
             <TableCell>
               {item.thumbnail ?
                 <img

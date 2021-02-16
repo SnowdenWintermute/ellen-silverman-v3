@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import ImageFader from "../ImageFader/ImageFader";
 import './imageFaderWithTitles.css'
 
@@ -13,20 +13,20 @@ const ImageFaderWithTitles = ({
   const indexHolder = useRef(0);
   const slideTimeout = useRef(null);
 
-  const changeSlides = () => {
+  const changeSlides = useCallback(() => {
     if (indexHolder.current >= titlesInfo.length - 1)
       indexHolder.current = 0;
     else indexHolder.current += 1;
     setIncomingIndex(indexHolder.current);
     slideTimeout.current = setTimeout(changeSlides, delayInMiliseconds);
-  };
+  }, [delayInMiliseconds, titlesInfo.length]);
 
   useEffect(() => {
-    setTimeout(changeSlides, delayInMiliseconds);
+    slideTimeout.current = setTimeout(changeSlides, delayInMiliseconds);
     return () => {
       clearTimeout(slideTimeout.current);
     };
-  }, []);
+  }, [changeSlides, delayInMiliseconds]);
 
   useEffect(() => {
     const timeout = setTimeout(() => setComponentShowClass("fader-titles"), 2000)

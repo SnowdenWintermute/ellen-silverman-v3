@@ -17,12 +17,13 @@ const FullResolutionImage = ({ match }) => {
       }
     }
     asyncFunc()
-  }, [])
+  }, [match.params.painting])
 
   return (
     <React.Fragment>
       {error && error}
       {imgUrl && <img
+        style={{ display: "block" }}
         src={imgUrl}
         alt={match.params.painting}
       />}

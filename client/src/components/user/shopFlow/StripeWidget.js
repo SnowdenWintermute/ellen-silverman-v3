@@ -5,10 +5,10 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { createPaymentIntent } from '../../../apiCalls/stripe'
 import { createOrder, clearCart } from '../../../apiCalls/user'
 import { Button } from '@material-ui/core'
-import { updateCart } from "../../../store/actions/cart-actions"
+import { updateCartItems } from "../../../store/actions/cart-actions"
 import { toast } from 'react-toastify'
 
-export const StripeWidget = ({ history }) => {
+export const StripeWidget = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const [succeeded, setSucceeded] = useState(false)
@@ -42,7 +42,7 @@ export const StripeWidget = ({ history }) => {
       await createOrder(payload, user.token)
       await clearCart(user.token);
       localStorage.removeItem('cart')
-      dispatch(updateCart([]))
+      dispatch(updateCartItems([]))
       toast.success("Order paid and saved")
     } catch (error) {
       toast.error(JSON.stringify(error))
@@ -100,7 +100,12 @@ export const StripeWidget = ({ history }) => {
 
   return (
     <>
-      {succeeded && <p className={"result-message"}>Payment successful. <Link className="standard-link underlined" to="user/history">See it in your purchase history</Link></p>}
+      {succeeded && <p className={"result-message"}>
+        Payment successful.
+         <Link className="standard-link underlined" to="user/history">
+          See it in your purchase history
+           </Link>
+      </p>}
       {!succeeded && <form id="payment-form" onSubmit={handleSubmit}>
         {error && error}
         <CardElement

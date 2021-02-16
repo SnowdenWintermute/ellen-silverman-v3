@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Typography } from '@material-ui/core'
+import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import { Typography } from '@material-ui/core'
+import { getCart } from "../../../apiCalls/user";
 import BasicPaper from '../../common/paper/BasicPaper'
 import StripeWidget from './StripeWidget'
-import { getCart } from "../../../apiCalls/user";
-import { toast } from 'react-toastify'
-import PayPalWidget from './PayPalWidget'
+// import PayPalWidget from './PayPalWidget'
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
 const Payment = ({ history }) => {
   const user = useSelector(state => state.user)
   const [cart, setCart] = useState({})
-  const [paymentMethod, setPaymentMethod] = useState("card")
+  // const [paymentMethod, setPaymentMethod] = useState("card")
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -32,15 +32,16 @@ const Payment = ({ history }) => {
   }, [user, history]);
 
   const selectedPaymentPortalElement = () => {
-    if (paymentMethod === "card") {
-      return (<Elements stripe={promise}>
-        <StripeWidget />
-      </Elements>)
-    } else if (paymentMethod === "paypal") {
-      return (
-        <PayPalWidget cart={cart} />
-      )
-    }
+    // if (paymentMethod === "card") {
+    return (<Elements stripe={promise}>
+      <StripeWidget />
+    </Elements>)
+    // } 
+    // else if (paymentMethod === "paypal") {
+    //   return (
+    //     <PayPalWidget cart={cart} />
+    //   )
+    // }
   }
 
   return (

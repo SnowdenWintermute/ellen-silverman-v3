@@ -1,16 +1,22 @@
-let initialState = []
+let initialState = {
+  items: [],
+  selectedShippingAddress: ""
+}
 
 if (typeof window !== "undefined") {
   if (localStorage.getItem('cart')) {
-    initialState = JSON.parse(localStorage.getItem('cart'))
-  } else initialState = []
+    initialState.items = JSON.parse(localStorage.getItem('cart'))
+  }
 }
 
-export default (state = initialState, action) => {
+const cart = (state = initialState, action) => {
   switch (action.type) {
     case "UPDATE_CART":
-      return action.payload;
+      return { ...state, items: [...action.payload] };
+    case "SET_SELECTED_SHIPPING_ADDRESS":
+      return { ...state, selectedShippingAddress: action.payload }
     default:
       return state
   }
 }
+export default cart

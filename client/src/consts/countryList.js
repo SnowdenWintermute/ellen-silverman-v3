@@ -1,4 +1,4 @@
-export default [
+const countryList = [
   { name: 'United States', code: 'US' },
   { name: 'Canada', code: 'CA' },
   { name: 'Afghanistan', code: 'AF' },
@@ -243,3 +243,4 @@ export default [
   { name: 'Zambia', code: 'ZM' },
   { name: 'Zimbabwe', code: 'ZW' }
 ]
+export default countryList

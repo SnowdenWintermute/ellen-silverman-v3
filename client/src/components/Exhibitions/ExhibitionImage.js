@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ExhibitionImage = ({ key, image }) => {
+const ExhibitionImage = ({ image }) => {
   const [imgClass, setImgClass] = useState(null);
   const [xClass, setXClass] = useState("transparent");
 
@@ -12,7 +12,7 @@ const ExhibitionImage = ({ key, image }) => {
   };
 
   return (
-    <div key={key} className={`side-image-frame`} onClick={handleImgClick}>
+    <div className={`side-image-frame`} onClick={handleImgClick}>
       <div className={`image-exit-button ${xClass}`}>X</div>
       <img className={`side-image ${imgClass}`} src={image} alt={image} />
     </div>

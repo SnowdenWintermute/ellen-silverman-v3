@@ -8,7 +8,7 @@ const initialState = {
   textContainerRef: null,
 };
 
-export default (state = initialState, action) => {
+const story = (state = initialState, action) => {
   switch (action.type) {
     case SET_TEXT_REFS:
       return {
@@ -24,3 +24,4 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+export default story

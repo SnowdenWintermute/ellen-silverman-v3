@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { TextField, Typography } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import OrderTrackingInfo from './OrderTrackingInfo'
 
 const OrderShippingAddressCard = ({ order, address, isAdmin }) => {

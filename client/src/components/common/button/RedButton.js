@@ -11,15 +11,19 @@ const useStyles = makeStyles({
       filter: "brightness(85%)",
     },
   },
+  outlined: {
+    color: "red",
+    border: "1px solid red"
+  },
   fullWidth: {
     width: "100%"
   },
 })
 
-const RedButton = ({ onClick, title, fullWidth }) => {
+const RedButton = ({ onClick, title, customClasses, fullWidth, outlined }) => {
   const classes = useStyles()
   return (
-    <Button variant="contained" className={classnames(classes.style, fullWidth && classes.fullWidth)} onClick={onClick}>
+    <Button variant={outlined ? "outlined" : "contained"} className={classnames((outlined ? classes.outlined : classes.style), fullWidth && classes.fullWidth, customClasses)} onClick={onClick}>
       {title}
     </Button>
   )

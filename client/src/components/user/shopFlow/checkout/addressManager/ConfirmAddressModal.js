@@ -1,8 +1,15 @@
 import React from 'react'
-import StandardModal from '../../common/modal/StandardModal'
-import { Grid, Typography, Button } from '@material-ui/core'
+import StandardModal from '../../../../common/modal/StandardModal'
+import { Grid, Typography, Button, makeStyles } from '@material-ui/core'
 
-const ConfirmAddressModal = ({ open, handleClose, addressToConfirm, handleConfirmAddress, handleRejectAddress, classes }) => {
+const useStyles = makeStyles(() => ({
+  modalHeader: {
+    marginBottom: 10,
+  },
+}));
+
+const ConfirmAddressModal = ({ open, handleClose, addressToConfirm, handleConfirmAddress, handleRejectAddress }) => {
+  const classes = useStyles()
   const { fullName, firstLine, secondLine, deliveryLastLine, phone, country } = addressToConfirm
   return (
     <StandardModal open={open} handleClose={handleClose}>

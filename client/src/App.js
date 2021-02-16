@@ -29,7 +29,7 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 
 import UserRoute from "./components/routes/UserRoute";
 import Cart from "./components/user/shopFlow/cart/Cart";
-import Checkout from "./components/user/shopFlow/Checkout";
+import Checkout from "./components/user/shopFlow/checkout/Checkout";
 import Payment from "./components/user/shopFlow/Payment";
 
 import AdminRoute from "./components/routes/AdminRoute";

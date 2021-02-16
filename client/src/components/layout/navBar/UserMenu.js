@@ -74,7 +74,7 @@ const UserMenu = () => {
         <div className="cart-icon-holder">
           <Link to="/cart">
             <Icon className={classes.icon}>
-              <Badge className={classes.badge} badgeContent={cart && cart.length} color="primary">
+              <Badge className={classes.badge} badgeContent={cart.items && cart.items.length} color="primary">
               </Badge>
               <ShoppingCartIcon />
             </Icon>

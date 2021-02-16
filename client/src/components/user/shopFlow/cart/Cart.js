@@ -9,15 +9,16 @@ import BasicPaper from '../../../common/paper/BasicPaper'
 import './cart.css'
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([])
+  const [cartItemsWithThumbnails, setCartItemsWithThumbnails] = useState([])
   const cart = useSelector((state) => state.cart)
-
+  console.log(cart)
+  // console.log(cartItems)
 
   useEffect(() => {
-    if (!cart.length) return
+    if (!cart.items.length) return
     const promises = []
-    const newCart = [...cart]
-    newCart.forEach((item) => {
+    const newCartItems = [...cart.items]
+    newCartItems.forEach((item) => {
       promises.push(new Promise((resolve, reject) => getPaintingThumbnail(item._id).then(thumbnail => {
         item.thumbnail = thumbnail.data
         resolve()
@@ -25,7 +26,7 @@ const Cart = () => {
       ))
     })
     Promise.all(promises).then(() => {
-      setCartItems(newCart)
+      setCartItemsWithThumbnails(newCartItems)
     }).catch(error => toast.error(JSON.stringify(error)))
   }, [cart])
 
@@ -38,17 +39,11 @@ const Cart = () => {
               <Typography variant="h5">Cart</Typography>
             </Grid>
             <Grid item xs={12}>
-              <CartItems
-                cart={cart}
-                setCartItems={setCartItems}
-              />
+              <CartItems cartItemsWithThumbnails={cartItemsWithThumbnails} />
             </Grid>
           </Grid>
           <Grid container item xs={12} sm={4}>
-            <OrderSummary
-              cart={cart}
-              cartItems={cartItems}
-            />
+            <OrderSummary cart={cart} />
           </Grid>
         </Grid>
       </BasicPaper>
