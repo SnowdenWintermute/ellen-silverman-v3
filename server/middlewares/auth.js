@@ -7,7 +7,6 @@ exports.authCheck = async (req, res, next) => {
       .auth()
       .verifyIdToken(req.headers.authtoken);
     req.user = firebaseUser;
-    console.log("passed user check")
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or expired token" });
@@ -22,7 +21,6 @@ exports.adminCheck = async (req, res, next) => {
       error: "Admin resource. Access denied.",
     });
   } else {
-    console.log("passed admin check")
     next();
   }
 };

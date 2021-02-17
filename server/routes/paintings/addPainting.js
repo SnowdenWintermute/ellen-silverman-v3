@@ -1,10 +1,10 @@
 const formidable = require('formidable');
 const _ = require('lodash');
-const fs = require('fs');
 const Painting = require('../../models/painting');
 const slugify = require("slugify");
 const parseFormFieldsAndFiles = require('../utils/parseFormFieldsAndFiles');
-const sharp = require('sharp');
+const createAndAssignThumbnailToPainting = require('../utils/paintings/createAndAssignThumbnailToPainting')
+const assignPaintingImageFromFile = require('../utils/paintings/assignPaintingImageFromFile')
 const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.create = async (req, res) => {
@@ -14,13 +14,8 @@ exports.create = async (req, res) => {
     const parsedForm = await parseFormFieldsAndFiles(req)
     let painting = new Painting(parsedForm.fields);
     if (parsedForm.files.image) {
-      painting.image.data = fs.readFileSync(parsedForm.files.image.path);
-      painting.image.contentType = parsedForm.files.image.type;
-      const thumbnail = await sharp(painting.image.data)
-        .resize({ width: 500 })
-        .toBuffer()
-      painting.thumbnail.data = thumbnail
-      painting.thumbnail.contentType = parsedForm.files.image.type
+      await assignPaintingImageFromFile(painting, parsedForm.files.image)
+      await createAndAssignThumbnailToPainting(painting)
     }
     if (painting.title) {
       painting.slug = slugify(painting.title)

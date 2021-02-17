@@ -5,7 +5,7 @@ import { LinearProgress, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import AdminFeatureHeader from '../subComponents/AdminFeatureHeader'
 import AddedImagesResultsDialog from './AddedImagesResultsDialog'
-import MaterialPaperNarrow from '../../common/paper/MaterialPaperBasic'
+import MaterialPaperNarrow from '../../common/paper/MaterialPaperNarrow'
 import MultipleImageInput from '../../forms/MultipleImageInput'
 import PrimaryButton from '../../common/button/PrimaryButton'
 import ImagePreviewCard from './ImagePreviewCard'
@@ -53,13 +53,14 @@ const AddMultiplePaintingPhotos = () => {
     setProgress(0)
     try {
       const res = await uploadMultiplePaintingImages(formData.current, user.token, handleProgressEvent)
+      const results = res.data
       setPhotos([])
       setImagesTotalSize(0)
       formData.current = new FormData()
       setResultsDialogOpen(true)
-      setImagesAdded(res.data.paintingImagesSaved)
-      setImagesUpdated(res.data.paintingImagesUpdated)
-      setErrors(res.data.errors)
+      setImagesAdded(results.paintingImagesSaved)
+      setImagesUpdated(results.paintingImagesUpdated)
+      setErrors(results.errors)
     } catch (error) {
       toast.error(JSON.stringify(error))
     }

@@ -61,12 +61,12 @@ const MultipleImageInput = ({ handleChange, selectedImages, imagesTotalSize, cla
   return (
     <Grid container justify="space-between" alignItems="center" onClick={handleClick} className={classnames(classes.root, className)}>
       <Grid container item xs={12} sm={6} >
-        <Grid item xs={12} >
+        <Grid container item xs={12} justify="center" >
           <Button variant="contained" className={classes.button}>
             Select Images
         </Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid container item xs={12} justify="center">
           {selectedImages.length < 1 && "Please choose an image to upload"}
         </Grid>
       </Grid>

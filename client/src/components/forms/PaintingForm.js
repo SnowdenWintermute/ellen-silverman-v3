@@ -36,8 +36,6 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
   const drawingMaterialOptions = ['oil', 'pastel', 'watercolor', 'acrylic', 'graphite', 'charcoal', 'ink', 'crayon']
   const supportOptions = ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal']
 
-  console.log(formFieldErrors)
-
   return (
     <form onSubmit={handleSubmit}>
       <MaterialPaperNarrow>

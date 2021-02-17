@@ -31,9 +31,9 @@ const AddOrEditPainting = (props) => {
     try {
       const fetchedSeriesList = await getSeriesList();
       setSeriesList(fetchedSeriesList.data);
-    } catch (err) {
-      console.log(err);
-      toast.error(err);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
     }
   }, []);
 

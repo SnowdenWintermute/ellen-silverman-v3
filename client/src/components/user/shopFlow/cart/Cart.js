@@ -11,8 +11,6 @@ import './cart.css'
 const Cart = () => {
   const [cartItemsWithThumbnails, setCartItemsWithThumbnails] = useState([])
   const cart = useSelector((state) => state.cart)
-  console.log(cart)
-  // console.log(cartItems)
 
   useEffect(() => {
     if (!cart.items.length) return

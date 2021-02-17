@@ -13,7 +13,6 @@ const Credits = ({ creditsShowing }) => {
 
   useEffect(() => {
     const asyncFunc = async () => {
-      console.log("ey")
       const newPageInfo = await getPage("the-professor-story")
       setPageInfo(newPageInfo.data)
     }

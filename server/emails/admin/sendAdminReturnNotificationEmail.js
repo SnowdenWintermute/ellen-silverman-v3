@@ -8,11 +8,13 @@ module.exports = (order, user, selectedPaintings, returnNotes) => {
   Object.keys(selectedPaintings).map(painting => console.log(painting))
   try {
     const output = `A return on order id ${order._id} has been requested for the following item(s). \n 
-    ${Object.keys(selectedPaintings).map(painting => selectedPaintings[painting] && (painting + " - Reason: " + returnNotes[painting] || "Reason not noted" + "\n"))}
+    ${Object.keys(selectedPaintings).map(painting => selectedPaintings[painting] &&
+      (painting + " - Reason: " + returnNotes[painting] || "Reason not noted" + "\n"))}
       Please email the user at ${user.email} with return instructions.
     `;
     const textOutput = `A return has been requested for the following item(s). \n 
-    ${Object.keys(selectedPaintings).map(painting => selectedPaintings[painting] && (painting + " - Reason: " + returnNotes[painting] || "Reason not noted" + "\n"))}
+    ${Object.keys(selectedPaintings).map(painting => selectedPaintings[painting] &&
+      (painting + " - Reason: " + returnNotes[painting] || "Reason not noted" + "\n"))}
       Please email the user at ${user.email} with return instructions.
     `;
 

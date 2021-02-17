@@ -4,7 +4,7 @@ import { Grid, LinearProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { toast } from "react-toastify"
 import { uploadPaintingCSVFormData } from '../../../apiCalls/paintings'
-import MaterialPaperNarrow from '../../common/paper/MaterialPaperBasic'
+import MaterialPaperNarrow from '../../common/paper/MaterialPaperNarrow'
 import PrimaryButton from '../../common/button/PrimaryButton'
 import StandardDialog from '../../common/dialog/StandardDialog'
 import AdminFeatureHeader from '../subComponents/AdminFeatureHeader'

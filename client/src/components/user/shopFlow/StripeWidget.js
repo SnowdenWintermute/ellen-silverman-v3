@@ -25,7 +25,6 @@ export const StripeWidget = () => {
       try {
         const response = await createPaymentIntent(user.token)
         setClientSecret(response.data.clientSecret)
-        console.log(response.data.clientSecret)
       } catch (error) {
         console.log(error)
       }
@@ -34,7 +33,6 @@ export const StripeWidget = () => {
   }, [user])
 
   const handleSuccess = async (payload) => {
-    console.log(JSON.stringify(payload, null, 2))
     setError(null)
     setProcessing(false)
     setSucceeded(true)
