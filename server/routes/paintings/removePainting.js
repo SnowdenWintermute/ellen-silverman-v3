@@ -8,7 +8,6 @@ exports.remove = async (req, res) => {
     const removedPainting = { ...paintingToRemove._doc }
     await paintingToRemove.remove()
     updateSeriesMetadata(paintingToRemove.series)
-    console.log("removed: ", removedPainting)
     return res.status(200).json(removedPainting)
   } catch (err) {
     return res.status(400).json({ error: err })

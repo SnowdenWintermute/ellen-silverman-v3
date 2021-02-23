@@ -1,12 +1,10 @@
 const parseFormFieldsAndFiles = require('../utils/parseFormFieldsAndFiles')
 const Painting = require('../../models/painting')
-const sharp = require('sharp')
-const fs = require('fs')
+const assignPaintingImageFromFile = require('../utils/paintings/assignPaintingImageFromFile')
 const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.edit = async (req, res) => {
   const parsedForm = await parseFormFieldsAndFiles(req)
-  console.log(parsedForm.fields)
   try {
     const paintingToBeEdited = await Painting.findOne({ title: parsedForm.fields.title })
     if (!paintingToBeEdited) return res.status(400).json({ error: { message: "No painting found by that name" } })
@@ -15,13 +13,8 @@ exports.edit = async (req, res) => {
     })
     const image = parsedForm.files.image
     if (image) {
-      paintingToBeEdited.image.data = fs.readFileSync(image.path);
-      paintingToBeEdited.image.contentType = image.type;
-      const thumbnail = await sharp(paintingToBeEdited.image.data)
-        .resize({ width: 500 })
-        .toBuffer()
-      paintingToBeEdited.thumbnail.data = thumbnail
-      paintingToBeEdited.thumbnail.contentType = image.type
+      await assignPaintingImageFromFile(paintingToBeEdited, parsedForm.files.image)
+      await createAndAssignThumbnailToPainting(paintingToBeEdited)
     }
     await paintingToBeEdited.save()
     updateSeriesMetadata(paintingToBeEdited.series)

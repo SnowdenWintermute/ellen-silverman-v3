@@ -1,14 +1,11 @@
 const User = require('../../models/user')
 const Cart = require('../../models/cart')
-const Painting = require('../../models/painting')
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 exports.createPaymentIntent = async (req, res) => {
   const user = await User.findOne({ email: req.user.email })
   const { cartTotal } = await Cart.findOne({ orderedBy: user._id })
   const numberOfCentsToCharge = cartTotal * 100
-  console.log("charging " + numberOfCentsToCharge + " cents")
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: numberOfCentsToCharge,

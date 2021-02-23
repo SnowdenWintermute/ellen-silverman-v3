@@ -19,16 +19,12 @@ exports.createOrder = async (req, res) => {
     newOrder.shippingAddress = userCart.shippingAddress
     newOrder.orderedBy = user._id
     await newOrder.save()
-    const newOrderForConfirmationEmail = await Order.findById(newOrder._id).populate({ path: "paintings", populate: { path: "painting", select: "title price", populate: { path: "series" } } })
+    const newOrderForConfirmationEmail = await Order.findById(newOrder._id)
+      .populate({ path: "paintings", populate: { path: "painting", select: "title price", populate: { path: "series" } } })
     await sendOrderEmail(user, newOrderForConfirmationEmail)
     sendAdminOrderNotificationEmail(newOrderForConfirmationEmail)
     await markPaintingsAsSoldOrDecrementStock(newOrder)
     const seriesIds = []
-    newOrderForConfirmationEmail.paintings.forEach(painting => {
-      console.log("order painting")
-      console.log(painting)
-      if (!seriesIds.includes(painting.painting.series._id)) seriesIds.push(painting.painting.series._id)
-    })
     seriesIds.forEach(id => updateSeriesMetadata(id))
     res.json({ ok: true })
   } catch (error) {

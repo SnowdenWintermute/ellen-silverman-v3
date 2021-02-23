@@ -6,14 +6,12 @@ exports.lookupNewAddress = async (req, res) => {
   const { email } = req.user
   const addressFromClient = req.body.address
   const { fullName, phone, country, firstLine, secondLine, city, state, zip } = addressFromClient
-  console.log("address from client: ", addressFromClient)
   const user = await User.findOne({ email })
   const newAddress = new Address()
   newAddress.user = user._id
   newAddress.fullName = fullName
   newAddress.phone = phone.toString()
   if (country !== "United States") {
-    console.log(addressFromClient)
     try {
       newAddress.firstLine = firstLine
       newAddress.secondLine = secondLine
@@ -45,5 +43,4 @@ exports.lookupNewAddress = async (req, res) => {
       res.json(error)
     }
   }
-
 }

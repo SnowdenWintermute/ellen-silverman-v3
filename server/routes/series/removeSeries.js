@@ -12,7 +12,7 @@ exports.remove = async (req, res) => {
     await seriesToBeDeleted.remove()
     return res.json(`${seriesName} and all associated paintings removed from database`)
   } catch (error) {
-    res.status(400).json(error)
     console.log(error)
+    res.status(400).json(error)
   }
 };

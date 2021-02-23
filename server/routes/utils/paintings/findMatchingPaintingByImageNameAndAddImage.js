@@ -1,6 +1,6 @@
-const Painting = require('../../models/painting');
-const assignPaintingImageFromFile = require('../utils/paintings/assignPaintingImageFromFile')
-const createAndAssignThumbnailToPainting = require('../utils/paintings/createAndAssignThumbnailToPainting')
+const Painting = require('../../../models/painting');
+const assignPaintingImageFromFile = require('./assignPaintingImageFromFile')
+const createAndAssignThumbnailToPainting = require('./createAndAssignThumbnailToPainting')
 
 exports.findMatchingPaintingByImageNameAndAddImage = async (image, results) => {
   try {

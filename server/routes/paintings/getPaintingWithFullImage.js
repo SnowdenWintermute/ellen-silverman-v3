@@ -9,7 +9,6 @@ exports.getFull = async (req, res) => {
     await incrementVeiwableObjectViewCounter(paintingToReturn, req.ip);
     return res.json(paintingToReturn);
   } catch (error) {
-    console.log("error caught")
     console.log(error);
     return res.status(400).json(error);
   }

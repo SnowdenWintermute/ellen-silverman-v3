@@ -1,7 +1,7 @@
 
 const parseFiles = require("../utils/parseFiles")
 const createIterableObject = require('../utils/createIterableObject')
-const { findMatchingPaintingByImageNameAndAddImage } = require("./findMatchingPaintingByImageNameAndAddImage");
+const { findMatchingPaintingByImageNameAndAddImage } = require("../utils/paintings/findMatchingPaintingByImageNameAndAddImage");
 const updateSeriesMetadata = require("../utils/series/updateSeriesMetadata");
 
 exports.addMultiplePaintingImages = async (req, res) => {

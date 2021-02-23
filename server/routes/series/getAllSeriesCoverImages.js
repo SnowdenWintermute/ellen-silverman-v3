@@ -1,9 +1,7 @@
 const Series = require('../../models/series')
 const Painting = require('../../models/painting');
-const series = require('../../models/series');
 
 exports.getSeriesWithThumbnails = async (req, res) => {
-  console.log("Requested series with thumbnails")
   const seriesToReturn = []
   try {
     const allSeries = await Series.find().populate('viewCounter')
@@ -12,9 +10,7 @@ exports.getSeriesWithThumbnails = async (req, res) => {
       if (firstPaintingInSeries) {
         const thumbnail = { ...firstPaintingInSeries.thumbnail }
         const thumbnailToSend = thumbnail ? thumbnail : {}
-        if (thumbnailToSend.data !== undefined) {
-          seriesToReturn.push({ ...series._doc, thumbnail: { ...thumbnailToSend } })
-        }
+        if (thumbnailToSend.data !== undefined) seriesToReturn.push({ ...series._doc, thumbnail: { ...thumbnailToSend } })
       }
     }
     return res.status(200).json(seriesToReturn)

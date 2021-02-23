@@ -1,6 +1,6 @@
 const Painting = require("../../models/painting")
 
-// used for cart, checkout etc
+// used for cart, checkout etc (places you only need thumbnail)
 exports.get = async (req, res) => {
   try {
     const paintingToReturn = await Painting.findOne({ slug: req.params.slug }).select("-image")

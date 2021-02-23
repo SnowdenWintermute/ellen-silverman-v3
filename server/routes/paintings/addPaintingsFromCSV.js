@@ -8,7 +8,6 @@ const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
 
 exports.addPaintingsFromCSV = async (req, res) => {
   const files = await parseFiles(req)
-  console.log(files)
   let paintings
   try {
     paintings = await convertCSVtoJSON(files.csv.path)
@@ -25,7 +24,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
     else continue
   }
 
-  // addSeriesFromCSV(paintings, seriesList) // use with caution
+  // addSeriesFromCSV(paintings, seriesList) // use with caution, if any series is misspelled it will create a "duplicate" of that series
 
   // assign slug and series id to paintings
   paintings.forEach(painting => {
@@ -41,6 +40,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
       painting.sold = false
     }
   })
+
   for (const painting of paintings) {
     try {
       paintingAlreadyInDatabase = await Painting.findOne({ title: painting.title })

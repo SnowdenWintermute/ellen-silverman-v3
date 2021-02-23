@@ -12,7 +12,6 @@ exports.confirmNewAddress = async (req, res) => {
       await user.save()
     }
     const addressesToCheckForRemoval = await Address.find({ user: user._id })
-    console.log("addressesToCheckForRemoval: ", addressesToCheckForRemoval)
     addressesToCheckForRemoval.forEach(addressToRemove => { if (!addressToRemove.isValidatedByUser) addressToRemove.remove() })
     user = await User.findOne({ email: req.user.email }).populate('addresses')
     res.json(user.addresses)

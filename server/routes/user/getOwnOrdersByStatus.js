@@ -3,7 +3,6 @@ const User = require('../../models/user')
 
 exports.getOwnOrdersByStatus = async (req, res) => {
   const { status } = req.params
-  console.log(req.user.email + " searching orders by status: " + status)
   let orders = {}
   try {
     const user = await User.findOne({ email: req.user.email })
@@ -19,7 +18,7 @@ exports.getOwnOrdersByStatus = async (req, res) => {
         }
       }).populate("shippingAddress")
     } else {
-      orders = await Order.find({ orderedBy: user._id, status }).populate({
+      orders = await Order.find({ orderedBy: user._id, status: status !== "all" && status }).populate({
         path: "paintings",
         populate: {
           path: 'painting',

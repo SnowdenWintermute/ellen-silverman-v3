@@ -1,4 +1,3 @@
-const Series = require('../../models/series')
 const Painting = require('../../models/painting')
 
 exports.listPaintingsInSeries = async (req, res) => {

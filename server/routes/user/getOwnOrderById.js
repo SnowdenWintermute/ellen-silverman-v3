@@ -3,7 +3,6 @@ const User = require('../../models/user')
 
 exports.getOwnOrderById = async (req, res) => {
   try {
-    console.log(req.params.id)
     const user = await User.findOne({ email: req.user.email })
     const orders = await Order.find({ orderedBy: user._id, _id: req.params.id }).populate({
       path: "paintings",

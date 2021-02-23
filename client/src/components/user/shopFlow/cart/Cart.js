@@ -13,7 +13,6 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart)
 
   useEffect(() => {
-    if (!cart.items.length) return
     const promises = []
     const newCartItems = [...cart.items]
     newCartItems.forEach((item) => {
