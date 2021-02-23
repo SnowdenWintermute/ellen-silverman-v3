@@ -5,12 +5,12 @@ import './footer.css'
 export default function Footer() {
   return (
     <footer>
-      <div id="footerLinks">
+      <div className="footer-links">
         <Link to="/index">Home</Link>&nbsp;|
-        <Link to="/artworks">Artworks</Link>&nbsp;|
-        <Link to="/exhibitions">Exhibitions</Link>&nbsp;|
-        <Link to="/about">CV</Link>&nbsp;|
-        <Link to="/contact">Contact</Link>
+        <Link to="/artworks">&nbsp;Artworks</Link>&nbsp;|
+        <Link to="/exhibitions">&nbsp;Exhibitions</Link>&nbsp;|
+        <Link to="/about">&nbsp;CV</Link>&nbsp;|
+        <Link to="/contact">&nbsp;Contact</Link>
       </div>
       <p>L. E. McGuff-Silverman</p>
     </footer>

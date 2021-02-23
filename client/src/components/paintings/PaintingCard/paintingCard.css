@@ -1,9 +1,3 @@
-.gallery-holder {
-  padding: 20px;
-  display: flex;
-  justify-content: left;
-  flex-wrap: wrap;
-}
 .painting-card-body {
   height: 372px;
   width: 350px;

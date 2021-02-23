@@ -2,28 +2,13 @@ import React, { useState, useEffect } from "react";
 import PaintingCard from "../paintings/PaintingCard/PaintingCard";
 import { getPaintingsInSeriesWithThumbnails } from "../../apiCalls/series";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
-import { CircularProgress, Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { getSeries } from '../../apiCalls/series'
 import { toast } from "react-toastify";
-
-const useStyles = makeStyles(() => ({
-  topBar: {
-    width: "100%",
-    padding: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10
-  },
-  sortFilter: {
-    width: 200,
-    maxWidth: "100%",
-  },
-}))
+import { SeriesPaintingsSortBar } from "./SeriesPaintingsSortBar";
 
 const SeriesPage = ({ match }) => {
-  const classes = useStyles()
   const [cards, setCards] = useState([]);
-  const [seriesName, setSeriesName] = useState([])
   const [series, setSeries] = useState(null)
   const [loading, setLoading] = useState(true)
   const [sortParameter, setSortParameter] = useState("newest")
@@ -39,7 +24,6 @@ const SeriesPage = ({ match }) => {
         const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(match.params.series);
         const series = await getSeries(paintingsInSeries.data[0].series._id)
         setSeries(series.data)
-        if (series) setSeriesName(paintingsInSeries.data[0].series.name)
         paintingsInSeries.data.forEach((painting, i) => {
           if (painting.thumbnail) {
             newCards.push({
@@ -80,42 +64,11 @@ const SeriesPage = ({ match }) => {
     <div className="page-frame">
       <div className="gallery-holder">
         {!loading && series &&
-          <Card className={classes.topBar}>
-            <Grid container>
-              <Grid container item xs={12} justify="space-between" alignItems="center">
-                <Grid item>
-                  <Typography variant="h5">{seriesName}</Typography>
-                </Grid>
-                <Grid item>
-                  <FormControl variant="filled" className={classes.sortFilter}>
-                    <InputLabel>Sort</InputLabel>
-                    <Select labelId="select-sort" onChange={(e) => onSelectSortParameter(e)} value={sortParameter}>
-                      <MenuItem value={"newest"}>Newest</MenuItem>
-                      <MenuItem value={"oldest"}>Oldest</MenuItem>
-                      <MenuItem value={"sold first"}>Sold First</MenuItem>
-                      <MenuItem value={"not sold first"}>Not Sold First</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid container item xs={12} className={classes.infoGrid}>
-                <Grid item sm={6} xs={12}>
-                  <Typography variant="body2">
-                    {series.numberSold}/{series.numberOfPaintings} paintings sold
-                  </Typography>
-                  <Typography variant="body2">
-                    Painted {
-                      series.years.earliest === series.years.latest
-                        ?
-                        <span>{series.years.earliest}</span>
-                        :
-                        <span>{series.years.earliest} to {series.years.latest} </span>
-                    }
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Card>
+          <SeriesPaintingsSortBar
+            series={series}
+            sortParameter={sortParameter}
+            onSelectSortParameter={onSelectSortParameter}
+          />
         }
         {loading ?
           <div className="flex-center"><CircularProgress /></div> :

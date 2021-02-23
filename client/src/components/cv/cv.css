@@ -1,12 +1,14 @@
 .cv-holder {
   width: 700px;
   max-width: 100%;
-  margin: 50px auto 100px auto;
+  margin: 0 auto;
+  margin-top: 20px;
   padding: 20px;
   border: 1px solid black;
 }
 
-.cv-holder h2 {
-  margin-bottom: 15px;
-  margin-top: 10px;
+@media only screen and (max-width: 800px) {
+  .cv-holder {
+    margin-top: 0px;
+  }
 }

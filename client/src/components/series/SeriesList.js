@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Typography, FormControl, InputLabel, Select, MenuItem, Card, Grid, makeStyles } from "@material-ui/core";
 import { toast } from 'react-toastify'
 import { getSeriesListWithThumbnails } from '../../apiCalls/series'
 import createImgSrcStringFromBinary from '../utils/createImgSrcStringFromBinary'
 import ProgressIndicator from '../common/progressIndicator/ProgressIndicator'
 import SeriesCard from "./SeriesCard";
-
-const useStyles = makeStyles({
-  sortBar: {
-    width: "100%",
-    marginLeft: 10,
-    marginRight: 10
-  },
-  sortFilter: {
-    width: 200,
-    maxWidth: "100%"
-  }
-})
+import SortBarHeader from "./SortBarHeader";
 
 const SeriesList = () => {
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(false)
   const [sortParameter, setSortParameter] = useState("newest")
-  const classes = useStyles()
 
   useEffect(() => {
     const newCards = []
@@ -63,24 +50,17 @@ const SeriesList = () => {
   return <div className="page-frame">
     <div className="gallery-holder">
       {!loading && (
-        <Card className={classes.sortBar}>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              <Typography variant="h5" style={{ marginLeft: "20px" }}>Select a Series</Typography>
-            </Grid>
-            <Grid item>
-              <FormControl variant="filled" className={classes.sortFilter}>
-                <InputLabel>Sort</InputLabel>
-                <Select labelId="select-sort" onChange={(e) => onSelectSortParameter(e)} value={sortParameter}>
-                  <MenuItem value={"newest"}>Newest</MenuItem>
-                  <MenuItem value={"oldest"}>Oldest</MenuItem>
-                  <MenuItem value={"most sold"}>Most Sold</MenuItem>
-                  <MenuItem value={"most paintings"}>Most Paintings</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Card>
+        <SortBarHeader
+          header={"Select a Series"}
+          sortParameter={sortParameter}
+          onSelectSortParameter={onSelectSortParameter}
+          filterOptions={[
+            "newest",
+            "oldest",
+            "most sold",
+            "most paintings"
+          ]}
+        />
       )}
       {loading ? <div className="flex-center"><ProgressIndicator /></div> : cards.map(card => card.cardElement)}
     </div>

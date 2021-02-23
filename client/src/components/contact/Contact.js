@@ -4,7 +4,7 @@ import './contact.css'
 const Contact = () => {
 
   return (
-    <div className="contact">
+    <div className="page-frame">
       <div className="contact-form-holder">
         If you are interested in purchasing artwork, please email us at
           <a
