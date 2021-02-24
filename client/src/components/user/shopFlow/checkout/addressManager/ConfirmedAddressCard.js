@@ -4,9 +4,10 @@ import { DeleteForever } from "@material-ui/icons";
 import PrimaryButton from '../../../../common/button/PrimaryButton'
 import RedButton from '../../../../common/button/RedButton'
 
-const useStyles = makeStyles(() => ({
-  addressCardGrid: { marginBottom: 10, paddingRight: 10 },
-  card: { padding: 10, border: "1px solid", width: "210px", height: "100%" },
+const useStyles = makeStyles((theme) => ({
+  card: {
+    padding: 10, border: "1px solid", width: "210px", height: "100%",
+  },
   marginBottom: {
     marginBottom: 10
   }

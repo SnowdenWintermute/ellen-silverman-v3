@@ -99,8 +99,8 @@ export const StripeWidget = () => {
   return (
     <>
       {succeeded && <p className={"result-message"}>
-        Payment successful.
-         <Link className="standard-link underlined" to="user/history">
+        Payment successful.{" "}
+        <Link className="standard-link underlined" to="user/history">
           See it in your purchase history
            </Link>
       </p>}

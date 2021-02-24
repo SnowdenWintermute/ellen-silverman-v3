@@ -35,6 +35,7 @@ const FinalOrderSummary = ({ cart, user, history, setSavingShippingAddressToCart
       console.log(error)
       toast.error(JSON.stringify(error));
     }
+    console.log("ey")
     setSavingShippingAddressToCart(false)
   }
 

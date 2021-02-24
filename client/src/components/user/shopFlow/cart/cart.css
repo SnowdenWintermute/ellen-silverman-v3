@@ -19,3 +19,8 @@
     margin-bottom: 10px;
   }
 }
+/* @media only screen and (max-width: 400px) {
+  .cart-item-thumbnail {
+    height: 50px;
+  }
+} */

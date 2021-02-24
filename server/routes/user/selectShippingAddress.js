@@ -7,7 +7,9 @@ exports.selectShippingAddress = async (req, res) => {
     const userCart = await Cart.findOne({ orderedBy: user._id })
     userCart.shippingAddress = req.body.addressId
     await userCart.save()
+    return res.json({ message: "Address saved" })
   } catch (error) {
+    console.log(error)
     res.json(error)
   }
 }

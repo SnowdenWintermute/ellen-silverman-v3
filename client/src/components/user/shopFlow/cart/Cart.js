@@ -35,11 +35,11 @@ const Cart = () => {
             <Grid item xs={12}>
               <Typography variant="h5">Cart</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item md={8} xs={12}>
               <CartItems cartItemsWithThumbnails={cartItemsWithThumbnails} />
             </Grid>
           </Grid>
-          <Grid container item xs={12} sm={4}>
+          <Grid container item md={4} xs={12}>
             <OrderSummary cart={cart} />
           </Grid>
         </Grid>

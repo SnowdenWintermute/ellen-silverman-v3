@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import classnames from 'classnames'
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import countryList from '../../consts/countryList'
 import PrimaryButton from '../common/button/PrimaryButton'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   input: {
     width: "100%",
     maxWidth: 500,
@@ -13,8 +14,15 @@ const useStyles = makeStyles(() => ({
   select: {
     textAlign: "left"
   },
-  marginRight: {
-    marginRight: 10
+  addAddressButton: {
+    marginRight: 10,
+  },
+  bottomButton: {
+    [theme.breakpoints.down("xs")]: {
+      width: '100%',
+      margin: 0,
+      marginBottom: 10
+    }
   }
 }));
 
@@ -30,6 +38,10 @@ const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, confi
     zip,
     phone
   } = values;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -132,13 +144,14 @@ const AddressForm = ({ addressLoading, handleSubmit, handleChange, values, confi
           <Grid item container xs={12}>
             <PrimaryButton
               title="ADD ADDRESS"
-              customClasses={classes.marginRight}
+              customClasses={classnames(classes.addAddressButton, classes.bottomButton)}
               disabled={addressLoading}
               isSubmit
             />
             {confirmedAddresses.length > 0 &&
               <PrimaryButton
                 title="USE A SAVED ADDRESS"
+                customClasses={classes.bottomButton}
                 onClick={() => setAddingNewAddress(false)}
                 outlined
               />}

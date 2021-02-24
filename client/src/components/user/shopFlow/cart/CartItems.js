@@ -2,12 +2,36 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateCartItems } from "../../../../store/actions/cart-actions";
-import { Icon, IconButton, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
+import classnames from 'classnames'
+import { Icon, IconButton, Table, TableBody, TableCell, TableRow, makeStyles } from '@material-ui/core'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 import createImgSrcStringFromBinary from '../../../utils/createImgSrcStringFromBinary'
 import ProgressIndicator from '../../../common/progressIndicator/ProgressIndicator'
 
+const useStyles = makeStyles((theme) => ({
+  cartItemRow: {
+    [theme.breakpoints.down('xs')]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      borderBottom: "1px solid grey",
+      // boxShadow: "0px 1px 2px black",
+      // marginBottom: 10
+    }
+  },
+  cartItemCell: {
+    [theme.breakpoints.down('xs')]: {
+      border: "none",
+      padding: 10
+    }
+  },
+  discardIconButton: {
+
+  }
+}))
+
 const CartItems = ({ cartItemsWithThumbnails }) => {
+  const classes = useStyles()
   const dispatch = useDispatch()
 
   const removeItemFromCart = (id) => {
@@ -27,8 +51,8 @@ const CartItems = ({ cartItemsWithThumbnails }) => {
     <Table>
       <TableBody>
         {cartItemsWithThumbnails && cartItemsWithThumbnails.length ?
-          cartItemsWithThumbnails.map(item => <TableRow key={item._id}>
-            <TableCell>
+          cartItemsWithThumbnails.map(item => <TableRow key={item._id} className={classes.cartItemRow}>
+            <TableCell className={classes.cartItemCell}>
               {item.thumbnail ?
                 <img
                   className="cart-item-thumbnail"
@@ -37,7 +61,7 @@ const CartItems = ({ cartItemsWithThumbnails }) => {
                 /> :
                 <ProgressIndicator />}
             </TableCell>
-            <TableCell>
+            <TableCell className={classes.cartItemCell}>
               <ul style={{ listStyle: "none" }}>
                 <li>
                   <Link className="cart-item-link" target="_blank" to={`/artworks/${item.series.slug}/${item.slug}`}>{item.title}</Link>
@@ -50,11 +74,11 @@ const CartItems = ({ cartItemsWithThumbnails }) => {
                 </li>
               </ul>
             </TableCell>
-            <TableCell>
+            <TableCell className={classnames(classes.cartItemCell)}>
               ${item.price}
             </TableCell>
-            <TableCell>
-              <IconButton onClick={() => removeItemFromCart(item._id)}>
+            <TableCell className={classnames(classes.cartItemCell)}>
+              <IconButton onClick={() => removeItemFromCart(item._id)} className={classes.discardIconButton}>
                 <Icon>
                   <RemoveShoppingCartIcon />
                 </Icon>

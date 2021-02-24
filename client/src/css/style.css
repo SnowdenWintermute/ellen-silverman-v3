@@ -122,6 +122,12 @@ a {
   min-height: calc(100vh - 70px - 40px - 100px);
 }
 
+@media only screen and (max-width: 500px) {
+  .page-frame {
+    padding-bottom: 20px;
+  }
+}
+
 .gallery-holder {
   padding: 0px;
   display: flex;

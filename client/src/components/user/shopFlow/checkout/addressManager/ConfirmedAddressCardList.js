@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Grid, FormControl, FormLabel, RadioGroup, makeStyles } from "@material-ui/core";
 import ConfirmedAddressCard from './ConfirmedAddressCard';
@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
+
 const ConfirmedAddressCardList = ({
   confirmedAddresses,
   handleRemoveAddress,
@@ -20,6 +21,11 @@ const ConfirmedAddressCardList = ({
   setAddingNewAddress }) => {
   const classes = useStyles()
   const selectedAddress = useSelector(state => state.cart.selectedShippingAddress)
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (<FormControl component="fieldset">
     <FormLabel component="legend">Select from saved addresses</FormLabel>
     <br />
