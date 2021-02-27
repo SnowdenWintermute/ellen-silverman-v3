@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
-import { makeStyles, Typography, Card } from '@material-ui/core'
+import { makeStyles, Typography } from '@material-ui/core'
 import { toast } from 'react-toastify';
 import { getOrdersByStatus, getOrderById } from '../../../apiCalls/admin'
 import { getOwnOrdersByStatus, getOwnOrderById } from '../../../apiCalls/user'
@@ -72,14 +72,12 @@ const ManageOrders = ({ isAdmin }) => {
       <BasicPaper>
         <div className={classes.pageHeader}>
           <Typography variant="h5" className={classes.pageTitle}>Manage Orders</Typography>
-          <Card elevation={5}>
-            <OrderFilterBar
-              onSearchOrderById={onSearchOrderById}
-              orderIdSearching={orderIdSearching}
-              onSelectFilter={onSelectFilter}
-              setOrderIdSearching={setOrderIdSearching}
-              orderStatusFilter={orderStatusFilter} />
-          </Card>
+          <OrderFilterBar
+            onSearchOrderById={onSearchOrderById}
+            orderIdSearching={orderIdSearching}
+            onSelectFilter={onSelectFilter}
+            setOrderIdSearching={setOrderIdSearching}
+            orderStatusFilter={orderStatusFilter} />
         </div>
         {loadingOrders && <div className="flex-center">
           <ProgressIndicator />
