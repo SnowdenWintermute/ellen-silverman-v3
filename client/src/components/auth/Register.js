@@ -8,7 +8,7 @@ import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
 
 const Register = ({ history }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("michael.p.silverman@gmail.com");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false)
   const user = useSelector(state => state.user)
 

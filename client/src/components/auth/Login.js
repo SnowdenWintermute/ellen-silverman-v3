@@ -9,8 +9,8 @@ import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
 const Login = ({ history }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    email: "michael.p.silverman@gmail.com",
-    password: "111111",
+    email: "",
+    password: "",
   });
   const [loading, setLoading] = useState(false);
   const [intendedRedirect, setIntendedRedirect] = useState()

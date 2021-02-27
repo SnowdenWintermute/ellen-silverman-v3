@@ -33,6 +33,13 @@ app.use("/api/stripe", require("./routes/stripe"));
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/pages", require("./routes/page"));
 
+// serve static files
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+
 // port
 const port = process.env.PORT || 8000;
 

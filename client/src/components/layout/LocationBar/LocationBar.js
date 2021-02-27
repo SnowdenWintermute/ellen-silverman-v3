@@ -16,14 +16,14 @@ const LocationBar = ({ match }) => {
   return (
     <div className="location-bar">
       <span>
-        <Link to={`/`}>Lucretia E. McGuff-Silverman</Link>
-        {currentPage ? " - " : ""}
+        <Link to={`/`}>Home</Link>
+        {currentPage ? " / " : ""}
         <Link to={`/${currentPage}`}>{capitalizedCurrentPage}</Link>
-        {capitalizedSeries ? " - " : ""}
+        {capitalizedSeries ? " / " : ""}
         {capitalizedSeries && (
           <Link to={`/${currentPage}/${series}`}>{capitalizedSeries}</Link>
         )}
-        {paintingName && " - "}
+        {paintingName && " / "}
         {paintingName && (
           <Link to={`/${currentPage}/${series}/${paintingName}`}>
             {paintingName}

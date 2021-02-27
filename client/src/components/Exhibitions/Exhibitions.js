@@ -31,7 +31,7 @@ export default function Exhibitions() {
             "../img/Art Show Pictures 2018/Roosevelt Art in the Woods 2018 3.jpg",
           ]}
         />
-        <ExhibitionViewer
+        {/* <ExhibitionViewer
           title="Art All Day "
           subtitle="Trenton Artworks - Trenton, NJ 2019"
           background=""
@@ -40,7 +40,7 @@ export default function Exhibitions() {
             "../img/Art Show Pictures 2019/Art All Day Trent House 4.jpg",
             "../img/Art Show Pictures 2019/Art All Day Trent House.jpg",
           ]}
-        />
+        /> */}
       </div>
       <div className="exhibitions-list">
         <h2>Past Exhibitions</h2>
