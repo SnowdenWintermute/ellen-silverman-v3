@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './seriesCard.css'
+import '../paintings/PaintingCard/paintingCard.css'
 
 export default function SeriesCard({ series, img }) {
   return (
