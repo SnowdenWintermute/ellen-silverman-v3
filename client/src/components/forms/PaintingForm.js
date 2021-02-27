@@ -37,8 +37,8 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
   const supportOptions = ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal']
 
   return (
-    <form onSubmit={handleSubmit}>
-      <MaterialPaperNarrow>
+    <MaterialPaperNarrow>
+      <form onSubmit={handleSubmit}>
         <Grid container item xs={12}>
           <AdminFeatureHeader headerText={`${editMode ? "Edit" : "Add New"} Painting`} />
           <Grid item xs={12}>
@@ -108,8 +108,8 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
             <Button disabled={loading} variant="contained" color="primary" type="submit">{editMode ? "EDIT" : "ADD"} PAINTING</Button>
           </Grid>
         </Grid>
-      </MaterialPaperNarrow>
-    </form>
+      </form>
+    </MaterialPaperNarrow>
   )
 }
 export default PaintingForm

@@ -4,12 +4,16 @@ import React from 'react'
 import createImgSrcStringFromBinary from "../../../utils/createImgSrcStringFromBinary"
 import PrimaryButton from '../../../common/button/PrimaryButton'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   viewButton: {
     marginTop: 10,
-    width: "100px"
+    width: "100px",
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   },
-})
+}))
+
 const OrderPaintingCard = ({ paintingOrderObject }) => {
   const classes = useStyles()
   const { painting } = paintingOrderObject

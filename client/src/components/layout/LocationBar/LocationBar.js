@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import toTitleCase from '../../utils/toTitleCase'
 import './locationBar.css'
 
-const PageLabel = ({ match }) => {
+const LocationBar = ({ match }) => {
   let currentPage, series, paintingName;
   let capitalizedSeries, capitalizedCurrentPage;
   if (match.params) {
@@ -33,4 +33,4 @@ const PageLabel = ({ match }) => {
     </div>
   );
 };
-export default PageLabel;
+export default LocationBar;

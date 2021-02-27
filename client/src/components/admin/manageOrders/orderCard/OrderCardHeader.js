@@ -1,31 +1,41 @@
 import React from 'react'
-import { Typography } from "@material-ui/core"
+import { Typography, makeStyles } from "@material-ui/core"
+import classnames from 'classnames'
+
+const useStyles = makeStyles((theme) => ({
+  headerText: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 10
+    }
+  }
+}))
 
 const OrderCardHeader = ({ orderState }) => {
+  const classes = useStyles()
   return (
     <table className="order-card-header">
       <thead>
         <tr>
           <th className="order-card-header-table-header">
-            <Typography variant="body1">ORDER ID</Typography>
+            <Typography variant="body1" className={classes.headerText}>ORDER ID</Typography>
           </th>
           <th className="order-card-header-table-header">
-            <Typography variant="body1">TOTAL</Typography>
+            <Typography variant="body1" className={classes.headerText}>TOTAL</Typography>
           </th>
           <th className="order-card-header-table-header">
-            <Typography variant="body1">DATE</Typography>
+            <Typography variant="body1" className={classes.headerText}>DATE</Typography>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td className="order-card-header-table-datum">
+          <td className={classnames("order-card-header-table-datum", classes.headerText)}>
             {orderState._id}
           </td>
-          <td className="order-card-header-table-datum">
+          <td className={classnames("order-card-header-table-datum", classes.headerText)}>
             ${orderState.orderTotal}
           </td>
-          <td className="order-card-header-table-datum">
+          <td className={classnames("order-card-header-table-datum", classes.headerText)}>
             {new Date(orderState.createdAt).toLocaleDateString() + " at " + new Date(orderState.createdAt).toLocaleTimeString()}
           </td>
         </tr>

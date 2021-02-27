@@ -1,9 +1,24 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Grid, TextField, Typography, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
+import { Grid, TextField, Typography, FormControl, FormLabel, FormGroup, FormControlLabel, Checkbox, makeStyles } from '@material-ui/core'
 import StandardModal from '../../../../common/modal/StandardModal'
 import PrimaryButton from '../../../../common/button/PrimaryButton'
+import classnames from 'classnames'
+
+const useStyles = makeStyles((theme) => ({
+  cancelButton: {
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: 10
+    }
+  },
+  smallScreenFullWidth: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
+  }
+}))
 
 const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) => {
+  const classes = useStyles()
   const [selectedPaintings, setSelectedPaintings] = useState({})
   const [returnNotes, setReturnNotes] = useState({})
 
@@ -41,7 +56,7 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
           <Typography variant="h5">Start a Return</Typography>
         </Grid>
         <Grid item xs={12}>
-          <FormControl component="fieldset">
+          <FormControl component="fieldset" className={classes.smallScreenFullWidth}>
             <FormLabel component="legend">Choose an item to return</FormLabel>
             <FormGroup>
               {
@@ -69,11 +84,13 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
         <Grid item container justify={'space-between'} xs={12}>
           <PrimaryButton
             title="CANCEL"
+            customClasses={classnames(classes.smallScreenFullWidth, classes.cancelButton)}
             onClick={handleClose}
             outlined
           />
           <PrimaryButton
             title="SEND REQUEST"
+            customClasses={classes.smallScreenFullWidth}
             onClick={() => handleReturnRequest({ orderId: order._id, selectedPaintings, returnNotes })}
             disabled={!checkIfAnyPaintingIsSelected()}
           />

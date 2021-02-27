@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "left"
     }
   },
+  smallScreenFullWidth: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
+  }
 }))
 
 const OrderCardBody = ({
@@ -69,12 +74,14 @@ const OrderCardBody = ({
                 orderState.paintings.map(painting => painting.returnRequested).length !== orderState.paintings.length)) &&
               <PrimaryButton
                 title="Request Return"
+                customClasses={classes.smallScreenFullWidth}
                 onClick={() => setRequestReturnModalOpen(true)}
                 outlined
               />}
             {(!isAdmin && orderState.status === "processing") &&
               <PrimaryButton
                 title="Cancel Order"
+                customClasses={classes.smallScreenFullWidth}
                 onClick={() => setCancelOrderModalOpen(true)}
                 outlined
               />}

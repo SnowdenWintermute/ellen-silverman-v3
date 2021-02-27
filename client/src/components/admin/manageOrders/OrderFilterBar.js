@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     borderTop: "0px",
     [theme.breakpoints.down('xs')]: {
       width: '25%',
-      minWidth: '40px'
+      minWidth: '40px',
+      borderRight: "0px",
     }
   },
   selectElementFormControl: {

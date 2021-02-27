@@ -28,11 +28,6 @@
 .order-card-body-table th:last-child {
   text-align: right;
 }
-.order-painting-card-holder {
-  /* width: 100%; */
-  /* min-width: 800px; */
-  width: 600px;
-}
 .order-painting-card {
   border: 1px solid;
   display: flex;
@@ -43,18 +38,19 @@
   margin-bottom: 10px;
   background: #e9e7e2;
   width: 100%;
+  padding: 10px;
 }
 .order-painting-image-holder {
   position: relative;
+  width: 100%;
 }
 .order-painting-image {
   display: block;
   width: 200px;
-  margin: 20px;
+  margin-bottom: 20px;
   border: 1px solid;
 }
 .order-painting-info-text-holder {
-  padding: 20px;
   /* white-space: nowrap; */
 }
 .order-card-info-header {
@@ -94,4 +90,13 @@
   transform: translate(-50%, -50%) rotate(-30deg);
   color: #fcbe11;
   text-shadow: 1px 1px 5px black;
+}
+
+@media only screen and (max-width: 400px) {
+  .order-painting-info-text-holder {
+    width: 100%;
+  }
+  .order-painting-image {
+    width: 100%;
+  }
 }

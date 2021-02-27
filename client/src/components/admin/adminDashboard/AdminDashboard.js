@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     color: "black"
   },
   gridItem: {
-    height: "100%"
+    height: "100%",
   },
   innerGrid: {
     margin: "0 auto",
