@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { ToastContainer, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProgressIndicator from "./components/common/progressIndicator/ProgressIndicator";
+import { LazyFallbackGenericPage } from "./components/layout/LazyFallbackGenericPage";
 // layout
 const Navbar = lazy(() => import("./components/layout/navBar/Navbar"));
 const LocationBar = lazy(() => import("./components/layout/locationBar/LocationBar"))
@@ -70,7 +70,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <Suspense fallback={"..."}>
+    <Suspense fallback={<LazyFallbackGenericPage />}>
       <Router>
         <ToastContainer
           transition={Flip}
@@ -80,15 +80,15 @@ const App = () => {
         </Helmet>
         <div className="App">
           <Switch>
-            <Route exact path="/full-res/:category/:painting" component={FullResolutionImage} />
+            <Route exact path="/full-res/:series/:paintingSlug" component={FullResolutionImage} />
             <Route exact path="/the-professor" component={""} />
             <Navbar />
           </Switch>
           <Route exact path="/" component={LandingPage} />
           <Switch>
-            <Route exact path="/full-res/:category/:painting" component={""} />
+            <Route exact path="/full-res/:seriesSlug/:painting" component={""} />
             <Route exact path="/the-professor" component={""} />
-            <Route exact path="/:page/:series?/:painting?/" component={LocationBar} />
+            <Route exact path="/:page/:seriesSlug?/:paintingSlug?/" component={LocationBar} />
           </Switch>
           <Switch>
             <Route exact path="/about" component={Cv} />
@@ -96,8 +96,8 @@ const App = () => {
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/the-professor" component={BunStory} />
             <Route exact path="/artworks/" component={SeriesList} />
-            <Route exact path="/artworks/:series?" component={SeriesPage} />
-            <Route exact path="/artworks/:series?/:paintingSlug?" component={PaintingDetailedPage} />
+            <Route exact path="/artworks/:seriesSlug?" component={SeriesPage} />
+            <Route exact path="/artworks/:seriesSlug?/:paintingSlug?" component={PaintingDetailedPage} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/complete-registration" component={RegisterComplete} />
             <Route exact path="/login" component={Login} />
@@ -116,7 +116,7 @@ const App = () => {
             <AdminRoute exact path="/admin" component={AdminDashboard} />
           </Switch>
           <Switch>
-            <Route exact path="/full-res/:category/:painting" component={""} />
+            <Route exact path="/full-res/:seriesSlug/:paintingSlug" component={""} />
             <Route exact path="/the-professor" component={""} />
             <Route path="/:page" component={Footer} />
           </Switch>

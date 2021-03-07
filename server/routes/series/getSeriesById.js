@@ -1,8 +1,8 @@
 const Series = require('../../models/series')
 
-exports.getSeries = async (req, res) => {
+exports.getSeriesById = async (req, res) => {
   try {
-    const series = await Series.find({ slug: req.params.seriesSlug })
+    const series = await Series.findById(req.params.seriesId)
     return res.json(series)
   } catch (error) {
     console.log(error)

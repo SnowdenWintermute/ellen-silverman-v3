@@ -1,13 +1,10 @@
 import axios from "axios"
 
-export const getSeries = async (seriesId) => axios.get(`${process.env.REACT_APP_API}/series/${seriesId}`)
-
+export const getSeries = async (seriesSlug) => axios.get(`${process.env.REACT_APP_API}/series/${seriesSlug}`)
+export const getSeriesById = async (seriesId) => axios.get(`${process.env.REACT_APP_API}/series/id/${seriesId}`)
 export const getSeriesList = async () => await axios.get(`${process.env.REACT_APP_API}/series/list`)
-
 export const getSeriesListWithThumbnails = async () => await axios.get(`${process.env.REACT_APP_API}/series/list-with-thumbnails`)
-
 export const getPaintingsInSeriesWithThumbnails = async (seriesSlug) => axios.get(`${process.env.REACT_APP_API}/series/paintings/${seriesSlug}`)
-
 export const fetchOneSeriesPaintingsNames = async (seriesId) => await axios.get(`${process.env.REACT_APP_API}/series/list-paintings/${seriesId}`)
 
 export const addSeries = async (series, authToken) => await axios.post(`${process.env.REACT_APP_API}/series`,

@@ -21,9 +21,9 @@ const SeriesPage = ({ match }) => {
     const asyncFunc = async () => {
       try {
         const newCards = [];
-        const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(match.params.series);
-        const series = await getSeries(paintingsInSeries.data[0].series._id)
-        setSeries(series.data)
+        const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(match.params.seriesSlug);
+        const series = await getSeries(match.params.seriesSlug)
+        setSeries(series.data[0])
         paintingsInSeries.data.forEach((painting, i) => {
           if (painting.thumbnail) {
             newCards.push({
@@ -34,6 +34,7 @@ const SeriesPage = ({ match }) => {
                   painting.thumbnail.data
                 )}
                 painting={painting}
+                seriesSlug={match.params.seriesSlug}
                 key={i}
               />
             });
@@ -48,7 +49,7 @@ const SeriesPage = ({ match }) => {
       }
     };
     asyncFunc();
-  }, [match.params.series]);
+  }, [match.params.seriesSlug]);
 
   const onSelectSortParameter = (e) => {
     setSortParameter(e.target.value)

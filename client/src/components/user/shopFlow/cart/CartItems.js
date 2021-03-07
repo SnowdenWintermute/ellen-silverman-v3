@@ -64,7 +64,7 @@ const CartItems = ({ cartItemsWithThumbnails }) => {
             <TableCell className={classes.cartItemCell}>
               <ul style={{ listStyle: "none" }}>
                 <li>
-                  <Link className="cart-item-link" target="_blank" to={`/artworks/${item.series.slug}/${item.slug}`}>{item.title}</Link>
+                  <Link className="cart-item-link" target="_blank" to={`/artworks/${item.seriesList[0].slug}/${item.slug}`}>{item.title}</Link>
                 </li>
                 <li>
                   {`${item.height}" x ${item.width}"`}

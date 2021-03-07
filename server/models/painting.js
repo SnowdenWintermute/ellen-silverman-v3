@@ -92,11 +92,11 @@ const paintingSchema = new mongoose.Schema(
     price: {
       type: Number,
     },
-    series: {
+    seriesList: [{
       type: ObjectId,
       ref: "Series",
       required: "Please specify which series the painting is from",
-    },
+    }],
     description: {
       type: String,
       maxlength: 2000,

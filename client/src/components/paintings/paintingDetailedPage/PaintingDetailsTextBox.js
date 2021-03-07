@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import _ from 'lodash'
 import PrimaryButton from '../../common/button/PrimaryButton'
 
-const PaintingDetailsTextBox = ({ painting }) => {
+const PaintingDetailsTextBox = ({ painting, seriesSlug }) => {
   const dispatch = useDispatch()
 
   const [paintingIsInCart, setPaintingIsInCart] = useState(false)
@@ -58,7 +58,7 @@ const PaintingDetailsTextBox = ({ painting }) => {
 
   let paintingCost;
   if (painting.price && !painting.sold) paintingCost = `Cost unframed: $${painting.price}`;
-  else if (painting.price && painting.sold) paintingCost = "Sold";
+  else if (painting.price && painting.sold) paintingCost = `Sold ($${painting.price})`;
   else if (!painting.price) paintingCost = "Price not listed"
 
   return (
@@ -68,7 +68,7 @@ const PaintingDetailsTextBox = ({ painting }) => {
       <div className="painting-detail-text">
         Size, unframed: {painting.height}" x {painting.width}"
             </div>
-      {painting.year && (
+      {painting.year !== 0 && (
         <div className="painting-detail-text">
           Painted {painting.year}
         </div>
@@ -79,16 +79,16 @@ const PaintingDetailsTextBox = ({ painting }) => {
       <div className="painting-detail-text">{paintingCost}</div>
       <Link
         className="standard-link underlined"
-        to={`/full-res/${painting.series.slug}/${painting.slug}`}
+        to={`/full-res/${seriesSlug}/${painting.slug}`}
       >
         View Full Resolution
       </Link>
       <br></br>
       <Link
-        to={`/artworks/${painting.series.slug}`}
+        to={`/artworks/${seriesSlug}`}
         className="standard-link underlined"
       >
-        View other paintings in the {painting.series.name} series
+        View other paintings in this series
             </Link>
       {(!painting.sold && painting.price) &&
         <>

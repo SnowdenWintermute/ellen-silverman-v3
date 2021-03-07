@@ -1,23 +1,31 @@
 import React from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel';
-import { FormHelperText, TextField, Select, MenuItem, Button, Grid } from '@material-ui/core';
+import { FormHelperText, TextField, Select, MenuItem, Button, Grid, IconButton, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import ImageInput from './ImageInput'
 import MaterialPaperNarrow from '../common/paper/MaterialPaperNarrow'
 import AdminFeatureHeader from '../admin/subComponents/AdminFeatureHeader';
+import { DeleteForever } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   input: {
     width: "100%",
     marginBottom: "10px"
   },
+  smallerInput: {
+    width: "calc(100% - 50px)",
+    marginBottom: "10px"
+  },
+  deleteIconButton: {
+
+  },
   select: {
     textAlign: "left"
   }
 }));
 
-const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, seriesList, formFieldErrors }) => {
+const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, onRemoveSeriesClick, values, listOfAvailableSeries, formFieldErrors }) => {
   const classes = useStyles()
   const {
     title,
@@ -26,7 +34,7 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
     year,
     image,
     thumbnail,
-    series,
+    seriesList,
     drawingMaterial,
     support,
     price,
@@ -35,6 +43,44 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
 
   const drawingMaterialOptions = ['oil', 'pastel', 'watercolor', 'acrylic', 'graphite', 'charcoal', 'ink', 'crayon']
   const supportOptions = ['canvas', 'paper', 'card stock', 'vellum', 'fabric', 'stone', 'wood', 'metal']
+
+  const displayedSeriesPickers = () => {
+    const elementsToReturn = []
+    for (let i = seriesList.length; i >= 0; i--) {
+      elementsToReturn.push(
+        <Grid key={i} item xs={12}>
+          <FormControl className={i === 0 ? classes.input : seriesList[i] ? classes.smallerInput : classes.input} variant="filled" error={formFieldErrors.series && true}>
+            <InputLabel id="select-series">Series{i > 0 && ` ${i + 1}`}</InputLabel>
+            {Object.keys(listOfAvailableSeries).length > 0 &&
+              <Select
+                className={classes.select}
+                labelId="select-series"
+                onChange={handleChange('series', i)}
+                value={seriesList[i] || ""}>
+                {listOfAvailableSeries.length &&
+                  listOfAvailableSeries.map((ser, i) => (
+                    <MenuItem key={i} value={ser._id}>
+                      {ser.name}
+                    </MenuItem>
+                  ))}
+              </Select>}
+            {formFieldErrors.series && <FormHelperText>{formFieldErrors.series.message}</FormHelperText>}
+          </FormControl>
+          {i > 0 && seriesList[i] &&
+            <IconButton
+              className={classes.deleteIconButton}
+              onClick={() => onRemoveSeriesClick(i)}
+            >
+              <Icon>
+                <DeleteForever />
+              </Icon>
+            </IconButton>
+          }
+        </Grid>
+      )
+    }
+    return elementsToReturn.reverse()
+  }
 
   return (
     <MaterialPaperNarrow>
@@ -46,20 +92,14 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, values, s
               <ImageInput handleChange={handleChange} selectedImage={image ? image : (thumbnail && typeof thumbnail.contentType !== undefined) ? thumbnail : ""} />
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
-            <FormControl className={classes.input} variant="filled" error={formFieldErrors.series && true}>
-              <InputLabel id="select-series">Series</InputLabel>
-              {Object.keys(seriesList).length > 0 && <Select className={classes.select} labelId="select-series" onChange={handleChange('series')} value={series}>
-                {seriesList.length &&
-                  seriesList.map((ser, i) => (
-                    <MenuItem key={i} value={ser._id}>
-                      {ser.name}
-                    </MenuItem>
-                  ))}
-              </Select>}
-              {formFieldErrors.series && <FormHelperText>{formFieldErrors.series.message}</FormHelperText>}
-            </FormControl>
-          </Grid>
+          {
+            <Grid container item xs={12}>
+              <Grid item xs={12}>
+                Select at least one series
+                </Grid>
+              {displayedSeriesPickers()}
+            </Grid>
+          }
           <Grid item xs={12}>
             <TextField className={classes.input} label="Title" variant="filled" width="75px" onChange={handleChange('title')} value={title} error={formFieldErrors.title && true} helperText={formFieldErrors.title ? formFieldErrors.title.message : ""} />
           </Grid>

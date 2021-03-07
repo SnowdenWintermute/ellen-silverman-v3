@@ -27,6 +27,9 @@
   padding: 20px;
   font-size: 1.2em;
 }
+.painting-details-text-box > * {
+  margin-bottom: 6px;
+}
 .painting-title {
   font-style: italic;
   font-size: 20px;
@@ -66,6 +69,9 @@
     width: 500px;
     max-width: 100%;
     font-size: 1.2em;
+  }
+  .zoom-frame {
+    display: none;
   }
 }
 @media only screen and (max-width: 500px) {

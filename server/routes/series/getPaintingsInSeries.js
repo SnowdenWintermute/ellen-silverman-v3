@@ -6,9 +6,9 @@ exports.getPaintingsInSeries = async (req, res) => {
   const { seriesSlug } = req.params;
   try {
     const series = await Series.findOne({ slug: seriesSlug }).populate("viewCounter");
-    const paintingsInSeries = await Painting.find({ series: series._id })
+    const paintingsInSeries = await Painting.find({ seriesList: series._id })
       .select("-image")
-      .populate("series");
+      .populate("seriesList");
     incrementVeiwableObjectViewCounter(series, req.ip);
     return res.status(200).json(paintingsInSeries);
   } catch (error) {

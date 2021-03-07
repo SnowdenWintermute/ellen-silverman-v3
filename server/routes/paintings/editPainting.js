@@ -11,13 +11,14 @@ exports.edit = async (req, res) => {
     Object.keys(parsedForm.fields).forEach(key => {
       if (key !== "thumbnail" && key !== "image") paintingToBeEdited[key] = parsedForm.fields[key]
     })
+    paintingToBeEdited.seriesList = parsedForm.fields.seriesList.split(",")
     const image = parsedForm.files.image
     if (image) {
       await assignPaintingImageFromFile(paintingToBeEdited, parsedForm.files.image)
       await createAndAssignThumbnailToPainting(paintingToBeEdited)
     }
     await paintingToBeEdited.save()
-    updateSeriesMetadata(paintingToBeEdited.series)
+    updateSeriesMetadata(paintingToBeEdited.seriesList)
     return res.status(200).json(paintingToBeEdited)
   } catch (error) {
     console.log(error)

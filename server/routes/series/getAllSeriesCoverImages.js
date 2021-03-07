@@ -6,7 +6,7 @@ exports.getSeriesWithThumbnails = async (req, res) => {
   try {
     const allSeries = await Series.find().populate('viewCounter')
     for (const series of allSeries) {
-      const firstPaintingInSeries = await Painting.findOne({ series: series._id, thumbnail: { $ne: null } }) || null
+      const firstPaintingInSeries = await Painting.findOne({ seriesList: series._id, thumbnail: { $ne: null } }) || null
       if (firstPaintingInSeries) {
         const thumbnail = { ...firstPaintingInSeries.thumbnail }
         const thumbnailToSend = thumbnail ? thumbnail : {}

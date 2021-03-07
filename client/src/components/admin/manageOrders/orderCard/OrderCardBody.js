@@ -36,6 +36,8 @@ const OrderCardBody = ({
 }) => {
   const classes = useStyles()
 
+  if (!orderState) return <ProgressIndicator />
+
   return (
     <div className="order-card-body">
       <Grid container className={classes.orderCardBody} spacing={2}>
@@ -44,12 +46,13 @@ const OrderCardBody = ({
             <Typography variant="body1"><strong>Works Purchased:</strong></Typography>
           </Grid>
           <Grid item xs={12}>
-            {orderState.paintings && orderState.paintings.length > 0 && orderState.paintings.map((painting) =>
-              painting.painting && painting.painting.thumbnail ?
+            {orderState.paintings && orderState.paintings.length > 0 && orderState.paintings.map((painting) => {
+              return painting.painting && painting.painting.thumbnail ?
                 <OrderPaintingCard key={painting.painting.title} paintingOrderObject={painting} /> :
                 loadingOrders ?
                   <ProgressIndicator /> :
                   "Painting not in Database"
+            }
             )}
           </Grid>
         </Grid>
@@ -71,7 +74,7 @@ const OrderCardBody = ({
             {(!isAdmin &&
               (orderState.status === "completed" ||
                 orderState.status === "return requested" ||
-                orderState.paintings.map(painting => painting.returnRequested).length !== orderState.paintings.length)) &&
+                orderState?.paintings?.map(painting => painting.returnRequested)?.length !== orderState?.paintings?.length)) &&
               <PrimaryButton
                 title="Request Return"
                 customClasses={classes.smallScreenFullWidth}

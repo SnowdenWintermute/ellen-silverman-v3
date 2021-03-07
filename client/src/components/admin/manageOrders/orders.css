@@ -31,7 +31,7 @@
 .order-painting-card {
   border: 1px solid;
   display: flex;
-  width: fit-content;
+  /* width: fit-content; */
   align-items: center;
   /* justify-content: center; */
   flex-wrap: wrap;
@@ -51,7 +51,6 @@
   border: 1px solid;
 }
 .order-painting-info-text-holder {
-  /* white-space: nowrap; */
 }
 .order-card-info-header {
   width: 100%;
@@ -83,11 +82,11 @@
   margin-bottom: 10px;
 }
 .painting-return-request-stamp {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
-  text-align: center;
-  transform: translate(-50%, -50%) rotate(-30deg);
+  text-align: center; */
+  /* transform: translate(-50%, -50%) rotate(-30deg); */
   color: #fcbe11;
   text-shadow: 1px 1px 5px black;
 }

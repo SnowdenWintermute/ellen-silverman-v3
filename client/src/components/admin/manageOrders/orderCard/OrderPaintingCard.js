@@ -1,8 +1,10 @@
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import React from 'react'
 import createImgSrcStringFromBinary from "../../../utils/createImgSrcStringFromBinary"
 import PrimaryButton from '../../../common/button/PrimaryButton'
+import { getSeriesById } from '../../../../apiCalls/series'
+import ProgressIndicator from '../../../common/progressIndicator/ProgressIndicator'
 
 const useStyles = makeStyles((theme) => ({
   viewButton: {
@@ -17,7 +19,17 @@ const useStyles = makeStyles((theme) => ({
 const OrderPaintingCard = ({ paintingOrderObject }) => {
   const classes = useStyles()
   const { painting } = paintingOrderObject
-  return (
+  const [seriesSlug, setSeriesSlug] = useState("")
+
+  useEffect(() => {
+    const asyncFunc = async () => {
+      const series = await getSeriesById(painting.seriesList[0])
+      setSeriesSlug(series.data.slug)
+    }
+    asyncFunc()
+  })
+
+  if (seriesSlug) return (
     <div className="order-painting-card">
       <div className="order-painting-image-holder">
         <img
@@ -34,7 +46,7 @@ const OrderPaintingCard = ({ paintingOrderObject }) => {
       </div>
       <ul style={{ listStyle: "none" }} className="order-painting-info-text-holder">
         <li>
-          <Link className="cart-item-link" target="_blank" to={`/artworks/${painting.series.slug}/${painting.slug}`}>
+          <Link className="cart-item-link" target="_blank" to={`/artworks/${seriesSlug}/${painting.slug}`}>
             <Typography variant="body1">
               {painting.title}
             </Typography>
@@ -56,7 +68,7 @@ const OrderPaintingCard = ({ paintingOrderObject }) => {
           </Typography>
         </li>
         <li>
-          <Link to={`/artworks/${painting.series.slug}/${painting.slug}`}>
+          <Link to={`/artworks/${seriesSlug}/${painting.slug}`}>
             <PrimaryButton
               title="VIEW"
               customClasses={classes.viewButton}
@@ -66,5 +78,6 @@ const OrderPaintingCard = ({ paintingOrderObject }) => {
       </ul>
     </div>
   )
+  else return <ProgressIndicator />
 }
 export default OrderPaintingCard

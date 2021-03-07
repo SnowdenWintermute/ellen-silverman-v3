@@ -25,9 +25,12 @@ exports.cancelOrder = async (req, res) => {
     order.paintings.forEach(painting => {
       painting.painting.sold = false
       painting.painting.save()
-      if (!seriesIds.includes(painting.painting.series._id)) seriesIds.push(painting.painting.series._id)
+      painting.painting.seriesList.forEach(series => {
+        console.log("seriesToUpdate", series)
+        if (!seriesIds.includes(series._id)) seriesIds.push(series._id)
+      })
     })
-    seriesIds.forEach(id => updateSeriesMetadata(id))
+    updateSeriesMetadata(seriesIds)
     sendCancelOrderEmail(order, user)
     sendAdminCancelledOrderNotificationEmail(order)
     res.json(order)

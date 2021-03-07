@@ -20,9 +20,11 @@ const SeriesHeaderInfo = ({ series }) => {
           Painted {
             series.years.earliest === series.years.latest
               ?
-              <span>{series.years.earliest}</span>
-              :
-              <span>{series.years.earliest} to {series.years.latest} </span>
+              <span>{series.years.earliest}</span> :
+              !series.years.earliest ?
+                <span>{series.years.latest}</span>
+                :
+                <span>{series.years.earliest} to {series.years.latest} </span>
           }
         </Typography>
       </Grid>

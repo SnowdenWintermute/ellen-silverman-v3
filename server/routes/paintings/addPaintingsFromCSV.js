@@ -24,14 +24,16 @@ exports.addPaintingsFromCSV = async (req, res) => {
     else continue
   }
 
+
   // addSeriesFromCSV(paintings, seriesList) // use with caution, if any series is misspelled it will create a "duplicate" of that series
 
-  // assign slug and series id to paintings
+  // assign slug and series ids to paintings
   paintings.forEach(painting => {
     if (!painting.title) return
     painting.slug = slugify(painting.title)
     painting.title_lower = painting.title.toLowerCase()
-    if (seriesList[painting.series]) painting.series = seriesList[painting.series]._id
+    if (seriesList[painting.series]) painting.seriesList = [seriesList[painting.series]._id]
+
     if (painting.sold.toLowerCase() === "true") {
       painting.sold = true
       painting.stock = 0
@@ -58,6 +60,6 @@ exports.addPaintingsFromCSV = async (req, res) => {
       errors.push({ error: err, paintingTitle: painting.title })
     }
   }
-  Object.keys(seriesList).forEach(seriesName => { if (seriesList[seriesName]) updateSeriesMetadata(seriesList[seriesName]._id) })
+  Object.keys(seriesList).forEach(seriesName => { if (seriesList[seriesName]) updateSeriesMetadata([seriesList[seriesName]._id]) })
   res.json({ paintingsUpdated, paintingsAdded, errors })
 }

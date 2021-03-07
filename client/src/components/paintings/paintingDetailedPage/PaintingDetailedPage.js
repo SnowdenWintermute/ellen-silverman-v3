@@ -12,6 +12,7 @@ const PaintingDetailedPage = (props) => {
   const [loading, setLoading] = useState(false)
   const [showZoomFrame, setShowZoomFrame] = useState(false)
   const { paintingSlug } = props.match.params
+  const { seriesSlug } = props.match.params
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -72,7 +73,7 @@ const PaintingDetailedPage = (props) => {
             </div>
             {showZoomFrame && <div className="zoom-frame"><ProgressIndicator /></div>}
           </MagnifierContainer>
-          {<PaintingDetailsTextBox painting={painting} />}
+          {<PaintingDetailsTextBox painting={painting} seriesSlug={seriesSlug} />}
         </div>
       </div>
     );

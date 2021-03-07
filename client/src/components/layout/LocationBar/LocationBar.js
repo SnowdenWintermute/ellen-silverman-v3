@@ -8,8 +8,8 @@ const LocationBar = ({ match }) => {
   let capitalizedSeries, capitalizedCurrentPage;
   if (match.params) {
     currentPage = match.params.page;
-    series = match.params.series;
-    paintingName = match.params.painting;
+    series = match.params.seriesSlug;
+    paintingName = match.params.paintingSlug;
   }
   if (currentPage) capitalizedCurrentPage = currentPage.charAt(0).toUpperCase() + currentPage.slice(1);
   if (series) capitalizedSeries = toTitleCase(series.split("-").join(" "))
@@ -25,8 +25,8 @@ const LocationBar = ({ match }) => {
         )}
         {paintingName && " / "}
         {paintingName && (
-          <Link to={`/${currentPage}/${series}/${paintingName}`}>
-            {paintingName}
+          <Link to={`/${currentPage}/${series}/${match.params.paintingSlug}`}>
+            {toTitleCase(paintingName)}
           </Link>
         )}
       </span>

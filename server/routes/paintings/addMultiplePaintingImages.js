@@ -15,7 +15,7 @@ exports.addMultiplePaintingImages = async (req, res) => {
   const iterableFilesObject = createIterableObject(files)
   try {
     for (const image of iterableFilesObject) await findMatchingPaintingByImageNameAndAddImage(image, results)
-    results.seriesToBeUpdated.forEach(series => updateSeriesMetadata(series))
+    updateSeriesMetadata(results.seriesToBeUpdated)
   } catch (error) {
     console.log(error)
     results.errors.push({ message: error.message })

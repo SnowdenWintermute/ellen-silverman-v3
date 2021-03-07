@@ -35,7 +35,6 @@ const FinalOrderSummary = ({ cart, user, history, setSavingShippingAddressToCart
       console.log(error)
       toast.error(JSON.stringify(error));
     }
-    console.log("ey")
     setSavingShippingAddressToCart(false)
   }
 
@@ -73,13 +72,13 @@ const FinalOrderSummary = ({ cart, user, history, setSavingShippingAddressToCart
               />
             </div>
           ) : (
-              <Link to={{ pathname: '/login', state: { from: 'cart' } }}>
-                <PrimaryButton
-                  title="Log in to check out"
-                  outlined
-                />
-              </Link>
-            )}
+            <Link to={{ pathname: '/login', state: { from: 'cart' } }}>
+              <PrimaryButton
+                title="Log in to check out"
+                outlined
+              />
+            </Link>
+          )}
         </Grid>
       </Grid>
       <ClearCartModal

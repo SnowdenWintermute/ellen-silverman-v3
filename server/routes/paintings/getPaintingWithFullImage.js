@@ -5,7 +5,7 @@ exports.getFull = async (req, res) => {
   try {
     const paintingToReturn = await Painting.findOne({
       slug: req.params.slug,
-    }).populate("series viewCounter");
+    }).populate("seriesList viewCounter");
     await incrementVeiwableObjectViewCounter(paintingToReturn, req.ip);
     return res.json(paintingToReturn);
   } catch (error) {

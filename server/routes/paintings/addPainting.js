@@ -5,7 +5,8 @@ const slugify = require("slugify");
 const parseFormFieldsAndFiles = require('../utils/parseFormFieldsAndFiles');
 const createAndAssignThumbnailToPainting = require('../utils/paintings/createAndAssignThumbnailToPainting')
 const assignPaintingImageFromFile = require('../utils/paintings/assignPaintingImageFromFile')
-const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata')
+const updateSeriesMetadata = require('../utils/series/updateSeriesMetadata');
+const Series = require('../../models/series');
 
 exports.create = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ exports.create = async (req, res) => {
     form.keepExtensions = true;
     const parsedForm = await parseFormFieldsAndFiles(req)
     let painting = new Painting(parsedForm.fields);
+    painting.seriesList = parsedForm.fields.seriesList.split(",")
     if (parsedForm.files.image) {
       await assignPaintingImageFromFile(painting, parsedForm.files.image)
       await createAndAssignThumbnailToPainting(painting)
@@ -22,8 +24,7 @@ exports.create = async (req, res) => {
       painting.title_lower = painting.title.toLowerCase()
     }
     const newPainting = await painting.save()
-    console.log("Painting added")
-    updateSeriesMetadata(newPainting.series)
+    updateSeriesMetadata(newPainting.seriesList)
     res.json(newPainting);
 
   } catch (error) {

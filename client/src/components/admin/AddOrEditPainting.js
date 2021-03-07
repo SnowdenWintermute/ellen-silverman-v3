@@ -10,7 +10,7 @@ const AddOrEditPainting = (props) => {
   const formData = useRef(new FormData());
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [seriesList, setSeriesList] = useState([]);
+  const [listOfAvailableSeries, setListOfAvailableSeries] = useState([]);
   const [formFieldErrors, setFormFieldErrors] = useState({});
   const initialValues = {
     title: "",
@@ -22,7 +22,7 @@ const AddOrEditPainting = (props) => {
     image: "",
     thumbnail: "",
     price: "",
-    series: "",
+    seriesList: [],
     description: "",
   };
   const [values, setValues] = useState({ ...initialValues });
@@ -30,7 +30,7 @@ const AddOrEditPainting = (props) => {
   const loadSeriesList = useCallback(async () => {
     try {
       const fetchedSeriesList = await getSeriesList();
-      setSeriesList(fetchedSeriesList.data);
+      setListOfAvailableSeries(fetchedSeriesList.data);
     } catch (error) {
       console.log(error);
       toast.error(error);
@@ -63,10 +63,18 @@ const AddOrEditPainting = (props) => {
     }
   }, []);
 
-  const handleChange = (name) => (event) => {
+  const handleChange = (name, seriesIndex) => (event) => {
     const value = name === "image" ? event.target.files[0] : event.target.value;
     formData.current.set(name, value);
-    if (name !== "image") setValues({ ...values, [name]: value });
+    if (name === "series") {
+      if (values.seriesList.indexOf(value) >= 0) return
+      let newSeriesList = [...values.seriesList]
+      if (newSeriesList[seriesIndex]) newSeriesList[seriesIndex] = value
+      else newSeriesList.push(value)
+      formData.current.set("seriesList", newSeriesList)
+      setValues({ ...values, seriesList: newSeriesList });
+    }
+    else if (name !== "image") setValues({ ...values, [name]: value });
     if (name === "image") {
       if (!value) setValues({ ...values, image: null, title: "" });
       if (editMode) setValues({ ...values, image: event.target.files[0] });
@@ -84,6 +92,12 @@ const AddOrEditPainting = (props) => {
     delete newFormFieldErrors[name];
     setFormFieldErrors(newFormFieldErrors);
   };
+
+  const handleRemoveSeriesClick = (indexToRemove) => {
+    let newSeriesList = values.seriesList.filter((seriesId, i) => i !== indexToRemove)
+    formData.current.set("seriesList", newSeriesList)
+    setValues({ ...values, seriesList: newSeriesList });
+  }
 
   const handleSubmitEdit = async () => {
     const res = await editPainting(formData.current, user.token);
@@ -119,8 +133,9 @@ const AddOrEditPainting = (props) => {
         editMode={editMode}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
+        onRemoveSeriesClick={handleRemoveSeriesClick}
         values={values}
-        seriesList={seriesList}
+        listOfAvailableSeries={listOfAvailableSeries}
         loading={loading}
         formFieldErrors={formFieldErrors}
       />

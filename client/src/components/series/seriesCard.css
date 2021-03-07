@@ -7,7 +7,7 @@
 }
 .series-card-body:hover {
   box-shadow: 1px 1px 3px black;
-  transform: scale(1.025);
+  transform: translateY(-10px);
 }
 .series-card-title {
   font-family: "Josefin Slab", "open-sans" !important;

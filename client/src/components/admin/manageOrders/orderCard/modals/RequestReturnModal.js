@@ -49,6 +49,8 @@ const RequestReturnModal = ({ open, handleClose, handleReturnRequest, order }) =
     return result
   }
 
+  if (!order.paintings) return null
+
   return (
     <StandardModal open={open} handleClose={handleClose}>
       <Grid container spacing={1}>

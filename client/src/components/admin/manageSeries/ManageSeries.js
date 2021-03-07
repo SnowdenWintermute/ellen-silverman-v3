@@ -123,7 +123,10 @@ const ManageSeries = () => {
     try {
       const deletedPainting = await removePainting(painting._id, user.token)
       toast.success(deletedPainting.data.title + " removed from database")
-      loadOneSeriesPaintings(deletedPainting.data.series)
+      const newPaintingLists = { ...paintingLists }
+      for (let paintingList in newPaintingLists)
+        newPaintingLists[paintingList] = newPaintingLists[paintingList].filter(paintingToCheck => paintingToCheck._id !== painting._id)
+      setPaintingLists(newPaintingLists)
     } catch (error) {
       console.log(error)
       toast.error(error)

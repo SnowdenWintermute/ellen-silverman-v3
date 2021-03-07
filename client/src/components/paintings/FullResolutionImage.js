@@ -9,7 +9,7 @@ const FullResolutionImage = ({ match }) => {
   useEffect(() => {
     const asyncFunc = async () => {
       try {
-        const painting = await getPaintingWithFullImage(match.params.painting)
+        const painting = await getPaintingWithFullImage(match.params.paintingSlug)
         if (painting.data.image) setImgUrl(createImgSrcStringFromBinary(painting.data.image.contentType, painting.data.image.data))
       } catch (error) {
         console.log(error)
@@ -17,7 +17,7 @@ const FullResolutionImage = ({ match }) => {
       }
     }
     asyncFunc()
-  }, [match.params.painting])
+  }, [match.params.paintingSlug])
 
   return (
     <React.Fragment>
@@ -25,7 +25,7 @@ const FullResolutionImage = ({ match }) => {
       {imgUrl && <img
         style={{ display: "block" }}
         src={imgUrl}
-        alt={match.params.painting}
+        alt={match.params.paintingSlug}
       />}
     </React.Fragment>
   );

@@ -10,7 +10,7 @@ exports.list = async (req, res) => {
     for (const series of seriesList) {
       listToReturn.push({ ...series._doc })
       try {
-        const numberOfPaintingsInSeries = await Paintings.countDocuments({ series: series._id })
+        const numberOfPaintingsInSeries = await Paintings.countDocuments({ seriesList: series._id })
         listToReturn[i].numberOfPaintings = numberOfPaintingsInSeries
       } catch (error) {
         listToReturn[i].numberOfPaintings = 0

@@ -9,6 +9,7 @@ import OrderCardHeader from './OrderCardHeader'
 import OrderCardBody from './OrderCardBody'
 import { changeOrderStatus } from '../../../../apiCalls/admin'
 import { submitReturnRequest, cancelOrder } from '../../../../apiCalls/user'
+import ProgressIndicator from '../../../common/progressIndicator/ProgressIndicator'
 
 const useStyles = makeStyles((theme) => ({
   orderCard: {
@@ -64,7 +65,6 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList, loadingOrders }) => {
         toast.success("Return request received. Check your email for updates.")
         setOrderStatus(res.data.status)
         setOrderState(res.data)
-        console.log(res.data.status)
       }
       setRequestReturnModalOpen(false)
     } catch (error) {
@@ -89,7 +89,7 @@ const OrderCard = ({ order, isAdmin, removeOrderFromList, loadingOrders }) => {
     }
   }
 
-  if (!order._id) return null
+  if (!order._id) return <ProgressIndicator />
 
   return (
     <Card className={classes.orderCard} elevation={3}>
