@@ -27,6 +27,7 @@ yarn-error.log*
 /client/build
 /client/public/img
 /client/.env
+/client/real.env
 
 /server/.env
 /server/node_modules
