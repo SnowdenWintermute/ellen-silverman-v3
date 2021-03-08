@@ -42,7 +42,6 @@ module.exports = validate = (addressFromClient) => {
   }
 
   function handleError(response) {
-    console.log(response);
     return response
   }
 }

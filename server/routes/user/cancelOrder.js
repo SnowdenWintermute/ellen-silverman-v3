@@ -26,7 +26,6 @@ exports.cancelOrder = async (req, res) => {
       painting.painting.sold = false
       painting.painting.save()
       painting.painting.seriesList.forEach(series => {
-        console.log("seriesToUpdate", series)
         if (!seriesIds.includes(series._id)) seriesIds.push(series._id)
       })
     })

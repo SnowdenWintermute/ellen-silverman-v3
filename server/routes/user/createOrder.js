@@ -27,14 +27,11 @@ exports.createOrder = async (req, res) => {
     await markPaintingsAsSoldOrDecrementStock(newOrder)
     const seriesIds = []
     for (const painting of newOrder.paintings) {
-      console.log("painting id: ", painting.painting)
       const paintingFromDB = await Painting.findById(painting.painting).populate('seriesList')
       paintingFromDB.seriesList.forEach(seriesId => {
-        console.log(seriesId)
         if (!seriesIds.includes(seriesId)) seriesIds.push(seriesId)
       })
     }
-    console.log(seriesIds)
     updateSeriesMetadata(seriesIds)
     res.json({ ok: true })
   } catch (error) {

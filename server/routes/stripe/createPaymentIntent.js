@@ -4,7 +4,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET)
 
 exports.createPaymentIntent = async (req, res) => {
   const user = await User.findOne({ email: req.user.email })
-  const { cartTotal } = await Cart.findOne({ orderedBy: user._id })
+  const cart = await Cart.findOne({ orderedBy: user._id })
+  if (!cart) throw new Error("No cart found")
+  const { cartTotal } = cart
   const numberOfCentsToCharge = cartTotal * 100
   try {
     const paymentIntent = await stripe.paymentIntents.create({

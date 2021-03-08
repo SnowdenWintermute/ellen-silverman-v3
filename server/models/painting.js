@@ -3,10 +3,12 @@ const ViewCounter = require("./viewCounter");
 const { ObjectId } = mongoose.Schema;
 
 const imageValidatior = [
-  (v) => v.byteLength < 3000000,
+  (v) => v.byteLength < 5000000,
   (props) =>
-    `Image must be less than 3mb (got ${props.value.byteLength / 1000000}mb)`,
+    `Image must be less than 5mb (got ${props.value.byteLength / 1000000}mb)`,
 ];
+
+const arrayMinLength = (val) => val.length > 0
 
 const paintingSchema = new mongoose.Schema(
   {
@@ -92,11 +94,14 @@ const paintingSchema = new mongoose.Schema(
     price: {
       type: Number,
     },
-    seriesList: [{
-      type: ObjectId,
-      ref: "Series",
-      required: "Please specify which series the painting is from",
-    }],
+    seriesList: {
+      type: [{
+        type: ObjectId,
+        ref: "Series",
+        required: "Please specify which series the painting is from",
+      }],
+      validate: [arrayMinLength, 'Painting must belong to at least one series']
+    },
     description: {
       type: String,
       maxlength: 2000,

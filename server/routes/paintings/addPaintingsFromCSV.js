@@ -60,6 +60,11 @@ exports.addPaintingsFromCSV = async (req, res) => {
       errors.push({ error: err, paintingTitle: painting.title })
     }
   }
-  Object.keys(seriesList).forEach(seriesName => { if (seriesList[seriesName]) updateSeriesMetadata([seriesList[seriesName]._id]) })
+  const seriesListToUpdateMetadata = []
+  Object.keys(seriesList).forEach(seriesName => {
+    if (seriesList[seriesName])
+      seriesListToUpdateMetadata.push(seriesList[seriesName]._id)
+  })
+  updateSeriesMetadata(seriesListToUpdateMetadata)
   res.json({ paintingsUpdated, paintingsAdded, errors })
 }

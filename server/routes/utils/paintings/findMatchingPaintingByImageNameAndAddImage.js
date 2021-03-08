@@ -13,8 +13,6 @@ exports.findMatchingPaintingByImageNameAndAddImage = async (image, results) => {
       await createAndAssignThumbnailToPainting(painting)
       const savedPainting = await painting.save()
       painting.seriesList.forEach(series => {
-        console.log("findMatchingImage")
-        console.log(series)
         if (!seriesToBeUpdated.includes(series._id)) seriesToBeUpdated.push(series._id)
       })
       const paintingToSendBack = { title: savedPainting.title, thumbnail: savedPainting.thumbnail }
