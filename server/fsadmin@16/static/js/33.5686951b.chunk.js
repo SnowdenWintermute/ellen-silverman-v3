@@ -1,0 +1,2 @@
+(this["webpackJsonpellen-silverman"]=this["webpackJsonpellen-silverman"]||[]).push([[33],{302:function(e,a,n){},338:function(e,a,n){"use strict";n.r(a);var t=n(2),r=n.n(t);n(302);a.default=function(){return r.a.createElement("div",{className:"page-frame"},r.a.createElement("div",{className:"contact-form-holder"},"If you are interested in purchasing artwork, please email us at",r.a.createElement("a",{className:"contact-form-email-address",href:"mailto:mcguffsilverman@gmail.com"}," ","mcguffsilverman@gmail.com")))}}}]);
+//# sourceMappingURL=33.5686951b.chunk.js.map
