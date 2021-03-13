@@ -16,26 +16,34 @@ import * as serviceWorker from "./serviceWorker";
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from 'redux-thunk'
-import { Provider } from 'react-redux'
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
 import storyReducer from "./store/reducers/story-reducer";
 import userReducer from "./store/reducers/user-reducer";
 import cartReducer from "./store/reducers/cart-reducer";
+import artworksReducer from "./store/reducers/artworks-reducer";
 
 const rootReducer = combineReducers({
   story: storyReducer,
   user: userReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  artworks: artworksReducer,
 });
 
-const reduxMiddleware = [thunk]
+const reduxMiddleware = [thunk];
 
-const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...reduxMiddleware)));
+const store = createStore(
+  rootReducer,
+  {},
+  composeWithDevTools(applyMiddleware(...reduxMiddleware))
+);
 
-ReactDOM.render(<Provider store={store}>
-  <App />
-</Provider>
-  , document.getElementById("root"));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

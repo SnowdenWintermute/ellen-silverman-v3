@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const LoadingToRedirect = () => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(3);
   let history = useHistory();
 
   useEffect(() => {
@@ -15,7 +15,15 @@ const LoadingToRedirect = () => {
 
   return (
     <div className="page-frame">
-      <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <p>Redirecting you in {count} seconds</p>
       </div>
     </div>
