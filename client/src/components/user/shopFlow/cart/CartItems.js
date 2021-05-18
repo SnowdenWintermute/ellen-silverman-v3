@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       justifyContent: "center",
       borderBottom: "1px solid grey",
-      // boxShadow: "0px 1px 2px black",
-      // marginBottom: 10
     }
   },
   cartItemCell: {
@@ -47,13 +45,14 @@ const CartItems = ({ cartItemsWithThumbnails }) => {
       }
     }
   }
+
   return (
     <Table>
       <TableBody>
         {cartItemsWithThumbnails && cartItemsWithThumbnails.length ?
           cartItemsWithThumbnails.map(item => <TableRow key={item._id} className={classes.cartItemRow}>
             <TableCell className={classes.cartItemCell}>
-              {item.thumbnail ?
+              {item.thumbnail?.contentType && item.thumbnail?.data ?
                 <img
                   className="cart-item-thumbnail"
                   alt={item.title}

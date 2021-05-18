@@ -122,7 +122,7 @@ const AddOrEditPainting = (props) => {
         if (error.response.data.errors) setFormFieldErrors({ ...error.response.data.errors })
         else if (error.response.data.message) toast.error(error.response.data.message);
       }
-      else toast.error(error.message);
+      else toast.error("Error creating painting (check all fields)");
     }
     setLoading(false);
   };

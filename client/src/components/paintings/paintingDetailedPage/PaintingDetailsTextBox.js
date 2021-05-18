@@ -68,14 +68,14 @@ const PaintingDetailsTextBox = ({ painting, seriesSlug }) => {
       <div className="painting-detail-text">
         Size, unframed: {painting.height}" x {painting.width}"
             </div>
-      {painting.year !== 0 && (
+      {painting.year ? (
         <div className="painting-detail-text">
           Painted {painting.year}
         </div>
-      )}
-      <div className="painting-detail-text">
+      ) : null}
+      {painting.drawingMaterial && painting.support ? <div className="painting-detail-text">
         {`${painting.drawingMaterial} on ${painting.support}`}
-      </div>
+      </div> : null}
       <div className="painting-detail-text">{paintingCost}</div>
       <Link
         className="standard-link underlined"

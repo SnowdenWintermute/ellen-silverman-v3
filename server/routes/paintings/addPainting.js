@@ -14,6 +14,7 @@ exports.create = async (req, res) => {
     form.keepExtensions = true;
     const parsedForm = await parseFormFieldsAndFiles(req)
     let painting = new Painting(parsedForm.fields);
+    if (!parsedForm.fields.seriesList) throw new Error("Please select what series the painting is from.")
     painting.seriesList = parsedForm.fields.seriesList.split(",")
     if (parsedForm.files.image) {
       await assignPaintingImageFromFile(painting, parsedForm.files.image)

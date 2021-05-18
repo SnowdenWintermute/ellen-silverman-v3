@@ -24,15 +24,20 @@ const Register = ({ history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true)
-    const config = {
-      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-      handleCodeInApp: true,
-    };
-    await auth.sendSignInLinkToEmail(email, config);
-    toast.success(`Email is sent to ${email}. Click the link to complete your registration.`);
-    setLoading(false)
-    window.localStorage.setItem("emailForRegistration", email);
-    setEmail("");
+    try {
+      console.log(process.env.REACT_APP_REGISTER_REDIRECT_URL)
+      const config = {
+        url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+        handleCodeInApp: true,
+      };
+      await auth.sendSignInLinkToEmail(email, config);
+      toast.success(`Email is sent to ${email}. Click the link to complete your registration.`);
+      setLoading(false)
+      window.localStorage.setItem("emailForRegistration", email);
+      setEmail("");
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   const googleLogin = async () => {

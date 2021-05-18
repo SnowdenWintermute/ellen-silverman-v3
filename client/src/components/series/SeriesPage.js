@@ -24,6 +24,8 @@ const SeriesPage = ({ match }) => {
         const paintingsInSeries = await getPaintingsInSeriesWithThumbnails(
           match.params.seriesSlug
         );
+
+        console.log("series slug: ", match.params.seriesSlug)
         const series = await getSeries(match.params.seriesSlug);
         setSeries(series.data[0]);
         paintingsInSeries.data.forEach((painting, i) => {
