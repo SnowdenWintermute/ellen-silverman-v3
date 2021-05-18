@@ -3,3 +3,6 @@
 /build
 .env
 real.env
+prod.env
+test.env
+dev.env
