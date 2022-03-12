@@ -8,7 +8,8 @@ const imageValidatior = [
     `Image must be less than 5mb (got ${props.value.byteLength / 1000000}mb)`,
 ];
 
-const arrayMinLength = (val) => val.length > 0
+const arrayMinLength = (val) => val.length > 0;
+const paintingMinYear = (val) => val > 1954;
 
 const paintingSchema = new mongoose.Schema(
   {
@@ -63,7 +64,7 @@ const paintingSchema = new mongoose.Schema(
         "mix media",
         "clay",
         "clay and wool",
-        "clear tape sculpture"
+        "clear tape sculpture",
       ],
     },
     support: {
@@ -80,11 +81,12 @@ const paintingSchema = new mongoose.Schema(
         "metal",
         "fiber cloth",
         "wool felt",
-        "tape"
+        "tape",
       ],
     },
     year: {
       type: Number,
+      validate: [paintingMinYear, "Date must be more recent than 1955"],
     },
     image: {
       data: { type: Buffer, validate: imageValidatior },
@@ -95,12 +97,14 @@ const paintingSchema = new mongoose.Schema(
       type: Number,
     },
     seriesList: {
-      type: [{
-        type: ObjectId,
-        ref: "Series",
-        required: "Please specify which series the painting is from",
-      }],
-      validate: [arrayMinLength, 'Painting must belong to at least one series']
+      type: [
+        {
+          type: ObjectId,
+          ref: "Series",
+          required: "Please specify which series the painting is from",
+        },
+      ],
+      validate: [arrayMinLength, "Painting must belong to at least one series"],
     },
     description: {
       type: String,
@@ -112,12 +116,12 @@ const paintingSchema = new mongoose.Schema(
     },
     stock: {
       type: Number,
-      default: 1
+      default: 1,
     },
     catalogueIndex: {
-      type: Number
+      type: Number,
     },
-    viewCounter: { type: ObjectId, ref: "ViewCounter" }
+    viewCounter: { type: ObjectId, ref: "ViewCounter" },
   },
   { timestamps: true }
 );
