@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     textAlign: "center",
     width: "100%",
     display: "block",
+    position: "relative",
     "& svg": {
       color: "black",
       fontSize: 40,
@@ -23,8 +24,9 @@ const useStyles = makeStyles({
     },
   },
   badge: {
-    right: -20,
-    top: -24,
+    position: "absolute",
+    right: "calc(50%)",
+    top: "calc(50% - 6px)",
     pointerEvents: "none",
     padding: "0 4px",
   },
