@@ -21,8 +21,9 @@ const SeriesList = () => {
       setLoading(true);
       try {
         let seriesListWithThumbnails = cachedSeries;
-        if (!seriesListWithThumbnails.length > 0) {
-          const fetchedSeriesListWithThumbnails = await getSeriesListWithThumbnails();
+        if (seriesListWithThumbnails.length <= 0) {
+          const fetchedSeriesListWithThumbnails =
+            await getSeriesListWithThumbnails();
           seriesListWithThumbnails = fetchedSeriesListWithThumbnails.data.sort(
             (a, b) =>
               b.years.latest - a.years.latest ||
