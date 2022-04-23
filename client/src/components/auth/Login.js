@@ -8,29 +8,35 @@ import { ReactComponent as GoogleIcon } from "../../icons/googleIcon.svg";
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [intendedRedirect, setIntendedRedirect] = useState()
-  const { email, password } = formData;
-  const user = useSelector(state => state.user);
+  const [intendedRedirect, setIntendedRedirect] = useState();
+  //const { email, password } = formData;
+  const user = useSelector((state) => state.user);
 
-  const roleBasedRedirect = useCallback((role) => {
-    if (intendedRedirect) history.push(intendedRedirect);
-    else if (role === "admin") history.push("/admin/");
-    else history.push("/user/history");
-  }, [history, intendedRedirect]);
+  const roleBasedRedirect = useCallback(
+    (role) => {
+      if (intendedRedirect) history.push(intendedRedirect);
+      else if (role === "admin") history.push("/admin/");
+      else history.push("/user/history");
+    },
+    [history, intendedRedirect]
+  );
 
   useEffect(() => {
     let intended = history.location.state;
-    if (intended) setIntendedRedirect(intended.from)
+    if (intended) setIntendedRedirect(intended.from);
     if (intended) return;
     else if (user && user.token) roleBasedRedirect(user.role);
   }, [user, history, roleBasedRedirect]);
 
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  //const onChange = (e) =>
+  //setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +45,7 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
       const { user } = result;
       const idTokenResult = await user.getIdTokenResult();
-      const res = await createOrUpdateUser(idTokenResult.token)
+      const res = await createOrUpdateUser(idTokenResult.token);
       dispatch({
         type: "LOGGED_IN_USER",
         payload: {
@@ -98,9 +104,7 @@ const Login = ({ history }) => {
             disabled={loading}
           >
             <GoogleIcon className="google-svg" />
-            <div className="google-login-text">
-              Login with Google
-          </div>
+            <div className="google-login-text">Login with Google</div>
           </div>
           <div className="or-holder">
             <span>or</span>
@@ -109,10 +113,11 @@ const Login = ({ history }) => {
             className="simple-text-input"
             type="email"
             placeholder="Email"
-            autoComplete={"email"}
+            autoComplete="email"
             name="email"
             value={email}
-            onChange={(e) => onChange(e)}
+            // onChange={(e) => onChange(e)}
+            onChange={(e) => setEmail(e.target.value)}
           ></input>
           <input
             className="simple-text-input"
@@ -121,13 +126,18 @@ const Login = ({ history }) => {
             placeholder="Password"
             autoComplete={"current-password"}
             value={password}
-            onChange={(e) => onChange(e)}
+            //onChange={(e) => onChange(e)}
+            onChange={(e) => setPassword(e.target.value)}
           ></input>
           <div className="forgot-password">
-            <Link className="auth-link" to="request-password-reset">Forgot password?</Link>
+            <Link className="auth-link" to="request-password-reset">
+              Forgot password?
+            </Link>
           </div>
           <div className="auth-bottom-links">
-            <Link className="auth-link" to="/register">Create account</Link>
+            <Link className="auth-link" to="/register">
+              Create account
+            </Link>
             <input
               type="submit"
               className="button button-standard-size button-basic"
