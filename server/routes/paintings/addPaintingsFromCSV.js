@@ -52,7 +52,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
   for (const painting of paintings) {
     try {
       paintingAlreadyInDatabase = await Painting.findOne({
-        title: painting.title,
+        title: painting.title.trim(),
       });
       if (paintingAlreadyInDatabase) {
         Object.keys(painting).forEach((key) => {
@@ -64,7 +64,9 @@ exports.addPaintingsFromCSV = async (req, res) => {
             });
             paintingAlreadyInDatabase.seriesList = newSeriesList;
           } else if (key !== "sold")
-            paintingAlreadyInDatabase[key] = painting[key].trim();
+            if (typeof painting[key] === "string")
+              paintingAlreadyInDatabase[key] = painting[key].trim();
+            else paintingAlreadyInDatabase[key] = painting[key];
         });
         const updatedPainting = await paintingAlreadyInDatabase.save();
         paintingsUpdated.push(updatedPainting);
@@ -73,7 +75,7 @@ exports.addPaintingsFromCSV = async (req, res) => {
         paintingsAdded.push(addedPainting);
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       errors.push({ error: error, paintingTitle: painting.title });
     }
   }

@@ -9,7 +9,10 @@ const imageValidatior = [
 ];
 
 const arrayMinLength = (val) => val.length > 0;
-const paintingMinYear = (val) => val > 1954;
+const paintingMinYear = (val) => {
+  if (val == 0) return true;
+  else return val > 1954;
+};
 
 const paintingSchema = new mongoose.Schema(
   {
@@ -36,11 +39,9 @@ const paintingSchema = new mongoose.Schema(
     },
     height: {
       type: Number,
-      required: true,
     },
     width: {
       type: Number,
-      required: true,
     },
     drawingMaterial: {
       type: String,
@@ -65,6 +66,9 @@ const paintingSchema = new mongoose.Schema(
         "clay",
         "clay and wool",
         "clear tape sculpture",
+        "acrylic collage",
+        "print",
+        "",
       ],
     },
     support: {
@@ -82,6 +86,10 @@ const paintingSchema = new mongoose.Schema(
         "fiber cloth",
         "wool felt",
         "tape",
+        "canvas board",
+        "board",
+        "paper/matted",
+        "",
       ],
     },
     year: {
