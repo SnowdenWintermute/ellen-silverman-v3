@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getSeriesList } from "../../apiCalls/series";
-import { addPainting, editPainting, getPainting } from "../../apiCalls/paintings";
+import {
+  addPainting,
+  editPainting,
+  getPainting,
+} from "../../apiCalls/paintings";
 import PaintingForm from "../forms/PaintingForm";
 
 const AddOrEditPainting = (props) => {
@@ -13,6 +17,7 @@ const AddOrEditPainting = (props) => {
   const [listOfAvailableSeries, setListOfAvailableSeries] = useState([]);
   const [formFieldErrors, setFormFieldErrors] = useState({});
   const initialValues = {
+    uneditedTitle: "",
     title: "",
     height: "",
     width: "",
@@ -37,7 +42,9 @@ const AddOrEditPainting = (props) => {
     }
   }, []);
 
-  useEffect(() => { loadSeriesList() }, [loadSeriesList]);
+  useEffect(() => {
+    loadSeriesList();
+  }, [loadSeriesList]);
 
   useEffect(() => {
     const { paintingSlug } = props.match.params;
@@ -51,9 +58,12 @@ const AddOrEditPainting = (props) => {
           newValues[valueKey] = paintingToEdit.data[valueKey] || "";
           formData.current.set(valueKey, paintingToEdit.data[valueKey]);
         });
+        newValues["uneditedTitle"] = paintingToEdit.data["title"];
+        formData.current.set("uneditedTitle", paintingToEdit.data["title"]);
+
         setValues({ ...newValues });
       } catch (error) {
-        console.log(error)
+        console.log(error);
         toast.error(error);
       }
       setLoading(false);
@@ -67,14 +77,13 @@ const AddOrEditPainting = (props) => {
     const value = name === "image" ? event.target.files[0] : event.target.value;
     formData.current.set(name, value);
     if (name === "series") {
-      if (values.seriesList.indexOf(value) >= 0) return
-      let newSeriesList = [...values.seriesList]
-      if (newSeriesList[seriesIndex]) newSeriesList[seriesIndex] = value
-      else newSeriesList.push(value)
-      formData.current.set("seriesList", newSeriesList)
+      if (values.seriesList.indexOf(value) >= 0) return;
+      let newSeriesList = [...values.seriesList];
+      if (newSeriesList[seriesIndex]) newSeriesList[seriesIndex] = value;
+      else newSeriesList.push(value);
+      formData.current.set("seriesList", newSeriesList);
       setValues({ ...values, seriesList: newSeriesList });
-    }
-    else if (name !== "image") setValues({ ...values, [name]: value });
+    } else if (name !== "image") setValues({ ...values, [name]: value });
     if (name === "image") {
       if (!value) setValues({ ...values, image: null, title: "" });
       if (editMode) setValues({ ...values, image: event.target.files[0] });
@@ -94,35 +103,38 @@ const AddOrEditPainting = (props) => {
   };
 
   const handleRemoveSeriesClick = (indexToRemove) => {
-    let newSeriesList = values.seriesList.filter((seriesId, i) => i !== indexToRemove)
-    formData.current.set("seriesList", newSeriesList)
+    let newSeriesList = values.seriesList.filter(
+      (seriesId, i) => i !== indexToRemove
+    );
+    formData.current.set("seriesList", newSeriesList);
     setValues({ ...values, seriesList: newSeriesList });
-  }
+  };
 
   const handleSubmitEdit = async () => {
     const res = await editPainting(formData.current, user.token);
     toast.success(`Edited ${res.data.title}.`);
-  }
+  };
 
   const handleSubmitNew = async () => {
     const res = await addPainting(formData.current, user.token);
     toast.success(`Added ${res.data.title}.`);
     setValues({ ...initialValues });
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      if (editMode) await handleSubmitEdit()
-      else await handleSubmitNew()
+      if (editMode) await handleSubmitEdit();
+      else await handleSubmitNew();
     } catch (error) {
-      console.log({ ...error })
+      console.log({ ...error });
       if (error.response.data) {
-        if (error.response.data.errors) setFormFieldErrors({ ...error.response.data.errors })
-        else if (error.response.data.message) toast.error(error.response.data.message);
-      }
-      else toast.error("Error creating painting (check all fields)");
+        if (error.response.data.errors)
+          setFormFieldErrors({ ...error.response.data.errors });
+        else if (error.response.data.message)
+          toast.error(error.response.data.message);
+      } else toast.error("Error creating painting (check all fields)");
     }
     setLoading(false);
   };
