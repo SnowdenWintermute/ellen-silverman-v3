@@ -113,6 +113,9 @@ const AddOrEditPainting = (props) => {
   const handleSubmitEdit = async () => {
     const res = await editPainting(formData.current, user.token);
     toast.success(`Edited ${res.data.title}.`);
+
+    setValues({ ...values, uneditedTitle: values.title });
+    formData.current.set("uneditedTitle", values["title"]);
   };
 
   const handleSubmitNew = async () => {

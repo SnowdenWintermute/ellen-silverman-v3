@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getSeriesListWithThumbnails } from "../../apiCalls/series";
-import { updateCachedSeries } from "../../store/actions/artworks-actions";
+import { updateCachedSeriesListWithThumbnails } from "../../store/actions/artworks-actions";
 import createImgSrcStringFromBinary from "../utils/createImgSrcStringFromBinary";
 import ProgressIndicator from "../common/progressIndicator/ProgressIndicator";
 import SeriesCard from "./SeriesCard";
@@ -13,23 +13,28 @@ const SeriesList = () => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sortParameter, setSortParameter] = useState("newest");
-  const { cachedSeries } = useSelector((state) => state.artworks);
+  const { cachedSeriesListWithThumbnails } = useSelector(
+    (state) => state.artworks
+  );
 
   useEffect(() => {
     const newCards = [];
     const asyncFunc = async () => {
       setLoading(true);
       try {
-        let seriesListWithThumbnails = cachedSeries;
+        let seriesListWithThumbnails = cachedSeriesListWithThumbnails;
         if (seriesListWithThumbnails.length <= 0) {
           const fetchedSeriesListWithThumbnails =
             await getSeriesListWithThumbnails();
+
           seriesListWithThumbnails = fetchedSeriesListWithThumbnails.data.sort(
             (a, b) =>
               b.years.latest - a.years.latest ||
               b.years.earliest - a.years.earliest
           );
-          dispatch(updateCachedSeries(seriesListWithThumbnails));
+          dispatch(
+            updateCachedSeriesListWithThumbnails(seriesListWithThumbnails)
+          );
         }
         seriesListWithThumbnails.forEach((series, i) => {
           newCards.push({
@@ -54,7 +59,7 @@ const SeriesList = () => {
       setLoading(false);
     };
     asyncFunc();
-  }, [cachedSeries, dispatch]);
+  }, [cachedSeriesListWithThumbnails, dispatch]);
 
   const onSelectSortParameter = (e) => {
     setSortParameter(e.target.value);

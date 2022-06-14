@@ -8,8 +8,15 @@ export const getSeriesList = async () =>
   await axios.get(`${process.env.REACT_APP_API}/series/list`);
 export const getSeriesListWithThumbnails = async () =>
   await axios.get(`${process.env.REACT_APP_API}/series/list-with-thumbnails`);
-export const getPaintingsInSeriesWithThumbnails = async (seriesSlug) =>
-  axios.get(`${process.env.REACT_APP_API}/series/paintings/${seriesSlug}`);
+export const getPaintingsInSeriesWithThumbnails = async ({
+  slug,
+  withThumbnails,
+}) =>
+  axios.get(
+    `${process.env.REACT_APP_API}/series/paintings/${slug}${
+      withThumbnails ? "/with-thumbnails" : "/without-thumbnails"
+    }`
+  );
 export const fetchOneSeriesPaintingsNames = async (seriesId) =>
   await axios.get(
     `${process.env.REACT_APP_API}/series/list-paintings/${seriesId}`
