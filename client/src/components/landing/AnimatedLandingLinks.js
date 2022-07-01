@@ -44,7 +44,7 @@ const AnimatedLandingLinks = () => {
 
   return (
     <div className={`landing-links`}>
-      <Link to="/about" className={`landing-header${landingHeaderHiddenClass}`}>
+      {/* <Link to="/about" className={`landing-header${landingHeaderHiddenClass}`}>
         L. E. McGuff-Silverman
         <p className="landing-header-sub-text">Fine Art</p>
       </Link>
@@ -53,8 +53,8 @@ const AnimatedLandingLinks = () => {
           <PermMediaIcon />
         </Icon>
         Browse Portfolio
-      </Link>
-      <Link to="/the-professor" className={`landing-link${bunStoryHiddenClass}`}>
+      </Link> */}
+      {/* <Link to="/the-professor" className={`landing-link${bunStoryHiddenClass}`}>
         <Icon className={classes.icon}>
           <MenuBookIcon />
         </Icon>
@@ -66,7 +66,7 @@ const AnimatedLandingLinks = () => {
             </div>
           </div>
         </div>
-      </Link>
+      </Link> */}
     </div>
   )
 }

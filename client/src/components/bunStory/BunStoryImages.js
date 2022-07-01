@@ -53,7 +53,7 @@ const BunStoryImages = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setColorFlashActiveClass("color-flash-inactive");
-    }, [2000]);
+    }, [0]);
   }, []);
 
   const updateImages = useCallback(() => {

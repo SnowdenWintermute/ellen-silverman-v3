@@ -49,7 +49,7 @@ export default class LandingPage extends Component {
             "./img/Cold River Camp/Cold River Vatican City.jpg",
           ]}
         />
-        <AnimatedLandingLinks />
+        {/* <AnimatedLandingLinks /> */}
       </div>
     );
   }
