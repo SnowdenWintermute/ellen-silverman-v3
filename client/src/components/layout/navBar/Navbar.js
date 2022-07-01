@@ -59,8 +59,11 @@ const Navbar = () => {
             <Link to="/artworks" onClick={hideMenu}>
               Artworks
             </Link>
-            <Link to="/exhibitions" onClick={hideMenu}>
+            {/* <Link to="/exhibitions" onClick={hideMenu}>
               Exhibitions
+            </Link>  */}
+            <Link to="/the-professor" onClick={hideMenu}>
+              Storybook
             </Link>
             <Link to="/About" onClick={hideMenu}>
               About
