@@ -61,7 +61,7 @@ const Navbar = () => {
             </Link>
             {/* <Link to="/exhibitions" onClick={hideMenu}>
               Exhibitions
-            </Link>    */}
+            </Link>  */}
             <Link to="/the-professor" onClick={hideMenu}>
               Storybook
             </Link>
