@@ -8,7 +8,7 @@ export const updateCachedPaintings = (newPaintings) => {
   };
 };
 
-export const updateCachedSeries = (newSeries) => {
+export const updateCachedSeriesListWithThumbnails = (newSeries) => {
   return {
     type: UPDATE_CACHED_SERIES,
     payload: newSeries,
