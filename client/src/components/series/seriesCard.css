@@ -39,6 +39,11 @@
   color: white;
   text-shadow: 2px 2px black;
   text-align: center;
+  transition: 0.6s;
+}
+.hovered-text {
+  transform: translate(-50%, -100%);
+  text-shadow: 1px 1px black;
 }
 .series-card-info-text {
   font-family: "Roboto", "open-sans";
@@ -54,6 +59,12 @@
 @media only screen and (max-width: 600px) {
   .series-card-body {
     width: calc(50% - 4px);
+    margin: 2px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .series-card-body {
+    width: calc(100% - 4px);
     margin: 2px;
   }
 }

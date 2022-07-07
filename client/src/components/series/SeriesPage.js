@@ -100,6 +100,9 @@ const SeriesPage = ({ match }) => {
       newCards.sort((a, b) =>
         a.painting.sold === b.painting.sold ? 0 : a.painting.sold ? 1 : -1
       );
+    if (e.target.value === "alphabetical")
+      newCards.sort((a, b) => a.painting.title.localeCompare(b.painting.title)
+      );
     setCards(newCards);
   };
 

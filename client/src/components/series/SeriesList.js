@@ -80,6 +80,10 @@ const SeriesList = () => {
       newCards.sort(
         (a, b) => b.series.numberOfPaintings - a.series.numberOfPaintings
       );
+    if (e.target.value === "alphabetical")
+      newCards.sort(
+        (a, b) => a.series.name.localeCompare(b.series.name)
+      );
     setCards(newCards);
   };
 
@@ -91,7 +95,7 @@ const SeriesList = () => {
             header={"Select a Series"}
             sortParameter={sortParameter}
             onSelectSortParameter={onSelectSortParameter}
-            filterOptions={["newest", "oldest", "most sold", "most paintings"]}
+            filterOptions={["newest", "oldest", "most sold", "most paintings", "alphabetical"]}
           />
         )}
         {loading ? (

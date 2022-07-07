@@ -3,6 +3,7 @@
   transform: translateX(-10%);
 }
 .landing-page {
+  /* position: relative; */
 }
 .landing-links {
   z-index: 11;
