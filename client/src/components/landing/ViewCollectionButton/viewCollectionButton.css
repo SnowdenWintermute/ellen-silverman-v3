@@ -1,0 +1,36 @@
+.view-collection-button-holder {
+  margin-left: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 3s;
+}
+.view-collection-button-holder-initial {
+  transform: translateY(-80%);
+  opacity: 0;
+}
+.view-collection-button {
+  color: #e9e7e2;
+  /* text-shadow: 2px 2px black; */
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Josefin Slab";
+  padding: 15px;
+  border: 2px solid #e9e7e2;
+  transition: 0.3s;
+}
+
+.view-collection-button:hover {
+  background: #e9e7e2;
+  font-weight: normal;
+  color: black;
+  text-shadow: 0px 0px black;
+  /* border: 2px solid black; */
+}
+
+@media only screen and (max-height: 400px) {
+  .view-collection-button-holder {
+    top: calc(100% - 40px);
+    transform: translateY(-100%);
+  }
+}

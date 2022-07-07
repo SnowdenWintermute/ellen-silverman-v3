@@ -12,7 +12,8 @@ export const SeriesPaintingsSortBar = ({ series, sortParameter, onSelectSortPara
         "newest",
         "oldest",
         "sold first",
-        "not sold first"
+        "not sold first",
+        "alphabetical"
       ]}>
       <SeriesHeaderInfo series={series} />
     </SortBarHeader>

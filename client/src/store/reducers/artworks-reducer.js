@@ -17,10 +17,6 @@ const artworks = (state = initialState, action) => {
       const updatedPaintingsObject = {};
 
       if (state.cachedPaintingsBySeries[action.payload.seriesName]) {
-        updatedPaintings = [
-          ...state.cachedPaintingsBySeries[action.payload.seriesName],
-        ];
-
         state.cachedPaintingsBySeries[action.payload.seriesName].forEach(
           (painting) => {
             updatedPaintingsObject[painting.title] = painting;

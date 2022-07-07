@@ -85,3 +85,9 @@
     font-size: 14px;
   }
 }
+
+@media only screen and (max-width: 320px) {
+  .painting-card-body {
+    width: calc(100% - 4px);
+  }
+}

@@ -16,7 +16,7 @@ export default function PaintingCard({ img, painting, seriesSlug }) {
         <img src={img} alt={img} />
         <div className="painting-card-info-text">
           <div className="galleryPicTitle">{title}</div>
-          {price && <div className="painting-price">${price}</div>}
+          {price && <div className="painting-price"><span style={{ textDecoration: sold ? "line-through" : "" }}>${price}</span>{(sold ? " (sold)" : "")}</div>}
         </div>
       </Link>
     </div>

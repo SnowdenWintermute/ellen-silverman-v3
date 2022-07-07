@@ -1,0 +1,9 @@
+.title-text {
+  display: inline-block;
+  color: #e9e7e2;
+  text-shadow: -1px -1px 0 #000, 0 -1px 0 #000, 1px -1px 0 #000, 1px 0 0 #000,
+    1px 1px 0 #000, 0 1px 0 #000, -1px 1px 0 #000, -1px 0 0 #000;
+  margin-left: 20px;
+  margin-top: 10px;
+  transition: 0.3s;
+}

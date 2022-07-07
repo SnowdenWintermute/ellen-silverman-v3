@@ -22,6 +22,11 @@ const ImageFaderWithTitles = ({
   }, [delayInMiliseconds, titlesInfo.length]);
 
   useEffect(() => {
+    changeSlides()
+    return clearTimeout(slideTimeout.current)
+  }, [changeSlides])
+
+  useEffect(() => {
     slideTimeout.current = setTimeout(changeSlides, delayInMiliseconds);
     return () => {
       clearTimeout(slideTimeout.current);
@@ -29,7 +34,7 @@ const ImageFaderWithTitles = ({
   }, [changeSlides, delayInMiliseconds]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setComponentShowClass("fader-titles"), 2000)
+    const timeout = setTimeout(() => setComponentShowClass("fader-titles"), 0)
     return () => {
       clearTimeout(timeout)
     }
@@ -44,7 +49,7 @@ const ImageFaderWithTitles = ({
 
   return (
     <div className="image-fader-with-titles">
-      <div className={componentShowClass}>
+      {/* <div className={componentShowClass}>
         {titlesInfo.map((titleInfo, i) => (
           <div
             key={i}
@@ -53,7 +58,7 @@ const ImageFaderWithTitles = ({
             {titleInfo.title} - {titleInfo.composition}
           </div>
         ))}
-      </div>
+      </div> */}
       <ImageFader
         imageSourceArray={imageSourceArray}
         delayInMiliseconds={delayInMiliseconds}
