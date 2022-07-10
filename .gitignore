@@ -28,6 +28,10 @@ yarn-error.log*
 /client/public/img
 /client/.env
 /client/real.env
+/client/prod.env
+/client/deploy.env
 
 /server/.env
 /server/node_modules
+/server/prod.env
+/server/deploy.env

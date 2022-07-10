@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getPage } from '../../apiCalls/page'
+import { createPage, getPage } from '../../apiCalls/page'
+
 
 const Credits = ({ creditsShowing }) => {
+  const user = useSelector(state => state.user)
   const [boxClass, setBoxClass] = useState("transparent-above");
   const [titleClass, setTitleClass] = useState("transparent-above");
   const [textClass1, setTextClass1] = useState("transparent-above");
@@ -13,8 +16,13 @@ const Credits = ({ creditsShowing }) => {
 
   useEffect(() => {
     const asyncFunc = async () => {
-      const newPageInfo = await getPage("the-professor-story")
-      setPageInfo(newPageInfo.data)
+      try {
+        const newPageInfo = await getPage("the-professor-story")
+        setPageInfo(newPageInfo.data)
+        if (!newPageInfo.data) createPage("the-professor-story", user.token)
+      } catch (error) {
+        console.log("error creating page (used for counting views) ", JSON.stringify(error))
+      }
     }
     asyncFunc()
   }, [])
