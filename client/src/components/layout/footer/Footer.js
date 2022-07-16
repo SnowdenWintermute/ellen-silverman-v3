@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './footer.css'
+import "./footer.css";
 
 export default function Footer() {
   return (
     <footer>
       <div className="footer-links">
-        <Link to="/index">Home</Link>&nbsp;|
+        <Link to="/">Home</Link>&nbsp;|
         <Link to="/artworks">&nbsp;Artworks</Link>&nbsp;|
         {/* <Link to="/exhibitions">&nbsp;Exhibitions</Link>&nbsp;| */}
         <Link to="/the-professor">&nbsp;Storybook</Link>&nbsp;|

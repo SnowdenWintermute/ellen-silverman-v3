@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, onRemoveSeriesClick, values, listOfAvailableSeries, formFieldErrors }) => {
+const PaintingForm = ({ loading, loadingSeriesList, editMode, handleSubmit, handleChange, onRemoveSeriesClick, values, listOfAvailableSeries, formFieldErrors }) => {
   const classes = useStyles()
   const {
     title,
@@ -50,7 +50,7 @@ const PaintingForm = ({ loading, editMode, handleSubmit, handleChange, onRemoveS
       elementsToReturn.push(
         <Grid key={i} item xs={12}>
           <FormControl className={i === 0 ? classes.input : seriesList[i] ? classes.smallerInput : classes.input} variant="filled" error={formFieldErrors.series && true}>
-            <InputLabel id="select-series">Series{i > 0 && ` ${i + 1}`}</InputLabel>
+            {loadingSeriesList?"fetching series list...":<InputLabel id="select-series">Series{i > 0 && ` ${i + 1}`}</InputLabel>}
             {Object.keys(listOfAvailableSeries).length > 0 &&
               <Select
                 className={classes.select}

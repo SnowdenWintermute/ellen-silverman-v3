@@ -14,6 +14,7 @@ const AddOrEditPainting = (props) => {
   const formData = useRef(new FormData());
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingSeriesList,setLoadingSeriesList] = useState(true)
   const [listOfAvailableSeries, setListOfAvailableSeries] = useState([]);
   const [formFieldErrors, setFormFieldErrors] = useState({});
   const initialValues = {
@@ -36,6 +37,7 @@ const AddOrEditPainting = (props) => {
     try {
       const fetchedSeriesList = await getSeriesList();
       setListOfAvailableSeries(fetchedSeriesList.data);
+      setLoadingSeriesList(false)
     } catch (error) {
       console.log(error);
       toast.error(error);
@@ -151,6 +153,7 @@ const AddOrEditPainting = (props) => {
         values={values}
         listOfAvailableSeries={listOfAvailableSeries}
         loading={loading}
+        loadingSeriesList={loadingSeriesList}
         formFieldErrors={formFieldErrors}
       />
     </div>
